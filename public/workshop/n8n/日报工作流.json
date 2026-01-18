@@ -1,0 +1,1236 @@
+{
+  "name": "日报-对外",
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": {
+          "__rl": true,
+          "value": "198629a6-152d-8016-b4ce-ce205e5e422c",
+          "mode": "list",
+          "cachedResultName": "AI Agents文章收集",
+          "cachedResultUrl": "https://www.notion.so/198629a6152d8016b4cece205e5e422c"
+        },
+        "limit": 30,
+        "filterType": "manual",
+        "filters": {
+          "conditions": [
+            {
+              "key": "创建日期|created_time",
+              "condition": "after",
+              "createdTimeValue": "={{ new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().split('.')[0]\n }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        -4560,
+        360
+      ],
+      "id": "45ea8827-06e3-4b00-9012-7a433b423453",
+      "name": "Notion",
+      "credentials": {
+        "notionApi": {
+          "id": "tHqNwAxXQ88MGWlm",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// 创建一个空字符串用于存储合并后的文本\nlet mergedText = '';\n\n// 提取JSON数组中的特定字段并按格式输出\nconst jsonData = $input.all();\n\n/**\n * 提取JSON数组中的特定字段并按格式输出\n * @param {Array} data - 包含文章信息的JSON数组\n * @returns {string} - 合并后的文本字符串\n */\nfunction extractFields(data) {\n  if (!Array.isArray(data) || data.length === 0) {\n    return '';\n  }\n\n  return data.map(item => {\n    const title = item.json.name || '';\n    const summary = item.json.property_ai || '';\n    const url = item.json.property_url || '';\n    return `标题：${title}\\n摘要：${summary}\\n链接：${url}\\n\\n`;\n  }).join('');\n}\n\n// 执行函数并将结果赋值给mergedText\nmergedText = extractFields(jsonData);\nreturn {\n    mergedText: mergedText.trim() // 去除最后的多余换行\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -4340,
+        360
+      ],
+      "id": "5b2c1aac-e1f8-4fb7-9ae3-c97cae0a06f2",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=待筛选的文章列表：\n{{ $json.mergedText }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "请将你的评价能力调整为专业AI领域评估者。我需要你帮我挑选出高质量的AI领域的文章。我对以下三类文章有特别关注：\n1、描述AI领域重大发展和趋势的文章，可以是研究论文、行业报告、深度分析或会议论文。关键词包括但不限于：AI趋势、AI研究、深度学习、机器学习、自然语言处理、AI伦理等。\n2、报道AI领域新产品发布的新闻或文章，尤其是那些具有巨大影响力的产品。关键词包括但不限于：AI产品发布、AI新技术、AI新应用、AI创新、AI工具等。\n3、发表AI领域工具、模型的评测分析和专业观点的内容。关键词包括但不限于：OpenAI、Claude、Deepseek、qwen、NVIDIA、字节跳动、MCP、RL、推理模型等。\n\n## Constrains:\n1、 筛选结果最少不低于5篇文章内容\n\n## Workflows:\n1、评估文章与AI领域的相关性：对提供的所有文章（包含标题和摘要）进行分析，筛选出真正与AI技术、产品、趋势相关的高质量内容。\n2、去重处理：如遇到多篇报道同一事件/主题的文章，仅保留摘要更完整的一篇。\n3、生成聚合标题：基于筛选后的文章，生成一个包含核心信息的组合标题，格式为\"公司/产品+关键动作/事件\"，多个新闻间用分号分隔，标题字数不超过60个汉字（示例：\"00后用DeepSeek直播1天卖出3.3亿元；特斯拉暴跌超15%；海尔集团否认强制员工双休\"）。\n4、输出筛选完的内容。"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        -4120,
+        360
+      ],
+      "id": "a887d1de-4630-4239-8896-28b3787bf532",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {
+          "temperature": 1
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1,
+      "position": [
+        -4120,
+        580
+      ],
+      "id": "a5e6f0dc-17d9-47bf-9a60-d32a3d2a1ef7",
+      "name": "DeepSeek Chat Model",
+      "credentials": {
+        "deepSeekApi": {
+          "id": "peOp7pcjSxphhmmF",
+          "name": "DeepSeek account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"bigtitle\": \"大标题\",\n  \"articles\": [\n    {\n      \"title\": \"1、标题一\",\n      \"summary\": \"摘要\",\n      \"url\": \"链接\",\n      \"reason\": \"选择的理由\"\n    },\n    {\n      \"title\": \"2、标题二\",\n      \"summary\": \"摘要\",\n      \"url\": \"链接\",\n      \"reason\": \"选择的理由\"\n    }\n  ]\n}\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        -3940,
+        580
+      ],
+      "id": "f4311521-6a1d-4c72-8fa4-d8d8e2d63cce",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "bab00be2-533c-43be-954b-51c57bfbf075",
+          "mode": "list",
+          "cachedResultName": "小林的博客-AI学长",
+          "cachedResultUrl": "https://www.notion.so/bab00be2533c43be954b51c57bfbf075"
+        },
+        "title": "={{$now.format('AI资讯-'+'MM月dd日')}}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "type|select",
+              "selectValue": "Post"
+            },
+            {
+              "key": "category|select",
+              "selectValue": "AI日报"
+            },
+            {
+              "key": "status|select",
+              "selectValue": "Published"
+            },
+            {
+              "key": "date|date",
+              "includeTime": false,
+              "date": "={{$now.format('yyyy-MM-dd')}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        -4780,
+        360
+      ],
+      "id": "d1a4efb8-8a40-4400-921f-d493230679ee",
+      "name": "Notion1",
+      "credentials": {
+        "notionApi": {
+          "id": "tHqNwAxXQ88MGWlm",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -1540,
+        360
+      ],
+      "id": "d7869f17-a91f-4056-9bea-22e958013716",
+      "name": "Loop Over Items",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "resource": "block",
+        "blockId": {
+          "__rl": true,
+          "value": "= {{ $('Notion1').first().json.url }}",
+          "mode": "url"
+        },
+        "blockUi": {
+          "blockValues": [
+            {
+              "type": "heading_3",
+              "textContent": "={{ $('Loop Over Items').item.json.title }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        -1320,
+        360
+      ],
+      "id": "d021da3a-73ac-4b0f-a99e-af784cf69cc9",
+      "name": "标题",
+      "executeOnce": true,
+      "retryOnFail": false,
+      "credentials": {
+        "notionApi": {
+          "id": "tHqNwAxXQ88MGWlm",
+          "name": "Notion account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "resource": "block",
+        "blockId": {
+          "__rl": true,
+          "value": "= {{ $('Notion1').first().json.url }}",
+          "mode": "url"
+        },
+        "blockUi": {
+          "blockValues": [
+            {
+              "textContent": "={{ $('Loop Over Items').item.json.summary }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        -1100,
+        360
+      ],
+      "id": "d5195cbe-d1c3-4b6b-965d-0862dde46411",
+      "name": "段落",
+      "executeOnce": true,
+      "retryOnFail": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "resource": "block",
+        "blockId": {
+          "__rl": true,
+          "value": "= {{ $('Notion1').first().json.url }}",
+          "mode": "url"
+        },
+        "blockUi": {
+          "blockValues": [
+            {
+              "richText": true,
+              "text": {
+                "text": [
+                  {
+                    "text": "🔗访问原文",
+                    "isLink": true,
+                    "textLink": "={{ $('Loop Over Items').item.json.url }}",
+                    "annotationUi": {
+                      "color": "blue"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        -880,
+        360
+      ],
+      "id": "530f1705-924a-4a28-8c8d-6b1ae6688328",
+      "name": "url",
+      "executeOnce": true,
+      "retryOnFail": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "output.articles",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -3740,
+        360
+      ],
+      "id": "68496180-e1b9-43db-b4df-c0a34f39135b",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "resource": "block",
+        "blockId": {
+          "__rl": true,
+          "value": "= {{ $('Notion1').first().json.url }}",
+          "mode": "url"
+        },
+        "blockUi": {
+          "blockValues": [
+            {
+              "textContent": "     "
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        -660,
+        440
+      ],
+      "id": "851fee33-3b17-4e4d-ad19-23dd38c38f24",
+      "name": "分隔",
+      "executeOnce": true,
+      "retryOnFail": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "= {{ $('Notion1').first().json.url }}",
+          "mode": "url"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "title|title",
+              "title": "={{ $('AI Agent').first().json.output.bigtitle }}{{$now.format(' | '+'MM月dd日'+ 'AI资讯')}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        -1320,
+        160
+      ],
+      "id": "8f9095dc-6ad9-414b-aae1-b0c834b35208",
+      "name": "Notion2",
+      "executeOnce": true,
+      "credentials": {
+        "notionApi": {
+          "id": "tHqNwAxXQ88MGWlm",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "action": "generate",
+        "dataPropertyName": "UUID"
+      },
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        -3300,
+        300
+      ],
+      "id": "94633aec-cde7-4065-b952-aa8e6ed66310",
+      "name": "Crypto"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://openspeech.bytedance.com/api/v1/tts_async/submit",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Resource-Id",
+              "value": "volc.tts_async.default"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer;这里填写密钥"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"appid\": \"这里填写appid\",\n    \"reqid\": \"{{ $json.UUID }}\",\n    \"text\": \"{{ $('AI Agent').first().json.output.bigtitle }}{{$now.format(' | '+'MM月dd日'+ 'AI资讯; ')}}{{ $('Code1').item.json.mergedText }}\",\n    \"format\": \"mp3\",\n    \"voice_type\": \"BV002_streaming\",\n    \"sample_rate\": 24000,\n    \"volume\": 1,\n    \"speed\": 1,\n    \"pitch\": 1,\n    \"enable_subtitle\": 0\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -3080,
+        300
+      ],
+      "id": "bb6c7888-b2da-485e-ba11-ecbe7f02289e",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 创建一个空字符串用于存储合并后的文本\nlet mergedText = '';\n\n// 提取JSON数组中的特定字段并按格式输出\nconst jsonData = $input.all();\n\n/**\n * 提取JSON数组中的特定字段并按格式输出\n * @param {Array} data - 包含文章信息的JSON数组\n * @returns {string} - 合并后的文本字符串\n */\nfunction extractFields(data) {\n  if (!Array.isArray(data) || data.length === 0) {\n    return '';\n  }\n\n  return data.map(item => {\n    const title = item.json.title || '';\n    const summary = item.json.summary || '';\n    return `${title} 摘要：${summary}  `;\n  }).join('');\n}\n\n// 执行函数并将结果赋值给mergedText\nmergedText = extractFields(jsonData);\nreturn {\n    mergedText: mergedText.trim() // 去除最后的多余换行\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -3520,
+        300
+      ],
+      "id": "ae3a04c4-61dc-4140-a919-bbeabbfdadec",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "bucketName": "n8ndata",
+        "fileName": "={{ $('Crypto').item.json.UUID }}.mp3",
+        "additionalFields": {
+          "acl": "publicRead"
+        }
+      },
+      "type": "n8n-nodes-base.awsS3",
+      "typeVersion": 2,
+      "position": [
+        -2200,
+        300
+      ],
+      "id": "71528073-0839-466f-9e86-24df81142273",
+      "name": "AWS S3",
+      "credentials": {
+        "aws": {
+          "id": "AaLOsqCGRN4Ynvxk",
+          "name": "AWS account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://openspeech.bytedance.com/api/v1/tts_async/query",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "appid",
+              "value": "这里填写appid"
+            },
+            {
+              "name": "task_id",
+              "value": "={{ $('HTTP Request').item.json.task_id }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Resource-Id",
+              "value": "volc.tts_async.default"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer;这里填写密钥"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -2640,
+        280
+      ],
+      "id": "afbee476-5af8-4ec5-973a-79492d9bca42",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "amount": 20
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -2860,
+        300
+      ],
+      "id": "cee9cb64-6ece-47ae-84aa-a96c26921b4b",
+      "name": "Wait",
+      "webhookId": "660ad7b5-9540-4812-986c-740a999a7efe"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.audio_url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -2420,
+        280
+      ],
+      "id": "3ad1d80e-8cd7-4b5e-b102-86673c010696",
+      "name": "下载音频"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch",
+        "useDataOfInput": 2
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        -1760,
+        360
+      ],
+      "id": "cf7bd560-7f5f-4820-9e18-526c8060c48e",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "bucketName": "n8ndata",
+        "fileName": "={{ $('Notion2').item.json.id }}.jpg",
+        "additionalFields": {
+          "acl": "publicRead"
+        }
+      },
+      "type": "n8n-nodes-base.awsS3",
+      "typeVersion": 2,
+      "position": [
+        -660,
+        160
+      ],
+      "id": "f2a1ce30-682f-4808-8bc0-96b958dab430",
+      "name": "AWS S32",
+      "credentials": {
+        "aws": {
+          "id": "AaLOsqCGRN4Ynvxk",
+          "name": "AWS account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 21,
+              "triggerAtMinute": 20
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -5000,
+        360
+      ],
+      "id": "9e348cbd-2a0b-40b4-9987-d922f42ea1ac",
+      "name": "Schedule Trigger",
+      "notesInFlow": true,
+      "notes": "每完9:10执行"
+    },
+    {
+      "parameters": {
+        "chatId": "ChatID",
+        "text": "=***{{ $('Notion2').item.json.name }}***\n🔗原文：\nhttps://ai.linbintalk.com/en/article/{{ $('Notion2').item.json.id }}\n\n*** 🎉🎉🎉【小林的AI课程-持续更新涨价中】请复制地址到微信打开：https://m.qlchat.com/live/channel/channelPage/2000020101980117.htm***",
+        "additionalFields": {
+          "disable_notification": true,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "7db60b52-2f67-442e-a9c4-8a49d5233ce5",
+      "name": "发送链接",
+      "webhookId": "3e8e2be0-2fa2-42ec-bd9a-2d0775f3cf98",
+      "credentials": {
+        "telegramApi": {
+          "id": "5JwRrhgTJYtXI8UD",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendPhoto",
+        "chatId": "ChatID",
+        "file": "={{ \"https://\" + \"n8ndata\" + \".s3.ap-southeast-1.amazonaws.com/\" + $('Notion2').item.json.id + \".jpg\"\n }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "486ee876-72b0-4ed0-b90d-daf8571bb746",
+      "name": "发送图片1",
+      "webhookId": "e0b47d30-12a2-41ed-abe4-1590c0b90436",
+      "credentials": {
+        "telegramApi": {
+          "id": "5JwRrhgTJYtXI8UD",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAudio",
+        "chatId": "ChatID",
+        "file": "={{ \"https://\" + \"n8ndata\" + \".s3.ap-southeast-1.amazonaws.com/\" + $('Crypto').first().json.UUID + \".mp3\"}}",
+        "additionalFields": {
+          "caption": "=听日报{{$now.format(' | '+'MM月dd日'+ 'AI资讯')}}"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "f32d20e4-6140-4f40-9eb0-d3a9803d81a4",
+      "name": "发送音频1",
+      "webhookId": "88321fe2-48aa-4171-80cd-bf42f82118a1",
+      "credentials": {
+        "telegramApi": {
+          "id": "5JwRrhgTJYtXI8UD",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://ai.linbintalk.com/en/article/{{ $('Notion2').item.json.id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -440,
+        160
+      ],
+      "id": "207a1b1a-3f4b-4df8-a625-5d27243ac22d",
+      "name": "HTTP Request4"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -220,
+        160
+      ],
+      "id": "f5842dc6-829b-4483-82fc-e48fea3edbfb",
+      "name": "Wait1",
+      "webhookId": "d237a112-f80c-405c-b3f7-b17e0bd42c5b"
+    },
+    {
+      "parameters": {
+        "operation": "crop",
+        "width": 800,
+        "height": 5000,
+        "positionX": 560,
+        "positionY": 40,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [
+        -880,
+        160
+      ],
+      "id": "996d3654-9b10-4da8-a6a5-983766ed7dd0",
+      "name": "Edit Image1"
+    },
+    {
+      "parameters": {
+        "url": "https://api.screenshotone.com/take",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "access_key",
+              "value": "这里填写密钥"
+            },
+            {
+              "name": "url",
+              "value": "={{ $json.url.replace(/https:\\/\\/www\\.notion\\.so/, \"https://linbintalk.notion.site\") }}"
+            },
+            {
+              "name": "format",
+              "value": "jpg"
+            },
+            {
+              "name": "dark_mode",
+              "value": "true"
+            },
+            {
+              "name": "full_page",
+              "value": "true"
+            },
+            {
+              "name": "selector",
+              "value": ".notion-page-content"
+            },
+            {
+              "name": "image_quality",
+              "value": "100"
+            },
+            {
+              "name": "response_type",
+              "value": "by_format"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1100,
+        160
+      ],
+      "id": "025c68ee-3745-4774-873b-7ba527904b15",
+      "name": "HTTP Request5"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:2531/v2/api/message/postText",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-GEWE-TOKEN",
+              "value": "密钥"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"appId\": \"wx_****\",\n    \"toWxid\": \"****@chatroom\",\n    \"content\": \"{{ $('Notion2').item.json.name }}\\n🔗原文：https://ai.linbintalk.com/en/article/{{ $('Notion2').item.json.id }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -40,
+        300
+      ],
+      "id": "d95401a6-009c-4bc4-8c3d-8e875aad92e2",
+      "name": "1群文字",
+      "notesInFlow": true,
+      "notes": "发送日报文字"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:2531/v2/api/message/postImage",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-GEWE-TOKEN",
+              "value": "密钥 "
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"appId\": \"wx_***\",\n    \"toWxid\": \"***@chatroom\",\n    \"imgUrl\": \"{{ \"https://\" + \"n8ndata\" + \".s3.ap-southeast-1.amazonaws.com/\" + $('Notion2').item.json.id + \".jpg\"\n }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        180,
+        300
+      ],
+      "id": "3ce42643-ec98-4971-8861-bc9574c0b6c2",
+      "name": "1群图片",
+      "notesInFlow": true,
+      "notes": "发送日报截图"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:2531/v2/api/message/postFile",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-GEWE-TOKEN",
+              "value": "密钥"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"appId\": \"wx_****\",\n    \"toWxid\": \"****@chatroom\",\n    \"fileName\": \"听日报{{$now.format('|'+'MM月dd日'+ 'AI资讯')}}.mp3\",\n    \"fileUrl\": \"{{ \"https://\" + \"n8ndata\" + \".s3.ap-southeast-1.amazonaws.com/\" + $('Crypto').first().json.UUID + \".mp3\"}}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        600,
+        300
+      ],
+      "id": "bdec73d6-4875-4d16-a5ea-1684442c3b4d",
+      "name": "1群音频",
+      "notesInFlow": true,
+      "notes": "发送日报音频"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        400,
+        300
+      ],
+      "id": "f963a8af-c86c-453a-a4f3-b839bfd1bc06",
+      "name": "Wait2",
+      "webhookId": "07a2cb38-24ff-46df-90e8-63d51ec35d3a"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Notion": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notion1": {
+      "main": [
+        [
+          {
+            "node": "Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Notion2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "标题",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "标题": {
+      "main": [
+        [
+          {
+            "node": "段落",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "段落": {
+      "main": [
+        [
+          {
+            "node": "url",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "url": {
+      "main": [
+        [
+          {
+            "node": "分隔",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "分隔": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notion2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crypto": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Crypto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AWS S3": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "下载音频",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "下载音频": {
+      "main": [
+        [
+          {
+            "node": "AWS S3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AWS S32": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Notion1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "发送链接": {
+      "main": [
+        [
+          {
+            "node": "发送图片1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "发送图片1": {
+      "main": [
+        [
+          {
+            "node": "发送音频1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request4": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "发送链接",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "1群文字",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeepSeek Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request5": {
+      "main": [
+        [
+          {
+            "node": "Edit Image1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Image1": {
+      "main": [
+        [
+          {
+            "node": "AWS S32",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1群文字": {
+      "main": [
+        [
+          {
+            "node": "1群图片",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1群图片": {
+      "main": [
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1群音频": {
+      "main": [
+        []
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "1群音频",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f96c6853-693d-4268-baf2-e86357e70a0c",
+  "meta": {
+    "instanceId": "667f8e49cea6f05a4f2d4764a2ef083b44c681d7bcf3709cc71f85be90eeca2e"
+  },
+  "id": "M9VoPToNgrV5LaSI",
+  "tags": []
+}

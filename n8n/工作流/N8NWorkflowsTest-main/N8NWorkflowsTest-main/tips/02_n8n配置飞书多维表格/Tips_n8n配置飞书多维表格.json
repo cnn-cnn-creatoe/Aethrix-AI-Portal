@@ -1,0 +1,320 @@
+{
+  "name": "Tips_n8n配置飞书多维表格",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -928,
+        1008
+      ],
+      "id": "da3abe96-0132-4521-a5ad-c147b1157ebe",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal/",
+        "sendHeaders": true,
+        "specifyHeaders": "json",
+        "jsonHeaders": "{\n  \"Content-Type\":\"application/json; charset=utf-8\"\n}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"app_id\": {{ $json.app_id.toJsonString() }},\n    \"app_secret\": {{ $json.app_secret.toJsonString() }}\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -576,
+        1008
+      ],
+      "id": "86baead7-982d-406f-9871-6d1d1f941a16",
+      "name": "获取飞书Token",
+      "notesInFlow": true,
+      "notes": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://open.feishu.cn/open-apis/bitable/v1/apps",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.tenant_access_token }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"name\": \"Tips_01_n8n配置飞书多维表格\",\n  \"folder_token\": {{ $('设置应用凭证').item.json.folder_token.toJsonString() }}\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -400,
+        1008
+      ],
+      "id": "defaf6d9-83e7-407d-aa8f-d9b6b1b50ac3",
+      "name": "创建多维表格",
+      "notesInFlow": true,
+      "notes": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://open.feishu.cn/open-apis/bitable/v1/apps/{{ $('创建多维表格').item.json.data.app.app_token }}/tables/{{ $('创建多维表格').item.json.data.app.default_table_id }}/records",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('获取飞书Token').item.json.tenant_access_token }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"fields\": {\n    \"文本\": \"南哥AGI研习社\",\n    \"单选\": \"南哥\",\n    \"日期\": 1674206443000,\n    \"超链接\": {\n      \"text\": \"nangeai.top\",\n      \"link\": \"https://nangeai.top\"\n    },\n    \"地理位置\": \"116.397755,39.903179\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        304,
+        1008
+      ],
+      "id": "daff7f64-fafb-4806-a4cc-e971322d12b7",
+      "name": "新增记录到表格",
+      "notesInFlow": true,
+      "notes": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "=https://open.feishu.cn/open-apis/bitable/v1/apps/{{ $json.data.app.app_token }}/tables/{{ $json.data.app.default_table_id }}/fields",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('获取飞书Token').item.json.tenant_access_token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -224,
+        1008
+      ],
+      "id": "72f324f5-3ebf-4399-994c-ed05b45bf248",
+      "name": "列出数据表字段",
+      "notesInFlow": true,
+      "notes": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://open.feishu.cn/open-apis/bitable/v1/apps/{{ $('创建多维表格').item.json.data.app.app_token }}/tables/{{ $('创建多维表格').item.json.data.app.default_table_id }}/fields/{{ $json.data.items[3].field_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('获取飞书Token').item.json.tenant_access_token }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"field_name\": \"超链接\",\n  \"type\": 15,\n  \"ui_type\": \"Url\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -48,
+        1008
+      ],
+      "id": "1d3051cc-4c21-407e-a8f0-b560e5f72529",
+      "name": "更新字段",
+      "notesInFlow": true,
+      "notes": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://open.feishu.cn/open-apis/bitable/v1/apps/{{ $('创建多维表格').item.json.data.app.app_token }}/tables/{{ $('创建多维表格').item.json.data.app.default_table_id }}/fields",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('获取飞书Token').item.json.tenant_access_token }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"field_name\": \"地理位置\",\n  \"type\": 22\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        128,
+        1008
+      ],
+      "id": "1114f770-3e55-4f78-be66-d89551531334",
+      "name": "新增字段",
+      "notesInFlow": true,
+      "notes": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ad0fb75f-4bf4-4157-8641-07b6d87aa235",
+              "name": "app_id",
+              "value": "填写自己的",
+              "type": "string"
+            },
+            {
+              "id": "8211841d-8df6-413c-9518-6bd69380d327",
+              "name": "app_secret",
+              "value": "填写自己的",
+              "type": "string"
+            },
+            {
+              "id": "67067775-7b08-4818-b22d-b410f12d6aa4",
+              "name": "folder_token",
+              "value": "填写自己的",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -752,
+        1008
+      ],
+      "id": "82c6dcc8-7f5a-48e5-9048-a6a6ac4669e0",
+      "name": "设置应用凭证",
+      "notesInFlow": true,
+      "notes": "Edit Fields"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "设置应用凭证",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "获取飞书Token": {
+      "main": [
+        [
+          {
+            "node": "创建多维表格",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "创建多维表格": {
+      "main": [
+        [
+          {
+            "node": "列出数据表字段",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "列出数据表字段": {
+      "main": [
+        [
+          {
+            "node": "更新字段",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "更新字段": {
+      "main": [
+        [
+          {
+            "node": "新增字段",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "新增字段": {
+      "main": [
+        [
+          {
+            "node": "新增记录到表格",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "设置应用凭证": {
+      "main": [
+        [
+          {
+            "node": "获取飞书Token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "727b671b-3abf-41dd-af95-4009fbbe87bf",
+  "meta": {
+    "instanceId": "830bfffc51ff88cd51b86a768f6a50a5b290896243e17b0bdf0f08551c38ba51"
+  },
+  "id": "eJClk3RfH5qDP6Rp",
+  "tags": [
+    {
+      "updatedAt": "2025-10-30T12:47:20.269Z",
+      "createdAt": "2025-10-30T12:47:20.269Z",
+      "id": "f21vDmcMsvedJbTO",
+      "name": "飞书"
+    },
+    {
+      "name": "多维表格",
+      "id": "vvSdsOAB9ETafUmt",
+      "updatedAt": "2025-12-15T05:59:01.229Z",
+      "createdAt": "2025-12-15T05:59:01.229Z"
+    }
+  ]
+}

@@ -1,0 +1,463 @@
+app:
+  description: ''
+  icon: 📄
+  icon_background: '#FBE8FF'
+  mode: advanced-chat
+  name: 长篇故事生成（迭代）
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai:0.0.13@9caa0421b5519db036aaccdbf1980d1071550767d6c59e9d9388dd386a92e9f6
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: llm
+      id: 1716783101349-source-1716783205923-target
+      source: '1716783101349'
+      sourceHandle: source
+      target: '1716783205923'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: code
+      id: 1716783205923-source-1716783405935-target
+      source: '1716783205923'
+      sourceHandle: source
+      target: '1716783405935'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: iteration
+      id: 1716783405935-source-1716786291494-target
+      source: '1716783405935'
+      sourceHandle: source
+      target: '1716786291494'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: iteration
+        targetType: code
+      id: 1716786291494-source-1716786321875-target
+      source: '1716786291494'
+      sourceHandle: source
+      target: '1716786321875'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: answer
+      id: 1716786321875-source-1716786344896-target
+      source: '1716786321875'
+      sourceHandle: source
+      target: '1716786344896'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: 文章标题
+          max_length: 256
+          options: []
+          required: true
+          type: text-input
+          variable: article_title
+        - label: 文章内容
+          max_length: 33024
+          options: []
+          required: true
+          type: paragraph
+          variable: article_outline
+      height: 116
+      id: '1716783101349'
+      position:
+        x: 30
+        y: 330.5
+      positionAbsolute:
+        x: 30
+        y: 330.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: 872364eb-6859-4011-b830-e9d547b2a2b4
+          role: system
+          text: "<instruction> \n你需要根据提供的标题和大纲写一篇长文。按照以下步骤完成任务： \n1. 使用article_title作为文章标题。\
+            \ \n2. 根据提供的article_outline组织文章。大纲中的每个部分应对应文章中的一个部分。 \n3. 确保文章内容详实，每个部分都包含详细的信息、解释、例子以及任何其他相关内容，以充分涵盖主题。\
+            \ \n4. 确保各部分之间的过渡顺畅，保持连贯的流畅性。 \n5. 输出应不包含任何XML标签。仅提供包含以下键和值的JSON数组：“section”（文章每个部分的标题），“bullets”（每个部分的提纲）。\
+            \ \n<example> \n<input> \n<article_title> \n气候变化对沿海城市的影响 \n</article_title>\
+            \ \n<article_outline> \n1. 引言 \n2. 海平面上升 \n3. 风暴频率增加 \n4. 结论 \n</article_outline>\
+            \ \n</input> \n<output> \n[ { \"section\": \"引言\", \"bullets\": \"1. 气候变化对沿海城市影响的概述\
+            \ 2. 理解这些影响的重要性\" }, { \"section\": \"海平面上升\", \"bullets\": \"1. 海平面上升的原因\
+            \ 2. 对沿海基础设施和社区的影响 3. 受影响城市的例子\" }, { \"section\": \"风暴频率增加\", \"bullets\"\
+            : \"1. 气候变化与风暴频率的关联 2. 更频繁和严重的风暴对沿海地区的影响 3. 最近风暴的案例研究\" }, { \"section\"\
+            : \"结论\", \"bullets\": \"1. 关键点总结 2. 应对气候变化的紧迫性 3. 对政策制定者和社区的行动呼吁\" }\
+            \ ] \n</output> \n</example> \n</instruction> \n<input> \n<article_title>\
+            \ \n{{#1716783101349.article_title#}} \n</article_title>\n<article_outline>\
+            \ \n{{#1716783101349.article_outline#}} \n</article_outline> \n</input>\
+            \ \n<output>\n"
+        selected: false
+        title: 生成段落标题和段落内容
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: true
+      height: 96
+      id: '1716783205923'
+      position:
+        x: 334
+        y: 330.5
+      positionAbsolute:
+        x: 334
+        y: 330.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(arg1: str) -> dict:\n    import json\n    data = json.loads(arg1)\n\
+          \    \n    # Create an array of objects\n    result = [{'section': item[\"\
+          section\"], 'bullets': item[\"bullets\"]} for item in data]\n    \n    return\
+          \ {\n        'result': result\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: array[object]
+        selected: false
+        title: 提取段落标题和段落内容
+        type: code
+        variables:
+        - value_selector:
+          - '1716783205923'
+          - text
+          variable: arg1
+      height: 54
+      id: '1716783405935'
+      position:
+        x: 638
+        y: 330.5
+      positionAbsolute:
+        x: 638
+        y: 330.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: 一段一段生成长篇故事
+        error_handle_mode: terminated
+        height: 261
+        is_parallel: false
+        iterator_selector:
+        - '1716783405935'
+        - result
+        output_selector:
+        - '1716805725916'
+        - text
+        output_type: array[string]
+        parallel_nums: 10
+        selected: false
+        startNodeType: llm
+        start_node_id: '1716805725916'
+        title: 迭代
+        type: iteration
+        width: 446
+      height: 261
+      id: '1716786291494'
+      position:
+        x: 942
+        y: 330.5
+      positionAbsolute:
+        x: 942
+        y: 330.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 446
+      zIndex: 1
+    - data:
+        code: "\ndef main(articleSections: list):\n    data = articleSections\n  \
+          \  return {\n        \"result\": \"\\n\".join(data)\n    }\n"
+        code_language: python3
+        desc: 将迭代节点输出的数组 Array 转换成字符串 String
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 代码执行
+        type: code
+        variables:
+        - value_selector:
+          - '1716786291494'
+          - output
+          variable: articleSections
+      height: 98
+      id: '1716786321875'
+      position:
+        x: 1448
+        y: 330.5
+      positionAbsolute:
+        x: 1448
+        y: 330.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1716786321875.result#}}'
+        desc: ''
+        selected: false
+        title: 结束
+        type: answer
+        variables: []
+      height: 105
+      id: '1716786344896'
+      position:
+        x: 1752
+        y: 330.5
+      positionAbsolute:
+        x: 1752
+        y: 330.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: 生成文章
+        isInIteration: true
+        isIterationStart: true
+        iteration_id: '1716786291494'
+        memory:
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 50
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: 0c84c8c2-bcde-43be-a392-87cd04b40674
+          role: system
+          text: "You are an expert document writer. Your job is to write long form\
+            \ cohesive content. \n"
+        - id: a661230f-2367-4f35-98d8-d9d608745354
+          role: user
+          text: "You are writing a document called {{#1716783101349.article_title#}}.\
+            \ Write a section based on the following information: {{#1716786291494.item#}}.\
+            \  \n\n\n<Full outline>\nTake the full outline as a reference when generating\
+            \ full article. \n{{#1716783205923.text#}}"
+        selected: false
+        title: 'LLM '
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: false
+      extent: parent
+      height: 124
+      id: '1716805725916'
+      parentId: '1716786291494'
+      position:
+        x: 85
+        y: 85
+      positionAbsolute:
+        x: 1027
+        y: 415.5
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1001
+    - data:
+        author: Dify
+        desc: ''
+        height: 252
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"输入你想生成的文章的结构，比如你想生成一个标题为《庄子最通透的5个故事，治好了我的精神内耗》的文章，其中有分别关于评价、得失、困境、选择和心态五个故事。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":2,"mode":"normal","style":"font-size:
+          16px;","text":"输入变量示例","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":2},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"article_title：庄子最通透的5个故事，治好了我的精神内耗","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"article_outline：
+          关于评价、得失、困境、选择和心态五个故事","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 285
+      height: 252
+      id: '1718916743166'
+      position:
+        x: 8.322615117174962
+        y: 455.3921060834343
+      positionAbsolute:
+        x: 8.322615117174962
+        y: 455.3921060834343
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 285
+    - data:
+        author: Dify
+        desc: ''
+        height: 427
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":2,"mode":"normal","style":"font-size:
+          16px;","text":"步骤","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":2},{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"使用
+          LLM 节点生成关于副标题和副标题下的内容的 JSON，如果想要更好效果可以在内容中添加上下文和文章结构等。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"listitem","version":1,"value":1},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"使用
+          Code 节点解析 JSON 传递给迭代节点分段​。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"listitem","version":1,"value":2}],"direction":"ltr","format":"","indent":0,"type":"list","version":1,"listType":"bullet","start":1,"tag":"ul"},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":2,"mode":"normal","style":"font-size:
+          16px;","text":"JSON 示例","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":2},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"[","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":" 
+          {","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":" 
+            \"section\": \"关于评价的故事\",","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":" 
+            \"bullets\": \"庄子关于评价的故事...\"","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":" 
+          },","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":" 
+          {","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":" 
+            \"section\": \"关于得失的故事\",","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":" 
+            \"bullets\": \"庄子关于得失的故事...\"","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":" 
+          }","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":" 
+          ......","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"]","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 558
+      height: 427
+      id: '1718921268873'
+      position:
+        x: 334
+        y: 455.3921060834343
+      positionAbsolute:
+        x: 334
+        y: 455.3921060834343
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 558
+    - data:
+        author: Dify
+        desc: ''
+        height: 127
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"使用
+          \"\\n\".join(data) 把迭代输出的 Array 转换成一个字符串。","type":"text","version":1},{"type":"linebreak","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"使用","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"","text":"模板","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"节点
+          ","type":"text","version":1},{"detail":0,"format":16,"mode":"normal","style":"","text":"{{
+          argument | join(\"\\n\") }} 可以达成一样的效果。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"type":"linebreak","version":1}],"direction":null,"format":"start","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 468
+      height: 127
+      id: '1718921370849'
+      position:
+        x: 1448
+        y: 480
+      positionAbsolute:
+        x: 1448
+        y: 480
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 468
+    viewport:
+      x: 41.05443799350451
+      y: -40.96954697114654
+      zoom: 0.81762522227863

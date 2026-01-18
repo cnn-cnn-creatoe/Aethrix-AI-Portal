@@ -1,0 +1,633 @@
+{
+  "apifoxProject": "1.0.0",
+  "$schema": {
+    "app": "apifox",
+    "type": "project",
+    "version": "1.2.0"
+  },
+  "info": {
+    "name": "n8n测试",
+    "description": "",
+    "mockRule": {
+      "rules": [],
+      "enableSystemRule": true
+    }
+  },
+  "apiCollection": [
+    {
+      "name": "根目录",
+      "id": 71203176,
+      "auth": {},
+      "securityScheme": {},
+      "parentId": 0,
+      "serverId": "",
+      "description": "",
+      "identityPattern": {
+        "httpApi": {
+          "type": "methodAndPath",
+          "bodyType": "",
+          "fields": []
+        }
+      },
+      "shareSettings": {},
+      "visibility": "SHARED",
+      "moduleId": 6555532,
+      "preProcessors": [
+        {
+          "id": "inheritProcessors",
+          "type": "inheritProcessors",
+          "data": {}
+        }
+      ],
+      "postProcessors": [
+        {
+          "id": "inheritProcessors",
+          "type": "inheritProcessors",
+          "data": {}
+        }
+      ],
+      "inheritPostProcessors": {},
+      "inheritPreProcessors": {},
+      "items": [
+        {
+          "name": "工单处理接口",
+          "api": {
+            "id": "376739442",
+            "method": "post",
+            "path": "webhook-test/107f44d8-9d03-4ea0-935f-c55e5a917b62",
+            "parameters": {
+              "query": [],
+              "header": [
+                {
+                  "required": false,
+                  "description": "",
+                  "type": "string",
+                  "id": "k00vpieHj2",
+                  "example": "application/json",
+                  "enable": true,
+                  "name": "Content-Type"
+                },
+                {
+                  "required": false,
+                  "description": "",
+                  "type": "string",
+                  "id": "TPnpctMBaU",
+                  "example": "1234567890",
+                  "enable": true,
+                  "name": "Authorization"
+                }
+              ]
+            },
+            "auth": {},
+            "securityScheme": {},
+            "commonParameters": {
+              "query": [],
+              "body": [],
+              "cookie": [],
+              "header": []
+            },
+            "responses": [
+              {
+                "id": "189757428",
+                "code": 200,
+                "name": "成功",
+                "headers": [],
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "description": "",
+                "contentType": "json",
+                "mediaType": ""
+              }
+            ],
+            "responseExamples": [],
+            "requestBody": {
+              "type": "application/json",
+              "parameters": [],
+              "jsonSchema": {
+                "firstname": "John",
+                "lastname": "Doe",
+                "time": "2025-10-27T10:00:00Z",
+                "type": "string"
+              },
+              "required": false,
+              "mediaType": "",
+              "examples": [
+                {
+                  "name": "示例 1",
+                  "value": "{\n    \"source\": \"网站表单\",\n    \"customer_name\": \"南哥\",\n    \"customer_email\": \"test@example.com\",\n    \"issue_title\": \"支付问题\",\n    \"issue_description\": \"我支付成功了但是订单没有更新，这让我很着急！\"\n}",
+                  "mediaType": "application/json"
+                }
+              ],
+              "oasExtensions": ""
+            },
+            "description": "",
+            "tags": [],
+            "status": "developing",
+            "serverId": "",
+            "operationId": "",
+            "sourceUrl": "",
+            "ordering": 10,
+            "cases": [
+              {
+                "id": 319369021,
+                "type": "DEBUG_CASE",
+                "path": null,
+                "name": "测试自动回复",
+                "responseId": 189757428,
+                "parameters": {
+                  "query": [],
+                  "path": [],
+                  "cookie": [],
+                  "header": [
+                    {
+                      "id": "WaUPqU0hJB",
+                      "relatedId": "k00vpieHj2",
+                      "relatedName": "Content-Type",
+                      "value": "application/json",
+                      "enable": true,
+                      "isDelete": false
+                    },
+                    {
+                      "id": "I79wzK3bXC",
+                      "relatedId": "TPnpctMBaU",
+                      "relatedName": "Authorization",
+                      "value": "1234567890",
+                      "enable": true,
+                      "isDelete": false
+                    }
+                  ]
+                },
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "header": [],
+                  "cookie": []
+                },
+                "requestBody": {
+                  "parameters": [],
+                  "data": "{\n    \"source\": \"网站表单\",\n    \"customer_name\": \"南哥\",\n    \"customer_email\": \"test@example.com\",\n    \"issue_title\": \"普通问题\",\n    \"issue_description\": \"如何进行支付。\"\n}",
+                  "generateMode": "example"
+                },
+                "auth": {},
+                "securityScheme": {},
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "requestResult": "{\"id\":\"temp.156dfc1f-c810-49c6-a6d9-dbc0f7df1fdb\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"156dfc1f-c810-49c6-a6d9-dbc0f7df1fdb\",\"requestIndex\":0,\"httpRequestId\":\"33bd1915-9453-4805-ae62-35231fcce1d9\"},\"type\":\"http\",\"response\":{\"id\":\"750fa65a-3cb1-48fa-a7ae-b4087d582e48\",\"status\":\"OK\",\"code\":200,\"header\":[{\"key\":\"Content-Security-Policy\",\"value\":\"sandbox allow-downloads allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-presentation allow-scripts allow-top-navigation allow-top-navigation-by-user-activation allow-top-navigation-to-custom-protocols\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"34\"},{\"key\":\"ETag\",\"value\":\"W/\\\"22-6OS7cK0FzqnV2NeDHdOSGS1bVUs\\\"\"},{\"key\":\"Vary\",\"value\":\"Accept-Encoding\"},{\"key\":\"Date\",\"value\":\"Mon, 17 Nov 2025 07:44:59 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,109,101,115,115,97,103,101,34,58,34,87,111,114,107,102,108,111,119,32,119,97,115,32,115,116,97,114,116,101,100,34,125]},\"cookie\":[],\"responseTime\":23,\"responseSize\":34,\"type\":\"http\",\"tempFilePath\":\"\",\"timingPhases\":{\"prepare\":0.37325000762939453,\"wait\":0.49262499809265137,\"dns\":0.16750001907348633,\"tcp\":0.1511249542236328,\"firstByte\":20.889084100723267,\"download\":0.4255409240722656,\"process\":0.023999929428100586,\"total\":22.523124933242798}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"5678\",\"path\":[\"webhook-test\",\"107f44d8-9d03-4ea0-935f-c55e5a917b62\"],\"host\":[\"localhost\"],\"query\":[],\"variable\":[]},\"header\":[{\"disabled\":false,\"key\":\"Authorization\",\"value\":\"1234567890\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"localhost:5678\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true},{\"key\":\"Content-Length\",\"value\":190,\"system\":true}],\"method\":\"POST\",\"baseUrl\":\"http://localhost:5678/\",\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n    \\\"source\\\": \\\"网站表单\\\",\\n    \\\"customer_name\\\": \\\"南哥\\\",\\n    \\\"customer_email\\\": \\\"test@example.com\\\",\\n    \\\"issue_title\\\": \\\"普通问题\\\",\\n    \\\"issue_description\\\": \\\"如何进行支付。\\\"\\n}\",\"generateMode\":\"example\",\"type\":\"application/json\"},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":false,\"sessions\":{},\"data\":[{\"request\":{\"method\":\"POST\",\"href\":\"http://localhost:5678/webhook-test/107f44d8-9d03-4ea0-935f-c55e5a917b62\",\"headers\":[{\"key\":\"Authorization\",\"value\":\"1234567890\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"localhost:5678\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Content-Length\",\"value\":\"190\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":200,\"headers\":[{\"key\":\"Content-Security-Policy\",\"value\":\"sandbox allow-downloads allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-presentation allow-scripts allow-top-navigation allow-top-navigation-by-user-activation allow-top-navigation-to-custom-protocols\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"34\"},{\"key\":\"ETag\",\"value\":\"W/\\\"22-6OS7cK0FzqnV2NeDHdOSGS1bVUs\\\"\"},{\"key\":\"Vary\",\"value\":\"Accept-Encoding\"},{\"key\":\"Date\",\"value\":\"Mon, 17 Nov 2025 07:44:59 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"httpVersion\":\"1.1\"},\"timings\":{\"start\":1763365499377,\"requestStart\":1763365499377,\"offset\":{\"request\":0.37325000762939453,\"socket\":0.8658750057220459,\"lookup\":1.0333750247955322,\"connect\":1.184499979019165,\"response\":22.07358407974243,\"end\":22.499125003814697,\"done\":22.523124933242798}}}]}},\"responseValidation\":{\"schema\":{\"valid\":true,\"message\":\"\",\"errors\":null},\"responseCode\":{\"valid\":true}},\"passed\":true,\"timings\":{\"started\":1763365499373,\"preProcessorsStarted\":1763365499374,\"preProcessorsCompleted\":1763365499374,\"postProcessorsStarted\":1763365499401,\"postProcessorsCompleted\":1763365499401,\"completed\":1763365499402},\"metaInfo\":{\"httpApiId\":376739442,\"httpApiCaseId\":318820887,\"httpApiName\":\"工单问题反馈\",\"httpApiPath\":\"webhook-test/107f44d8-9d03-4ea0-935f-c55e5a917b62\",\"httpApiMethod\":\"post\",\"httpApiCaseName\":\"\",\"moduleId\":6555532}}",
+                "visibility": "INHERITED",
+                "moduleId": 6555532,
+                "categoryId": 0,
+                "tagIds": [],
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              },
+              {
+                "id": 319369363,
+                "type": "DEBUG_CASE",
+                "path": null,
+                "name": "测试紧急处理",
+                "responseId": 189757428,
+                "parameters": {
+                  "query": [],
+                  "path": [],
+                  "cookie": [],
+                  "header": [
+                    {
+                      "id": "WaUPqU0hJB",
+                      "relatedId": "k00vpieHj2",
+                      "relatedName": "Content-Type",
+                      "value": "application/json",
+                      "enable": true,
+                      "isDelete": false
+                    },
+                    {
+                      "id": "I79wzK3bXC",
+                      "relatedId": "TPnpctMBaU",
+                      "relatedName": "Authorization",
+                      "value": "1234567890",
+                      "enable": true,
+                      "isDelete": false
+                    }
+                  ]
+                },
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "header": [],
+                  "cookie": []
+                },
+                "requestBody": {
+                  "parameters": [],
+                  "data": "{\n    \"source\": \"网站表单\",\n    \"customer_name\": \"南哥\",\n    \"customer_email\": \"test@example.com\",\n    \"issue_title\": \"支付问题\",\n    \"issue_description\": \"我支付成功了但是订单没有更新，这让我很着急！\"\n}",
+                  "generateMode": "example"
+                },
+                "auth": {},
+                "securityScheme": {},
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "requestResult": "{\"id\":\"temp.156dfc1f-c810-49c6-a6d9-dbc0f7df1fdb\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"156dfc1f-c810-49c6-a6d9-dbc0f7df1fdb\",\"requestIndex\":0,\"httpRequestId\":\"33bd1915-9453-4805-ae62-35231fcce1d9\"},\"type\":\"http\",\"response\":{\"id\":\"750fa65a-3cb1-48fa-a7ae-b4087d582e48\",\"status\":\"OK\",\"code\":200,\"header\":[{\"key\":\"Content-Security-Policy\",\"value\":\"sandbox allow-downloads allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-presentation allow-scripts allow-top-navigation allow-top-navigation-by-user-activation allow-top-navigation-to-custom-protocols\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"34\"},{\"key\":\"ETag\",\"value\":\"W/\\\"22-6OS7cK0FzqnV2NeDHdOSGS1bVUs\\\"\"},{\"key\":\"Vary\",\"value\":\"Accept-Encoding\"},{\"key\":\"Date\",\"value\":\"Mon, 17 Nov 2025 07:44:59 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,109,101,115,115,97,103,101,34,58,34,87,111,114,107,102,108,111,119,32,119,97,115,32,115,116,97,114,116,101,100,34,125]},\"cookie\":[],\"responseTime\":23,\"responseSize\":34,\"type\":\"http\",\"tempFilePath\":\"\",\"timingPhases\":{\"prepare\":0.37325000762939453,\"wait\":0.49262499809265137,\"dns\":0.16750001907348633,\"tcp\":0.1511249542236328,\"firstByte\":20.889084100723267,\"download\":0.4255409240722656,\"process\":0.023999929428100586,\"total\":22.523124933242798}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"5678\",\"path\":[\"webhook-test\",\"107f44d8-9d03-4ea0-935f-c55e5a917b62\"],\"host\":[\"localhost\"],\"query\":[],\"variable\":[]},\"header\":[{\"disabled\":false,\"key\":\"Authorization\",\"value\":\"1234567890\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"localhost:5678\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true},{\"key\":\"Content-Length\",\"value\":190,\"system\":true}],\"method\":\"POST\",\"baseUrl\":\"http://localhost:5678/\",\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n    \\\"source\\\": \\\"网站表单\\\",\\n    \\\"customer_name\\\": \\\"南哥\\\",\\n    \\\"customer_email\\\": \\\"test@example.com\\\",\\n    \\\"issue_title\\\": \\\"普通问题\\\",\\n    \\\"issue_description\\\": \\\"如何进行支付。\\\"\\n}\",\"generateMode\":\"example\",\"type\":\"application/json\"},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":false,\"sessions\":{},\"data\":[{\"request\":{\"method\":\"POST\",\"href\":\"http://localhost:5678/webhook-test/107f44d8-9d03-4ea0-935f-c55e5a917b62\",\"headers\":[{\"key\":\"Authorization\",\"value\":\"1234567890\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"localhost:5678\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Content-Length\",\"value\":\"190\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":200,\"headers\":[{\"key\":\"Content-Security-Policy\",\"value\":\"sandbox allow-downloads allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-presentation allow-scripts allow-top-navigation allow-top-navigation-by-user-activation allow-top-navigation-to-custom-protocols\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"34\"},{\"key\":\"ETag\",\"value\":\"W/\\\"22-6OS7cK0FzqnV2NeDHdOSGS1bVUs\\\"\"},{\"key\":\"Vary\",\"value\":\"Accept-Encoding\"},{\"key\":\"Date\",\"value\":\"Mon, 17 Nov 2025 07:44:59 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"httpVersion\":\"1.1\"},\"timings\":{\"start\":1763365499377,\"requestStart\":1763365499377,\"offset\":{\"request\":0.37325000762939453,\"socket\":0.8658750057220459,\"lookup\":1.0333750247955322,\"connect\":1.184499979019165,\"response\":22.07358407974243,\"end\":22.499125003814697,\"done\":22.523124933242798}}}]}},\"responseValidation\":{\"schema\":{\"valid\":true,\"message\":\"\",\"errors\":null},\"responseCode\":{\"valid\":true}},\"passed\":true,\"timings\":{\"started\":1763365499373,\"preProcessorsStarted\":1763365499374,\"preProcessorsCompleted\":1763365499374,\"postProcessorsStarted\":1763365499401,\"postProcessorsCompleted\":1763365499401,\"completed\":1763365499402},\"metaInfo\":{\"httpApiId\":376739442,\"httpApiCaseId\":318820887,\"httpApiName\":\"工单问题反馈\",\"httpApiPath\":\"webhook-test/107f44d8-9d03-4ea0-935f-c55e5a917b62\",\"httpApiMethod\":\"post\",\"httpApiCaseName\":\"\",\"moduleId\":6555532}}",
+                "visibility": "INHERITED",
+                "moduleId": 6555532,
+                "categoryId": 0,
+                "tagIds": [],
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              },
+              {
+                "id": 319369438,
+                "type": "DEBUG_CASE",
+                "path": null,
+                "name": "测试常规处理",
+                "responseId": 189757428,
+                "parameters": {
+                  "query": [],
+                  "path": [],
+                  "cookie": [],
+                  "header": [
+                    {
+                      "id": "WaUPqU0hJB",
+                      "relatedId": "k00vpieHj2",
+                      "relatedName": "Content-Type",
+                      "value": "application/json",
+                      "enable": true,
+                      "isDelete": false
+                    },
+                    {
+                      "id": "I79wzK3bXC",
+                      "relatedId": "TPnpctMBaU",
+                      "relatedName": "Authorization",
+                      "value": "1234567890",
+                      "enable": true,
+                      "isDelete": false
+                    }
+                  ]
+                },
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "header": [],
+                  "cookie": []
+                },
+                "requestBody": {
+                  "parameters": [],
+                  "data": "{\n    \"source\": \"网站表单\",\n    \"customer_name\": \"南哥\",\n    \"customer_email\": \"test@example.com\",\n    \"issue_title\": \"技术问题\",\n    \"issue_description\": \"发现状态更新不及时，不过这不是很重要。\"\n}",
+                  "generateMode": "example"
+                },
+                "auth": {},
+                "securityScheme": {},
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "requestResult": "{\"id\":\"temp.156dfc1f-c810-49c6-a6d9-dbc0f7df1fdb\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"156dfc1f-c810-49c6-a6d9-dbc0f7df1fdb\",\"requestIndex\":0,\"httpRequestId\":\"33bd1915-9453-4805-ae62-35231fcce1d9\"},\"type\":\"http\",\"response\":{\"id\":\"750fa65a-3cb1-48fa-a7ae-b4087d582e48\",\"status\":\"OK\",\"code\":200,\"header\":[{\"key\":\"Content-Security-Policy\",\"value\":\"sandbox allow-downloads allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-presentation allow-scripts allow-top-navigation allow-top-navigation-by-user-activation allow-top-navigation-to-custom-protocols\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"34\"},{\"key\":\"ETag\",\"value\":\"W/\\\"22-6OS7cK0FzqnV2NeDHdOSGS1bVUs\\\"\"},{\"key\":\"Vary\",\"value\":\"Accept-Encoding\"},{\"key\":\"Date\",\"value\":\"Mon, 17 Nov 2025 07:44:59 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,109,101,115,115,97,103,101,34,58,34,87,111,114,107,102,108,111,119,32,119,97,115,32,115,116,97,114,116,101,100,34,125]},\"cookie\":[],\"responseTime\":23,\"responseSize\":34,\"type\":\"http\",\"tempFilePath\":\"\",\"timingPhases\":{\"prepare\":0.37325000762939453,\"wait\":0.49262499809265137,\"dns\":0.16750001907348633,\"tcp\":0.1511249542236328,\"firstByte\":20.889084100723267,\"download\":0.4255409240722656,\"process\":0.023999929428100586,\"total\":22.523124933242798}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"5678\",\"path\":[\"webhook-test\",\"107f44d8-9d03-4ea0-935f-c55e5a917b62\"],\"host\":[\"localhost\"],\"query\":[],\"variable\":[]},\"header\":[{\"disabled\":false,\"key\":\"Authorization\",\"value\":\"1234567890\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"localhost:5678\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true},{\"key\":\"Content-Length\",\"value\":190,\"system\":true}],\"method\":\"POST\",\"baseUrl\":\"http://localhost:5678/\",\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n    \\\"source\\\": \\\"网站表单\\\",\\n    \\\"customer_name\\\": \\\"南哥\\\",\\n    \\\"customer_email\\\": \\\"test@example.com\\\",\\n    \\\"issue_title\\\": \\\"普通问题\\\",\\n    \\\"issue_description\\\": \\\"如何进行支付。\\\"\\n}\",\"generateMode\":\"example\",\"type\":\"application/json\"},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":false,\"sessions\":{},\"data\":[{\"request\":{\"method\":\"POST\",\"href\":\"http://localhost:5678/webhook-test/107f44d8-9d03-4ea0-935f-c55e5a917b62\",\"headers\":[{\"key\":\"Authorization\",\"value\":\"1234567890\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"localhost:5678\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Content-Length\",\"value\":\"190\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":200,\"headers\":[{\"key\":\"Content-Security-Policy\",\"value\":\"sandbox allow-downloads allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-presentation allow-scripts allow-top-navigation allow-top-navigation-by-user-activation allow-top-navigation-to-custom-protocols\"},{\"key\":\"Content-Type\",\"value\":\"application/json; charset=utf-8\"},{\"key\":\"Content-Length\",\"value\":\"34\"},{\"key\":\"ETag\",\"value\":\"W/\\\"22-6OS7cK0FzqnV2NeDHdOSGS1bVUs\\\"\"},{\"key\":\"Vary\",\"value\":\"Accept-Encoding\"},{\"key\":\"Date\",\"value\":\"Mon, 17 Nov 2025 07:44:59 GMT\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Keep-Alive\",\"value\":\"timeout=5\"}],\"httpVersion\":\"1.1\"},\"timings\":{\"start\":1763365499377,\"requestStart\":1763365499377,\"offset\":{\"request\":0.37325000762939453,\"socket\":0.8658750057220459,\"lookup\":1.0333750247955322,\"connect\":1.184499979019165,\"response\":22.07358407974243,\"end\":22.499125003814697,\"done\":22.523124933242798}}}]}},\"responseValidation\":{\"schema\":{\"valid\":true,\"message\":\"\",\"errors\":null},\"responseCode\":{\"valid\":true}},\"passed\":true,\"timings\":{\"started\":1763365499373,\"preProcessorsStarted\":1763365499374,\"preProcessorsCompleted\":1763365499374,\"postProcessorsStarted\":1763365499401,\"postProcessorsCompleted\":1763365499401,\"completed\":1763365499402},\"metaInfo\":{\"httpApiId\":376739442,\"httpApiCaseId\":318820887,\"httpApiName\":\"工单问题反馈\",\"httpApiPath\":\"webhook-test/107f44d8-9d03-4ea0-935f-c55e5a917b62\",\"httpApiMethod\":\"post\",\"httpApiCaseName\":\"\",\"moduleId\":6555532}}",
+                "visibility": "INHERITED",
+                "moduleId": 6555532,
+                "categoryId": 0,
+                "tagIds": [],
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            ],
+            "mocks": [],
+            "customApiFields": "{}",
+            "advancedSettings": {
+              "disabledSystemHeaders": {}
+            },
+            "mockScript": {},
+            "codeSamples": [],
+            "commonResponseStatus": {},
+            "responseChildren": [],
+            "visibility": "INHERITED",
+            "moduleId": 6555532,
+            "oasExtensions": "",
+            "type": "http",
+            "preProcessors": [],
+            "postProcessors": [],
+            "inheritPostProcessors": {},
+            "inheritPreProcessors": {}
+          }
+        }
+      ]
+    }
+  ],
+  "socketCollection": [],
+  "docCollection": [],
+  "webSocketCollection": [],
+  "socketIOCollection": [],
+  "responseCollection": [
+    {
+      "_databaseId": 7866825,
+      "updatedAt": "2025-11-14T06:55:40.000Z",
+      "name": "根目录",
+      "type": "root",
+      "children": [],
+      "moduleId": 6555532,
+      "parentId": 0,
+      "id": 7866825,
+      "ordering": [],
+      "items": []
+    }
+  ],
+  "schemaCollection": [
+    {
+      "id": 17243734,
+      "name": "根目录",
+      "visibility": "SHARED",
+      "moduleId": 6555532,
+      "items": [],
+      "ordering": []
+    }
+  ],
+  "securitySchemeCollection": [
+    {
+      "id": 2513731,
+      "moduleId": 6555532,
+      "name": "根目录",
+      "items": [],
+      "ordering": []
+    }
+  ],
+  "requestCollection": [
+    {
+      "name": "根目录",
+      "children": [],
+      "ordering": [
+        "requestFolder.7921171"
+      ],
+      "items": []
+    }
+  ],
+  "apiTestCaseCollection": [
+    {
+      "name": "Root",
+      "children": [],
+      "items": []
+    }
+  ],
+  "testCaseReferences": [],
+  "environments": [
+    {
+      "name": "n8n",
+      "websocketBaseUrls": {},
+      "requestProxyAgentSettings": {},
+      "variables": [],
+      "parameters": {
+        "cookie": [],
+        "query": [],
+        "header": [],
+        "body": []
+      },
+      "type": "normal",
+      "visibility": "protected",
+      "ordering": 30,
+      "tags": [
+        {
+          "name": "",
+          "color": "#FA541C"
+        }
+      ],
+      "id": "39835540",
+      "baseUrl": "http://localhost:5678/",
+      "baseUrls": {
+        "default": "http://localhost:5678/"
+      }
+    }
+  ],
+  "commonScripts": [],
+  "databaseConnections": [],
+  "globalVariables": [],
+  "commonParameters": null,
+  "projectSetting": {
+    "id": "7448268",
+    "auth": {},
+    "securityScheme": {},
+    "gateway": [],
+    "language": "zh-CN",
+    "apiStatuses": [
+      "developing",
+      "testing",
+      "released",
+      "deprecated"
+    ],
+    "mockSettings": {},
+    "preProcessors": [],
+    "postProcessors": [],
+    "advancedSettings": {
+      "enableJsonc": false,
+      "enableBigint": false,
+      "responseValidate": true,
+      "enableTestScenarioSetting": false,
+      "enableYAPICompatScript": false,
+      "isDefaultUrlEncoding": 2,
+      "publishedDocUrlRules": {
+        "defaultRule": "RESOURCE_KEY_ONLY",
+        "resourceKeyStandard": "NEW"
+      }
+    },
+    "initialDisabledMockIds": [],
+    "servers": [
+      {
+        "id": "default",
+        "name": "默认服务"
+      }
+    ],
+    "cloudMock": {
+      "security": "free",
+      "enable": false,
+      "tokenKey": "apifoxToken"
+    }
+  },
+  "customFunctions": [],
+  "projectTestCaseCategories": [
+    {
+      "id": 4211345,
+      "name": "正向",
+      "description": "有效的输入和正确的预期结果，代表典型的用法。"
+    },
+    {
+      "id": 4211346,
+      "name": "负向",
+      "description": "消极的、无效的输入，如缺少字段、错误的类型、不支持的方法等。"
+    },
+    {
+      "id": 4211347,
+      "name": "边界值",
+      "description": "极端或边缘条件，如最大字符串长度、空值、零、null等"
+    },
+    {
+      "id": 4211348,
+      "name": "安全性",
+      "description": "可能暴露API安全性风险的测试用例。"
+    },
+    {
+      "id": 4211349,
+      "name": "其他",
+      "description": "其他未归属的测试用例。"
+    }
+  ],
+  "projectTestCaseTags": [
+    {
+      "id": 9328320,
+      "name": "仅传必要字段",
+      "description": "仅发送具有有效值的必填字段，省略所有可选字段，以测试最小有效请求。"
+    },
+    {
+      "id": 9328321,
+      "name": "语义合法",
+      "description": "使用语法正确且在业务逻辑或域上下文中也有意义的值。"
+    },
+    {
+      "id": 9328322,
+      "name": "覆盖枚举组合",
+      "description": "对所有枚举型参数，应用正交设计系统地构建参数及其枚举值的测试用例组合，专用于测试枚举覆盖率"
+    },
+    {
+      "id": 9328323,
+      "name": "其他正向",
+      "description": "提供符合API规范的真实有效的输入，产生正确和预期的结果。"
+    },
+    {
+      "id": 9328324,
+      "name": "缺失必填字段",
+      "description": "在请求主体或参数中省略一个或多个必需字段。"
+    },
+    {
+      "id": 9328325,
+      "name": "无效值",
+      "description": "提供的值类型和格式正确，但在逻辑上对该字段无效。"
+    },
+    {
+      "id": 9328326,
+      "name": "类型错误",
+      "description": "使用数据类型不正确的值，例如发送字符串而不是整数。"
+    },
+    {
+      "id": 9328327,
+      "name": "格式错误",
+      "description": "以不正确的格式提供值，例如，错误的日期模式，格式错误的电子邮件地址。"
+    },
+    {
+      "id": 9328328,
+      "name": "语义非法",
+      "description": "使用语法正确且格式正确的值，这些值在逻辑上不可能或违反域规则。"
+    },
+    {
+      "id": 9328329,
+      "name": "其他负向",
+      "description": "提供无效或意外的输入，应触发错误处理或拒绝API。"
+    },
+    {
+      "id": 9328330,
+      "name": "Null",
+      "description": "必须是 JSON 字面量 `null`（不是空的，也不是 \"null\"）。"
+    },
+    {
+      "id": 9328331,
+      "name": "零值",
+      "description": "必须是数字字面值0。"
+    },
+    {
+      "id": 9328332,
+      "name": "空值",
+      "description": "必须是\"\"。"
+    },
+    {
+      "id": 9328333,
+      "name": "极大值",
+      "description": "Max/min值 - 为数字或日期字段提供精确的最小值和最大值。"
+    },
+    {
+      "id": 9328334,
+      "name": "极小值",
+      "description": "Max/min值 - 为数字或日期字段提供精确的最小值和最大值。"
+    },
+    {
+      "id": 9328335,
+      "name": "超出最大边界值",
+      "description": "过长/过短字符串 - 提供超出允许的最小或最大边界的值。"
+    },
+    {
+      "id": 9328336,
+      "name": "超出最小边界值",
+      "description": "过长/过短字符串 - 提供超出允许的最小或最大边界的值。"
+    },
+    {
+      "id": 9328337,
+      "name": "字符串过长",
+      "description": "超出范围的值 - 提供大于允许的最大长度或小于要求的最小长度的字符串。"
+    },
+    {
+      "id": 9328338,
+      "name": "字符串过短",
+      "description": "超出范围的值 - 提供大于允许的最大长度或小于要求的最小长度的字符串。"
+    },
+    {
+      "id": 9328339,
+      "name": "对象级别授权缺失",
+      "description": "对象级别授权缺失 - 用户在没有适当授权的情况下访问或操作数据对象。"
+    },
+    {
+      "id": 9328340,
+      "name": "访问控制",
+      "description": "基于角色、权限或属性来限制用户能访问哪些资源、能执行哪些操作"
+    },
+    {
+      "id": 9328341,
+      "name": "认证失败",
+      "description": "认证失败 - 认证薄弱、配置错误或被绕过，导致未授权访问。"
+    },
+    {
+      "id": 9328342,
+      "name": "SQL注入",
+      "description": "在输入字段中插入恶意SQL代码，测试是否存在SQL注入漏洞。"
+    },
+    {
+      "id": 9328343,
+      "name": "XSS注入",
+      "description": "注入JavaScript或HTML标签来测试跨站点脚本漏洞。"
+    },
+    {
+      "id": 9328344,
+      "name": "模糊输入",
+      "description": "发送大型或随机生成的有效载荷，以测试输入的有效性和稳定性。"
+    },
+    {
+      "id": 9328345,
+      "name": "命令行注入",
+      "description": "将shell命令插入输入以测试命令执行漏洞。"
+    },
+    {
+      "id": 9328346,
+      "name": "JSON注入",
+      "description": "插入恶意或意外的JSON结构来测试解析和验证。"
+    },
+    {
+      "id": 9328347,
+      "name": "NoSQL注入",
+      "description": "提供NoSQL特定的恶意查询或操作符来测试注入漏洞。"
+    },
+    {
+      "id": 9328348,
+      "name": "其他",
+      "description": "其他未归属的测试用例。"
+    }
+  ],
+  "projectAssociations": [],
+  "moduleSettings": [
+    {
+      "id": "6555532",
+      "name": "默认模块",
+      "description": "",
+      "moduleVariables": [],
+      "openApiInfo": {}
+    }
+  ]
+}

@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>N8N 工作流库 | 2000+ 精选自动化模板</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--primary:#2563EB;--primary-dark:#1D4ED8;--accent:#00D4AA;--success:#10B981;--warning:#F59E0B;--error:#EF4444;--bg:#FFF;--bg-secondary:#F8FAFC;--bg-tertiary:#F1F5F9;--bg-card:#FFF;--text:#1E293B;--text-secondary:#64748B;--text-muted:#94A3B8;--border:#E2E8F0;--border-light:#F1F5F9;--shadow-sm:0 1px 2px 0 rgb(0 0 0/0.05);--shadow-md:0 4px 6px -1px rgb(0 0 0/0.1);--shadow-lg:0 10px 15px -3px rgb(0 0 0/0.1);--radius:0.5rem;--radius-md:0.75rem;--radius-lg:1rem;--transition:200ms ease}
+[data-theme="dark"]{--bg:#0F172A;--bg-secondary:#1E293B;--bg-tertiary:#334155;--bg-card:#1E293B;--text:#F8FAFC;--text-secondary:#CBD5E1;--text-muted:#64748B;--border:#475569;--border-light:#334155}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.container{max-width:1280px;margin:0 auto;padding:0 1.5rem}
+.header{background:linear-gradient(135deg,var(--bg-secondary),var(--bg));border-bottom:1px solid var(--border);padding:3rem 0;text-align:center}
+.logo-badge{display:inline-flex;align-items:center;gap:0.5rem;background:var(--primary);color:white;padding:0.5rem 1rem;border-radius:var(--radius-lg);font-size:0.875rem;font-weight:600;margin-bottom:1.5rem}
+.title{font-family:'Space Grotesk',sans-serif;font-size:3rem;font-weight:700;margin-bottom:0.75rem;background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparentbackground-clip:text;}
+.subtitle{font-size:1.25rem;color:var(--text-secondary);margin-bottom:2.5rem}
+.stats{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.stat{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:1.25rem 2rem;text-align:center;min-width:140px}
+.stat-number{display:block;font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:var(--primary)}
+.stat-label{font-size:0.8125rem;color:var(--text-muted);text-transform:uppercase}
+.controls{background:var(--bg);border-bottom:1px solid var(--border);padding:1.5rem 0;position:sticky;top:0;z-index:100}
+.search-section{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+.search-wrapper{flex:1;position:relative}
+.search-icon{position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:var(--text-muted)}
+.search-input{width:100%;padding:0.875rem 1rem 0.875rem 3rem;border:2px solid var(--border);border-radius:var(--radius-lg);background:var(--bg);color:var(--text);font-size:1rem}
+.search-input:focus{outline:none;border-color:var(--primary)}
+.filter-section{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.filter-group{display:flex;align-items:center;gap:0.5rem}
+.filter-group label{font-size:0.875rem;font-weight:500;color:var(--text-secondary)}
+.filter-group select{padding:0.5rem 2rem 0.5rem 0.75rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:0.875rem}
+.checkbox-label{display:flex;align-items:center;gap:0.5rem;font-size:0.875rem;color:var(--text-secondary);cursor:pointer}
+.theme-toggle{background:var(--bg-tertiary);border:1px solid var(--border);border-radius:var(--radius-lg);padding:0.5rem 1rem;cursor:pointer;font-size:0.875rem;margin-left:auto;color:var(--text);min-width:90px}
+.results-info{margin-top:1rem;font-size:0.875rem;color:var(--text-secondary)}
+.main{padding:2rem 0 4rem;min-height:60vh}
+.state{text-align:center;padding:4rem 2rem}
+.state .icon{font-size:4rem;margin-bottom:1.5rem;display:block}
+.state h3{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;margin-bottom:0.75rem}
+.state p{color:var(--text-secondary);margin-bottom:2rem}
+.retry-btn{background:var(--primary);color:white;border:none;padding:0.75rem 1.5rem;border-radius:var(--radius);cursor:pointer;font-size:1rem}
+.workflow-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:1.5rem}
+.workflow-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;cursor:pointer;transition:all var(--transition)}
+.workflow-card:hover{border-color:var(--primary);box-shadow:var(--shadow-lg);transform:translateY(-4px)}
+.workflow-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1rem;gap:1rem}
+.workflow-meta{display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap}
+.status-dot{width:8px;height:8px;border-radius:50%}
+.status-active{background:var(--success)}
+.status-inactive{background:var(--text-muted)}
+.complexity-badge{font-size:0.75rem;font-weight:600;padding:0.25rem 0.5rem;border-radius:0.25rem}
+.complexity-low{background:rgba(16,185,129,0.1);color:var(--success)}
+.complexity-medium{background:rgba(245,158,11,0.1);color:var(--warning)}
+.complexity-high{background:rgba(239,68,68,0.1);color:var(--error)}
+.node-count{font-size:0.75rem;color:var(--text-muted);background:var(--bg-tertiary);padding:0.25rem 0.5rem;border-radius:0.25rem}
+.category-badge{font-size:0.75rem;color:var(--primary);background:rgba(37,99,235,0.1);padding:0.25rem 0.5rem;border-radius:0.25rem}
+.trigger-badge{font-size:0.75rem;color:var(--accent);background:rgba(0,212,170,0.1);padding:0.25rem 0.5rem;border-radius:0.25rem}
+.workflow-title{font-family:'Space Grotesk',sans-serif;font-size:1.125rem;font-weight:600;margin-bottom:0.5rem}
+.workflow-description{font-size:0.875rem;color:var(--text-secondary);margin-bottom:1rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:verticalline-clamp:3;;overflow:hidden}
+.workflow-integrations{border-top:1px solid var(--border-light);padding-top:1rem}
+.integrations-title{font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:0.5rem}
+.integrations-list{display:flex;flex-wrap:wrap;gap:0.375rem}
+.integration-tag{font-size:0.6875rem;background:var(--bg-tertiary);color:var(--text-secondary);padding:0.25rem 0.5rem;border-radius:0.25rem}
+.load-more{text-align:center;padding:2rem 0}
+.load-more-btn{background:var(--bg-card);border:2px solid var(--primary);color:var(--primary);padding:0.875rem 2rem;border-radius:var(--radius-lg);cursor:pointer;font-size:1rem;font-weight:600}
+.hidden{display:none!important}
+.modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem}
+.modal-content{background:var(--bg-card);border-radius:var(--radius-lg);max-width:800px;width:100%;max-height:90vh;overflow:hidden;display:flex;flex-direction:column}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:1.5rem;border-bottom:1px solid var(--border)}
+.modal-title{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:600}
+.modal-close{background:none;border:none;font-size:2rem;color:var(--text-muted);cursor:pointer}
+.modal-body{padding:1.5rem;overflow-y:auto}
+.workflow-detail{margin-bottom:1.5rem}
+.workflow-detail h4{font-size:0.875rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;margin-bottom:0.75rem}
+.workflow-actions{display:flex;gap:0.75rem;flex-wrap:wrap}
+.action-btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.75rem 1.25rem;border-radius:var(--radius);font-size:0.875rem;cursor:pointer;border:1px solid var(--border);background:var(--bg);color:var(--text);text-decoration:none}
+.action-btn.primary{background:var(--primary);color:white;border-color:var(--primary)}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem}
+.copy-btn{background:var(--bg-tertiary);border:1px solid var(--border);border-radius:0.25rem;padding:0.375rem 0.75rem;font-size:0.75rem;cursor:pointer;color:var(--text-secondary)}
+.json-viewer{background:var(--bg-tertiary);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;font-family:monospace;font-size:0.75rem;overflow-x:auto;max-height:400px;white-space:pre-wrap}
+#diagramViewer{background:var(--bg-tertiary);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;min-height:200px}
+</style>
+</head>
+<body>
+<div id="app">
+<header class="header"><div class="container">
+<div class="logo-badge"><span></span><span>N8N 工作流库</span></div>
+<h1 class="title">2000+ 精选自动化工作流</h1>
+<p class="subtitle">极速浏览、智能搜索，快速找到适合你的自动化模板</p>
+<div class="stats">
+<div class="stat"><span class="stat-number" id="totalCount">0</span><span class="stat-label">工作流总数</span></div>
+<div class="stat"><span class="stat-number" id="activeCount">0</span><span class="stat-label">已激活</span></div>
+<div class="stat"><span class="stat-number" id="nodeCount">0</span><span class="stat-label">节点总数</span></div>
+<div class="stat"><span class="stat-number" id="integrationCount">0</span><span class="stat-label">集成服务</span></div>
+</div>
+</div></header>
+<div class="controls"><div class="container">
+<div class="search-section"><div class="search-wrapper"><span class="search-icon"></span><input type="text" id="searchInput" class="search-input" placeholder="搜索工作流名称、描述或集成服务..."></div></div>
+<div class="filter-section">
+<div class="filter-group"><label>触发方式:</label><select id="triggerFilter"><option value="all">All Types</option><option value="Webhook">Webhook</option><option value="Scheduled">Scheduled</option><option value="Manual">Manual</option><option value="Complex">Complex</option></select></div>
+<div class="filter-group"><label>复杂度:</label><select id="complexityFilter"><option value="all">全部级别</option><option value="low">简单</option><option value="medium">中等</option><option value="high">复杂</option></select></div>
+<div class="filter-group"><label>分类:</label><select id="categoryFilter"><option value="all">全部分类</option></select></div>
+<label class="checkbox-label"><input type="checkbox" id="activeOnly">仅显示已激活</label>
+<button id="themeToggle" class="theme-toggle"> 深色</button>
+</div>
+<div class="results-info"><span id="resultsCount">加载中...</span></div>
+</div></div>
+<main class="main"><div class="container">
+<div id="loadingState" class="state"><span class="icon"></span><h3>正在加载工作流...</h3><p>请稍候</p></div>
+<div id="errorState" class="state hidden"><span class="icon"></span><h3>加载失败</h3><p id="errorMessage">出了点问题</p><button id="retryBtn" class="retry-btn">重新加载</button></div>
+<div id="noResultsState" class="state hidden"><span class="icon"></span><h3>未找到工作流</h3><p>试试调整搜索条件</p></div>
+<div id="workflowGrid" class="workflow-grid hidden"></div>
+<div id="loadMoreContainer" class="load-more hidden"><button id="loadMoreBtn" class="load-more-btn">加载更多</button></div>
+</div></main>
+</div>
+<div id="workflowModal" class="modal hidden"><div class="modal-content">
+<div class="modal-header"><h2 class="modal-title" id="modalTitle">工作流详情</h2><button class="modal-close" id="modalClose"></button></div>
+<div class="modal-body">
+<div class="workflow-detail"><h4>描述</h4><p id="modalDescription">加载中...</p></div>
+<div class="workflow-detail"><h4>统计信息</h4><div id="modalStats">加载中...</div></div>
+<div class="workflow-detail"><h4>集成服务</h4><div id="modalIntegrations">加载中...</div></div>
+<div class="workflow-detail"><h4>操作</h4><div class="workflow-actions"><a id="downloadBtn" class="action-btn primary" href="#" download> 下载 JSON</a><button id="viewJsonBtn" class="action-btn"> 查看 JSON</button><button id="viewDiagramBtn" class="action-btn"> 查看流程图</button></div></div>
+<div class="workflow-detail hidden" id="jsonSection"><div class="section-header"><h4>JSON</h4><button id="copyJsonBtn" class="copy-btn"> 复制</button></div><div class="json-viewer" id="jsonViewer"></div></div>
+<div class="workflow-detail hidden" id="diagramSection"><div class="section-header"><h4>流程图</h4><button id="copyDiagramBtn" class="copy-btn"> 复制</button></div><div id="diagramViewer"></div></div>
+</div>
+</div></div>
+<script src="/static/translate.js?v=4"></script>
+<script>
+class WorkflowApp{constructor(){this.state={workflows:[],currentPage:1,totalPages:1,totalCount:0,perPage:20,isLoading:false,searchQuery:'',filters:{trigger:'all',complexity:'all',category:'all',activeOnly:false},categories:[],categoryMap:new Map(),categoryCounts:new Map()};this.elements={};this.searchDebounceTimer=null;this.currentWorkflow=null;this.currentJsonData=null;this.currentDiagramData=null}
+init(){const ids=['searchInput','triggerFilter','complexityFilter','categoryFilter','activeOnly','themeToggle','resultsCount','workflowGrid','loadMoreContainer','loadMoreBtn','loadingState','errorState','noResultsState','errorMessage','retryBtn','totalCount','activeCount','nodeCount','integrationCount','workflowModal','modalTitle','modalClose','modalDescription','modalStats','modalIntegrations','downloadBtn','viewJsonBtn','viewDiagramBtn','jsonSection','jsonViewer','diagramSection','diagramViewer','copyJsonBtn','copyDiagramBtn'];ids.forEach(id=>this.elements[id]=document.getElementById(id));this.setupEventListeners();this.setupTheme();if(typeof mermaid!=='undefined')mermaid.initialize({startOnLoad:false,theme:'base'});this.loadInitialData()}
+setupEventListeners(){this.elements.searchInput.addEventListener('input',e=>{this.state.searchQuery=e.target.value;this.debounceSearch()});this.elements.triggerFilter.addEventListener('change',e=>{this.state.filters.trigger=e.target.value;this.state.currentPage=1;this.loadWorkflows(true)});this.elements.complexityFilter.addEventListener('change',e=>{this.state.filters.complexity=e.target.value;this.state.currentPage=1;this.loadWorkflows(true)});this.elements.categoryFilter.addEventListener('change',e=>{this.state.filters.category=e.target.value;this.state.currentPage=1;this.loadWorkflows(true)});this.elements.activeOnly.addEventListener('change',e=>{this.state.filters.activeOnly=e.target.checked;this.state.currentPage=1;this.loadWorkflows(true)});this.elements.loadMoreBtn.addEventListener('click',()=>this.loadMoreWorkflows());this.elements.retryBtn.addEventListener('click',()=>this.loadInitialData());this.elements.themeToggle.addEventListener('click',()=>this.toggleTheme());this.elements.modalClose.addEventListener('click',()=>this.closeModal());this.elements.workflowModal.addEventListener('click',e=>{if(e.target===this.elements.workflowModal)this.closeModal()});this.elements.viewJsonBtn.addEventListener('click',()=>this.toggleJsonView());this.elements.viewDiagramBtn.addEventListener('click',()=>this.toggleDiagramView());this.elements.copyJsonBtn.addEventListener('click',()=>this.copyToClipboard(this.currentJsonData));this.elements.copyDiagramBtn.addEventListener('click',()=>this.copyToClipboard(this.currentDiagramData));document.addEventListener('keydown',e=>{if(e.key==='Escape')this.closeModal()})}
+setupTheme(){const theme=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',theme);this.elements.themeToggle.textContent=theme==='dark'?' 浅色':' 深色'}
+toggleTheme(){const current=document.documentElement.getAttribute('data-theme');const next=current==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',next);localStorage.setItem('theme',next);this.elements.themeToggle.textContent=next==='dark'?' 浅色':' 深色'}
+debounceSearch(){clearTimeout(this.searchDebounceTimer);this.searchDebounceTimer=setTimeout(()=>{this.state.currentPage=1;this.loadWorkflows(true)},300)}
+async apiCall(endpoint){const res=await fetch('/api'+endpoint);if(!res.ok)throw new Error('HTTP '+res.status);return res.json()}
+async loadInitialData(){this.showState('loading');try{await this.loadCategories();this.populateCategoryFilter();const[stats]=await Promise.all([this.apiCall('/stats'),this.loadWorkflows(true)]);this.elements.totalCount.textContent=stats.total.toLocaleString();this.elements.activeCount.textContent=stats.active.toLocaleString();this.elements.nodeCount.textContent=stats.total_nodes.toLocaleString();this.elements.integrationCount.textContent=stats.unique_integrations.toLocaleString()}catch(e){this.showError('加载失败: '+e.message)}}
+async loadCategories(){try{const[catRes,mapRes]=await Promise.all([this.apiCall('/categories'),this.apiCall('/category-mappings')]);this.state.categories=catRes.categories||['Uncategorized'];const map=new Map();const counts=new Map();this.state.categories.forEach(c=>counts.set(c,0));Object.entries(mapRes.mappings||{}).forEach(([f,c])=>{const cat=c||'Uncategorized';map.set(f,cat);counts.set(cat,(counts.get(cat)||0)+1)});this.state.categoryMap=map;this.state.categoryCounts=counts}catch(e){this.state.categories=['Uncategorized'];this.state.categoryMap=new Map();this.state.categoryCounts=new Map()}}
+populateCategoryFilter(){const sel=this.elements.categoryFilter;while(sel.children.length>1)sel.removeChild(sel.lastChild);this.state.categories.forEach(c=>{const opt=document.createElement('option');opt.value=c;const translatedName=window.translateCategory?window.translateCategory(c):c;const count=this.state.categoryCounts.get(c)||0;opt.textContent=translatedName+' ('+count+')';sel.appendChild(opt)})}
+async loadWorkflows(reset){if(reset){this.state.currentPage=1;this.state.workflows=[]}this.state.isLoading=true;try{const params=new URLSearchParams({q:this.state.searchQuery,trigger:this.state.filters.trigger,complexity:this.state.filters.complexity,category:this.state.filters.category,active_only:this.state.filters.activeOnly,page:this.state.currentPage,per_page:this.state.perPage});const res=await this.apiCall('/workflows?'+params);let wfs=res.workflows;if(reset){this.state.workflows=wfs;this.state.totalCount=res.total;this.state.totalPages=res.pages}else{this.state.workflows.push(...wfs)}this.updateUI()}catch(e){this.showError('加载失败: '+e.message)}this.state.isLoading=false}
+getCategory(filename){const c=this.state.categoryMap.get(filename);return c&&c.trim()?c:'Uncategorized'}
+async loadMoreWorkflows(){if(this.state.currentPage<this.state.totalPages){this.state.currentPage++;await this.loadWorkflows(false)}}
+updateUI(){let resultText='共 '+this.state.totalCount.toLocaleString()+' 个工作流';if(this.state.filters.category!=='all'){const catName=window.translateCategory?window.translateCategory(this.state.filters.category):this.state.filters.category;resultText='分类「'+catName+'」共 '+this.state.totalCount.toLocaleString()+' 个工作流'}this.elements.resultsCount.textContent=resultText;this.renderWorkflows();this.elements.loadMoreContainer.classList.toggle('hidden',this.state.currentPage>=this.state.totalPages||this.state.workflows.length===0);this.showState(this.state.workflows.length===0?'no-results':'content')}
+renderWorkflows(){this.elements.workflowGrid.innerHTML=this.state.workflows.map(w=>this.createCard(w)).join('');this.elements.workflowGrid.querySelectorAll('.workflow-card').forEach((card,i)=>{card.addEventListener('click',()=>this.openDetail(this.state.workflows[i]))})}
+createCard(w){const cat=this.getCategory(w.filename);const name=window.translateName?window.translateName(w.name):w.name;const desc=window.translateDescription?window.translateDescription(w.description):w.description;const comp=window.translateComplexity?window.translateComplexity(w.complexity):w.complexity;const trig=window.translateTrigger?window.translateTrigger(w.trigger_type):w.trigger_type;const catTr=window.translateCategory?window.translateCategory(cat):cat;const ints=w.integrations.slice(0,5).map(i=>'<span class="integration-tag">'+this.esc(i)+'</span>').join('');const more=w.integrations.length>5?'<span class="integration-tag">+'+(w.integrations.length-5)+'</span>':'';return'<div class="workflow-card"><div class="workflow-header"><div class="workflow-meta"><div class="status-dot '+(w.active?'status-active':'status-inactive')+'"></div><span class="complexity-badge complexity-'+w.complexity+'">'+comp+'</span><span class="node-count">'+w.node_count+' 个节点</span><span class="category-badge">'+this.esc(catTr)+'</span></div><span class="trigger-badge">'+this.esc(trig)+'</span></div><h3 class="workflow-title">'+this.esc(name)+'</h3><p class="workflow-description">'+this.esc(desc)+'</p>'+(w.integrations.length>0?'<div class="workflow-integrations"><h4 class="integrations-title">集成服务 ('+w.integrations.length+')</h4><div class="integrations-list">'+ints+more+'</div></div>':'')+'</div>'}
+openDetail(w){this.currentWorkflow=w;const name=window.translateName?window.translateName(w.name):w.name;const desc=window.translateDescription?window.translateDescription(w.description):w.description;const cat=this.getCategory(w.filename);const trig=window.translateTrigger?window.translateTrigger(w.trigger_type):w.trigger_type;const comp=window.translateComplexity?window.translateComplexity(w.complexity):w.complexity;const catTr=window.translateCategory?window.translateCategory(cat):cat;this.elements.modalTitle.textContent=name;this.elements.modalDescription.textContent=desc;this.elements.modalStats.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;"><div><strong>状态:</strong> '+(w.active?'已激活':'未激活')+'</div><div><strong>触发方式:</strong> '+trig+'</div><div><strong>复杂度:</strong> '+comp+'</div><div><strong>节点数:</strong> '+w.node_count+'</div><div><strong>分类:</strong> '+this.esc(catTr)+'</div></div>';this.elements.modalIntegrations.innerHTML=w.integrations.length>0?w.integrations.map(i=>'<span class="integration-tag">'+this.esc(i)+'</span>').join(' '):'暂无';this.elements.downloadBtn.href='/api/workflows/'+w.filename+'/download';this.elements.downloadBtn.download=w.filename;this.elements.jsonSection.classList.add('hidden');this.elements.diagramSection.classList.add('hidden');this.elements.workflowModal.classList.remove('hidden')}
+closeModal(){this.elements.workflowModal.classList.add('hidden');this.currentWorkflow=null;this.currentJsonData=null;this.currentDiagramData=null}
+async toggleJsonView(){if(!this.currentWorkflow)return;if(!this.elements.jsonSection.classList.contains('hidden')){this.elements.jsonSection.classList.add('hidden');return}try{this.elements.jsonViewer.textContent='加载中...';this.elements.jsonSection.classList.remove('hidden');const data=await this.apiCall('/workflows/'+this.currentWorkflow.filename);this.currentJsonData=JSON.stringify(data.raw_json,null,2);this.elements.jsonViewer.textContent=this.currentJsonData}catch(e){this.elements.jsonViewer.textContent='加载失败'}}
+async toggleDiagramView(){if(!this.currentWorkflow)return;if(!this.elements.diagramSection.classList.contains('hidden')){this.elements.diagramSection.classList.add('hidden');return}try{this.elements.diagramViewer.textContent='加载中...';this.elements.diagramSection.classList.remove('hidden');const data=await this.apiCall('/workflows/'+this.currentWorkflow.filename+'/diagram');this.currentDiagramData=data.diagram;this.elements.diagramViewer.innerHTML='<pre class="mermaid">'+data.diagram+'</pre>';if(typeof mermaid!=='undefined')mermaid.init(undefined,this.elements.diagramViewer.querySelector('.mermaid'))}catch(e){this.elements.diagramViewer.textContent='加载失败'}}
+showState(s){this.elements.loadingState.classList.add('hidden');this.elements.errorState.classList.add('hidden');this.elements.noResultsState.classList.add('hidden');this.elements.workflowGrid.classList.add('hidden');if(s==='loading')this.elements.loadingState.classList.remove('hidden');else if(s==='error')this.elements.errorState.classList.remove('hidden');else if(s==='no-results')this.elements.noResultsState.classList.remove('hidden');else if(s==='content')this.elements.workflowGrid.classList.remove('hidden')}
+showError(msg){this.elements.errorMessage.textContent=msg;this.showState('error')}
+esc(t){const d=document.createElement('div');d.textContent=t;return d.innerHTML}
+async copyToClipboard(text){if(text)try{await navigator.clipboard.writeText(text)}catch(e){}}}
+document.addEventListener('DOMContentLoaded',()=>{const app=new WorkflowApp();app.init()});
+</script>
+</body>
+</html>
+
+
+
+
+
+

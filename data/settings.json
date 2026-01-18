@@ -1,0 +1,157 @@
+{
+  "siteName": "Aethrix | 以太夜",
+  "browserTitle": "Aethrix | 以太夜",
+  "slogan": "以太夜漫漫， 粒子生生不息",
+  "seoDescription": "Aethrix | 以太夜 - AIForge AI 工具导航平台，由独立开发者一人打造的自建生态。精选全球数百款优质 AI 工具，覆盖大语言模型、文生图、文生视频、在线工作流、本地部署、编程自动化、数据分析、声音克隆、3D 建模等 17 大分类，帮助开发者、设计师和 AI 爱好者快速发现并高效使用前沿生产力工具。\n以太夜漫漫，粒子生生不息。这里不仅提供精准的 AI 工具聚合与分类导航，还展示个人 Docker 自建服务栈，包括 Rocket.Chat 团队聊天、BookStack 知识库、Focalboard 任务看板等开源应用。通过 Cloudflare Tunnel 实现安全稳定的自托管体验，支持深色/浅色双模式与动态粒子背景。\n无论你是寻找最新 Claude、Gemini、Grok、DeepSeek，还是探索 n8n、Zapier、AnythingLLM 等自动化工具，以太夜都是你探索 AI 世界的私人星河起点。",
+  "notice": "111",
+  "portfolio": {
+    "title": "精选作品",
+    "subtitle": "展示最新的创意项目和技术实现",
+    "filters": [
+      "全部",
+      "AI 工具",
+      "网页设计",
+      "品牌设计"
+    ],
+    "items": [
+      {
+        "title": "AI 工具集成平台",
+        "description": "整合多种 AI 工具的统一平台，提供文本生成、图像处理、数据分析等功能",
+        "category": "ai-tools",
+        "tags": [
+          "AI",
+          "平台",
+          "集成"
+        ],
+        "link": "tools",
+        "image": "/uploads/portfolio/portfolio-1767433090349-b8a48e32.png"
+      },
+      {
+        "title": "荧光动漫节",
+        "description": "沉浸式动漫活动落地页，带有交互式滚动效果",
+        "category": "web-design",
+        "tags": [
+          "网页设计",
+          "动漫",
+          "交互动效"
+        ],
+        "link": "/lumina-anime-festival/dist/index.html",
+        "image": "/uploads/portfolio/portfolio-1767435710511-bccfa23a.png"
+      },
+      {
+        "title": "Aura Quiet Living",
+        "description": "宁静的电商体验网站，配备AI智能客服",
+        "category": "web-design",
+        "tags": [
+          "网页设计",
+          "电商",
+          "AI"
+        ],
+        "link": "/aura-quiet-living/dist/index.html",
+        "image": "/uploads/portfolio/portfolio-1767435720725-72cb48b6.png"
+      },
+      {
+        "title": "Research Visualization",
+        "description": "研究论文可视化展示，优雅的交互式叙事网站",
+        "category": "web-design",
+        "tags": [
+          "网页设计",
+          "数据可视化",
+          "学术"
+        ],
+        "link": "/research-visualization/dist/index.html",
+        "image": "/uploads/portfolio/portfolio-1767435737938-f0c96f1f.png"
+      },
+      {
+        "title": "响应式网站设计",
+        "description": "现代化的响应式网站设计，注重用户体验和性能优化",
+        "category": "web-design",
+        "tags": [
+          "网页设计",
+          "响应式",
+          "UX"
+        ],
+        "link": "",
+        "image": "/uploads/portfolio/portfolio-1766470470728-eb55bc66.png"
+      },
+      {
+        "title": "品牌视觉识别",
+        "description": "完整的品牌视觉识别系统设计，包括 Logo、色彩、字体等",
+        "category": "branding",
+        "tags": [
+          "品牌",
+          "视觉",
+          "识别"
+        ],
+        "link": "",
+        "image": ""
+      }
+    ]
+  },
+  "services": {
+    "title": "专业服务",
+    "subtitle": "提供全方位的数字化解决方案",
+    "items": [
+      {
+        "title": "AI 工具开发",
+        "description": "定制化 AI 工具开发，包括文本生成、图像处理、数据分析等功能模块",
+        "icon": "lightning"
+      },
+      {
+        "title": "网站设计开发",
+        "description": "现代化响应式网站设计与开发，注重性能优化和用户体验",
+        "icon": "monitor"
+      },
+      {
+        "title": "系统集成",
+        "description": "企业级系统集成服务，提供完整的数字化转型解决方案",
+        "icon": "settings"
+      },
+      {
+        "title": "品牌设计",
+        "description": "专业的品牌视觉识别设计，打造独特的品牌形象和用户体验",
+        "icon": "star"
+      }
+    ]
+  },
+  "about": {
+    "title": "关于我",
+    "subtitle": "专注创新与品质的设计团队",
+    "content": "我们是一支专注于现代化数字体验的创意团队，致力于将最新的 AI 技术与优秀的设计理念相结合，为客户提供创新的解决方案。\n\n从概念到实现，我们关注每一个细节，确保每个项目都能达到最高的品质标准。我们相信好的设计不仅要美观，更要实用和有意义。",
+    "image": "/uploads/portfolio/portfolio-1766470838336-a01e5b4b.jpg",
+    "stats": [
+      {
+        "value": "50+",
+        "label": "完成项目"
+      },
+      {
+        "value": "2年",
+        "label": "行业经验"
+      },
+      {
+        "value": "100%",
+        "label": "客户满意度"
+      }
+    ]
+  },
+  "footer": {
+    "copyright": "© 2025 Aethrix | 以太夜. 保留所有权利.",
+    "toolsFooter": "© 2025 Aethrix | 以太夜. 以太夜漫漫，粒子生生不息",
+    "email": "nan323660@gmail.com",
+    "phone": "微信：13302394166",
+    "address": "广东广州"
+  },
+  "aiAssistant": {
+    "enabled": true,
+    "apiEndpoint": "https://aihubmix.com/v1/chat/completions",
+    "modelName": "gpt-4.1-nano",
+    "apiKey": "sk-x4c7uVOMXNMHRYHVEe89225eD1684dA59b287b40D1Ef6c3a",
+    "systemPrompt": "",
+    "maxTokens": 2048,
+    "temperature": 0.7,
+    "autoSwitch": false,
+    "savedModels": [
+      "gpt-4.1-nano"
+    ]
+  }
+}

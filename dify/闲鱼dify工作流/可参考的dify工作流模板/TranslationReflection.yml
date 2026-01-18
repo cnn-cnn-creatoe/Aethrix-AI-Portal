@@ -1,0 +1,360 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 反思翻译法
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.2
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: llm
+      id: 1731157781321-source-1731157788899-target
+      source: '1731157781321'
+      sourceHandle: source
+      target: '1731157788899'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1731157788899-source-1731157792396-target
+      source: '1731157788899'
+      sourceHandle: source
+      target: '1731157792396'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1731157792396-source-1731157795260-target
+      source: '1731157792396'
+      sourceHandle: source
+      target: '1731157795260'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: end
+      id: 1731157795260-source-1731157798378-target
+      source: '1731157795260'
+      sourceHandle: source
+      target: '1731157798378'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: source_lang
+          max_length: 48
+          options:
+          - Chinese
+          - English
+          - Japanese
+          - Korean
+          - French
+          - German
+          required: true
+          type: select
+          variable: source_lang
+        - label: target_lang
+          max_length: 48
+          options:
+          - Chinese
+          - English
+          - Japanese
+          - Korean
+          - French
+          - German
+          required: true
+          type: select
+          variable: target_lang
+        - label: source_text
+          max_length: 3000
+          options: []
+          required: true
+          type: paragraph
+          variable: source_text
+      height: 142
+      id: '1731157781321'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4
+          provider: openai
+        prompt_template:
+        - id: c769ed1e-dc0a-49bd-900c-07b0612e4999
+          role: system
+          text: 'This is an {{#1731157781321.source_lang#}} to {{#1731157781321.target_lang#}} translation, please provide the {{#1731157781321.target_lang#}} translation for this text. 
+
+            Do not provide any explanations or text apart from the translation.
+
+            {{#1731157781321.source_lang#}}: {{#1731157781321.source_text#}}
+
+
+            {{#1731157781321.target_lang#}}:'
+        selected: false
+        title: 初始翻译
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1731157788899'
+      position:
+        x: 384
+        y: 282
+      positionAbsolute:
+        x: 384
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4-turbo
+          provider: openai
+        prompt_template:
+        - id: 0bdffd70-76db-433d-85c2-62574a51350b
+          role: system
+          text: 'Your task is to carefully read a source text and a translation from {{#1731157781321.source_lang#}} to {{#1731157781321.target_lang#}}, and then give constructive criticism and helpful suggestions to improve the translation.
+
+
+            The source text and initial translation, delimited by XML tags <SOURCE_TEXT></SOURCE_TEXT> and <TRANSLATION></TRANSLATION>, are as follows:
+
+
+            <SOURCE_TEXT>
+
+            {{#1731157781321.source_text#}}
+
+            </SOURCE_TEXT>
+
+
+            <TRANSLATION>
+
+            {{#1731157788899.text#}}
+
+            </TRANSLATION>
+
+
+            When writing suggestions, pay attention to whether there are ways to improve the translation''s 
+
+            (i) accuracy (by correcting errors of addition, mistranslation, omission, or untranslated text),
+
+            (ii) fluency (by applying {target_lang} grammar, spelling and punctuation rules, and ensuring there are no unnecessary repetitions),
+
+            (iii) style (by ensuring the translations reflect the style of the source text and takes into account any cultural context),
+
+            (iv) terminology (by ensuring terminology use is consistent and reflects the source text domain; and by only ensuring you use equivalent idioms {target_lang}).
+
+
+            Write a list of specific, helpful and constructive suggestions for improving the translation.
+
+            Each suggestion should address one specific part of the translation.
+
+            Output only the suggestions and nothing else.'
+        selected: false
+        title: 反思翻译
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1731157792396'
+      position:
+        x: 688
+        y: 282
+      positionAbsolute:
+        x: 688
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4-turbo
+          provider: openai
+        prompt_template:
+        - id: a6444611-15e7-4ede-a98f-a81ca60dccbe
+          role: system
+          text: 'Your task is to carefully read, then edit, a translation from {{#1731157781321.source_lang#}} to {{#1731157781321.target_lang#}}, taking into
+
+            account a list of expert suggestions and constructive criticisms.
+
+
+            The source text, the initial translation, and the expert linguist suggestions are delimited by XML tags <SOURCE_TEXT></SOURCE_TEXT>, <TRANSLATION></TRANSLATION> and <EXPERT_SUGGESTIONS></EXPERT_SUGGESTIONS> 
+
+            as follows:
+
+
+            <SOURCE_TEXT>
+
+            {{#1731157781321.source_text#}}
+
+            </SOURCE_TEXT>
+
+
+            <TRANSLATION>
+
+            {{#1731157788899.text#}}
+
+            </TRANSLATION>
+
+
+            <EXPERT_SUGGESTIONS>
+
+            {{#1731157792396.text#}}
+
+            </EXPERT_SUGGESTIONS>
+
+
+            Please take into account the expert suggestions when editing the translation. Edit the translation by ensuring:
+
+
+            (i) accuracy (by correcting errors of addition, mistranslation, omission, or untranslated text),
+
+            (ii) fluency (by applying {target_lang} grammar, spelling and punctuation rules and ensuring there are no unnecessary repetitions), 
+
+            (iii) style (by ensuring the translations reflect the style of the source text)
+
+            (iv) terminology (inappropriate for context, inconsistent use), or
+
+            (v) other errors.
+
+
+            Output only the new translation and nothing else.'
+        selected: false
+        title: 改进翻译
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1731157795260'
+      position:
+        x: 992
+        y: 282
+      positionAbsolute:
+        x: 992
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1731157795260'
+          - text
+          variable: text
+        selected: false
+        title: 结束
+        type: end
+      height: 90
+      id: '1731157798378'
+      position:
+        x: 1296
+        y: 282
+      positionAbsolute:
+        x: 1296
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -68.90282874451782
+      y: 48.26179279698374
+      zoom: 0.994462151448245

@@ -1,0 +1,59 @@
+app:
+  description: ''
+  icon: eye-in-speech-bubble
+  icon_background: '#FFEAD5'
+  mode: chat
+  name: 代码解释器
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+model_config:
+  agent_mode:
+    enabled: true
+    strategy: router
+    tools: []
+  annotation_reply:
+    enabled: false
+  chat_prompt_config: {}
+  completion_prompt_config: {}
+  dataset_configs:
+    retrieval_model: single
+  dataset_query_variable: null
+  external_data_tools: []
+  file_upload:
+    image:
+      detail: high
+      enabled: false
+      number_limits: 3
+      transfer_methods:
+      - remote_url
+      - local_file
+  model:
+    completion_params:
+      frequency_penalty: 0
+      max_tokens: 9481
+      presence_penalty: 0
+      temperature: 0.11
+      top_p: 0.75
+    name: abab5.5-chat
+    provider: minimax
+  more_like_this:
+    enabled: false
+  opening_statement: 你好，我可以帮助你理解代码中每一步的目的，请输入您想了解的代码。
+  pre_prompt: 我希望您能够充当代码解释器，澄清代码的语法和语义。代码是
+  prompt_type: simple
+  retriever_resource:
+    enabled: false
+  sensitive_word_avoidance:
+    canned_response: ''
+    enabled: false
+    words: ''
+  speech_to_text:
+    enabled: false
+  suggested_questions: []
+  suggested_questions_after_answer:
+    enabled: false
+  text_to_speech:
+    enabled: false
+  user_input_form: []
+version: 0.1.5

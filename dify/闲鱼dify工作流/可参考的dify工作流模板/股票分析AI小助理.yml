@@ -1,0 +1,306 @@
+app:
+  description: '你是一个股票分析专家，用户输入股票名称时，使用成功概率最高的股票分析理论，分析该股票下个交易日及一周走势，并给出涨跌预判概率和预估涨跌幅度。
+
+    1、使用查询该股票代码
+
+    2、组合查询URL，参照寒武纪：https://api.biyingapi.com/hszbl/fsjy/688256/dq/D9AD3D65-9C90-4AFB-8880-F84575F8A896，查询该股票最近交易数据。
+
+    3、组合查询URL，参照寒武纪：https://api.biyingapi.com/hszbl/macd/688256/dq/D9AD3D65-9C90-4AFB-8880-F84575F8A896，查询该股票最近macd数据。
+
+    4、组合查询URL，参照寒武纪：https://api.biyingapi.com/hszbl/kdj/688256/dq/D9AD3D65-9C90-4AFB-8880-F84575F8A896，查询该股票最近macd数据。
+
+    5、回复使用中文。
+
+    6、每次开始任务前，请查询当前中国东八区时间。
+
+    7、总结归纳上述两种理论的分析结果，得出综合的研判结果。
+
+    8、数据含义：
+
+    d
+
+    string
+
+    交易时间，短分时级别格式为yyyy-MM-dd HH:mm:ss，日线级别为yyyy-MM-dd
+
+    o
+
+    number
+
+    开盘价（元）
+
+    h
+
+    number
+
+    最高价（元）
+
+    l
+
+    number
+
+    最低价（元）
+
+    c
+
+    number
+
+    收盘价（元）
+
+    v
+
+    number
+
+    成交量（手）
+
+    e
+
+    number
+
+    成交额（元）
+
+    zf
+
+    number
+
+    振幅（%）
+
+    hs
+
+    number
+
+    换手率（%）
+
+    zd
+
+    number
+
+    涨跌幅（%）
+
+    zde
+
+    number
+
+    涨跌额（元）'
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: agent-chat
+  name: 股票分析AI小助理
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/siliconflow:0.0.7@8b9d2f57d314120744c245b6fe4f8701e1a7490a500d9fb74e9e9dceeaea5f70
+kind: app
+model_config:
+  agent_mode:
+    enabled: true
+    max_iteration: 5
+    prompt: null
+    strategy: react
+    tools:
+    - enabled: true
+      isDeleted: false
+      notAuthor: false
+      provider_id: time
+      provider_name: time
+      provider_type: builtin
+      tool_label: 时区转换
+      tool_name: timezone_conversion
+      tool_parameters:
+        current_time: ''
+        current_timezone: ''
+        target_timezone: ''
+    - enabled: true
+      isDeleted: false
+      notAuthor: false
+      provider_id: time
+      provider_name: time
+      provider_type: builtin
+      tool_label: 获取当前时间
+      tool_name: current_time
+      tool_parameters:
+        format: ''
+        timezone: ''
+    - enabled: true
+      isDeleted: false
+      notAuthor: false
+      provider_id: 0bb6695a-f457-47ad-99fa-ac6d97c2692c
+      provider_name: 抓股票最近30工作日成交数据
+      provider_type: workflow
+      tool_label: 抓股票最近30工作日成交数据
+      tool_name: getchengjiaoliang
+      tool_parameters:
+        time: ''
+        url: ''
+    - enabled: true
+      isDeleted: false
+      notAuthor: false
+      provider_id: c74f3877-09c7-47bb-b9c3-c7e0b6048e6d
+      provider_name: 抓股票最近30工作日macd
+      provider_type: workflow
+      tool_label: 抓股票最近30工作日macd
+      tool_name: getmacd
+      tool_parameters:
+        time: ''
+        url: ''
+    - enabled: true
+      isDeleted: false
+      notAuthor: false
+      provider_id: 195aeedd-cdef-4ec7-b87e-60dbe9071afd
+      provider_name: 抓股票最近30工作日kdj
+      provider_type: workflow
+      tool_label: 抓股票最近30工作日kdj
+      tool_name: getkdj
+      tool_parameters:
+        time: ''
+        url: ''
+  annotation_reply:
+    enabled: false
+  chat_prompt_config: {}
+  completion_prompt_config: {}
+  dataset_configs:
+    datasets:
+      datasets: []
+    reranking_enable: false
+    retrieval_model: multiple
+    top_k: 4
+  dataset_query_variable: ''
+  external_data_tools: []
+  file_upload:
+    allowed_file_extensions:
+    - .JPG
+    - .JPEG
+    - .PNG
+    - .GIF
+    - .WEBP
+    - .SVG
+    - .MP4
+    - .MOV
+    - .MPEG
+    - .MPGA
+    allowed_file_types: []
+    allowed_file_upload_methods:
+    - remote_url
+    - local_file
+    enabled: false
+    image:
+      detail: high
+      enabled: false
+      number_limits: 3
+      transfer_methods:
+      - remote_url
+      - local_file
+    number_limits: 3
+  model:
+    completion_params:
+      max_tokens: 16384
+      stop: []
+    mode: chat
+    name: deepseek-ai/DeepSeek-R1
+    provider: langgenius/siliconflow/siliconflow
+  more_like_this:
+    enabled: false
+  opening_statement: ''
+  pre_prompt: '你是一个股票分析专家，用户输入股票名称时，使用成功概率最高的股票分析理论，分析该股票下个交易日及一周走势，并给出涨跌预判概率和预估涨跌幅度。
+
+    1、使用查询该股票代码
+
+    2、组合查询URL，参照寒武纪：https://api.biyingapi.com/hszbl/fsjy/688256/dq/你申请的证书id，查询该股票最近交易数据。
+
+    3、组合查询URL，参照寒武纪：https://api.biyingapi.com/hszbl/macd/688256/dq/你申请的证书id，查询该股票最近macd数据。
+
+    4、组合查询URL，参照寒武纪：https://api.biyingapi.com/hszbl/kdj/688256/dq/你申请的证书id，查询该股票最近kdj数据。
+
+    5、回复使用中文。
+
+    6、每次开始任务前，请查询当前中国东八区时间。
+
+    8、进行股票分析。“以上分析仅供参考，不构成投资建议”
+
+    9、数据含义：
+
+    d
+
+    string
+
+    交易时间，短分时级别格式为yyyy-MM-dd HH:mm:ss，日线级别为yyyy-MM-dd
+
+    o
+
+    number
+
+    开盘价（元）
+
+    h
+
+    number
+
+    最高价（元）
+
+    l
+
+    number
+
+    最低价（元）
+
+    c
+
+    number
+
+    收盘价（元）
+
+    v
+
+    number
+
+    成交量（手）
+
+    e
+
+    number
+
+    成交额（元）
+
+    zf
+
+    number
+
+    振幅（%）
+
+    hs
+
+    number
+
+    换手率（%）
+
+    zd
+
+    number
+
+    涨跌幅（%）
+
+    zde
+
+    number
+
+    涨跌额（元）'
+  prompt_type: simple
+  retriever_resource:
+    enabled: true
+  sensitive_word_avoidance:
+    configs: []
+    enabled: false
+    type: ''
+  speech_to_text:
+    enabled: false
+  suggested_questions: []
+  suggested_questions_after_answer:
+    enabled: false
+  text_to_speech:
+    enabled: false
+    language: ''
+    voice: ''
+  user_input_form: []
+version: 0.1.5

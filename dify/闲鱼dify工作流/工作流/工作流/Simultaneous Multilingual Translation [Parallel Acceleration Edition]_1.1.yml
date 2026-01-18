@@ -1,0 +1,1094 @@
+app:
+  description: '# Add parallel features to speed up translation
+
+    Simultaneous output of multiple translations with a single input
+
+    一次输入，多种翻译同时输出'
+  icon: biting_lip
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: Simultaneous Multilingual Translation_1.1
+  use_icon_as_answer_icon: true
+kind: app
+version: 0.1.3
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: '我已了解你的翻译要求，直接发送要翻译的内容给我，稍等片刻，我将为你提供翻译结果~😄
+
+
+      I have understood your translation requirements, send me the content to be translated
+      directly, wait a moment, I will provide you with the translation results~'
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: llm
+      id: 1728905819683-source-1728911450642-target
+      selected: false
+      source: '1728905819683'
+      sourceHandle: source
+      target: '1728911450642'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: code
+      id: 1728911450642-source-1728913424986-target
+      selected: false
+      source: '1728911450642'
+      sourceHandle: source
+      target: '1728913424986'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        iteration_id: '1728912649383'
+        sourceType: llm
+        targetType: llm
+      id: 1728912661000-source-1729394715737-target
+      selected: false
+      source: '1728912661000'
+      sourceHandle: source
+      target: '1729394715737'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        iteration_id: '1728912649383'
+        sourceType: llm
+        targetType: llm
+      id: 1729394715737-source-1729394720619-target
+      selected: false
+      source: '1729394715737'
+      sourceHandle: source
+      target: '1729394720619'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        iteration_id: '1728912649383'
+        sourceType: iteration-start
+        targetType: code
+      id: 1728912649383start-source-1729394862920-target
+      selected: false
+      source: 1728912649383start
+      sourceHandle: source
+      target: '1729394862920'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        iteration_id: '1728912649383'
+        sourceType: code
+        targetType: llm
+      id: 1729394862920-source-1728912661000-target
+      selected: false
+      source: '1729394862920'
+      sourceHandle: source
+      target: '1728912661000'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        iteration_id: '1728912649383'
+        sourceType: llm
+        targetType: template-transform
+      id: 1729394720619-source-1729395276354-target
+      selected: false
+      source: '1729394720619'
+      sourceHandle: source
+      target: '1729395276354'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        iteration_id: '1728912649383'
+        sourceType: template-transform
+        targetType: answer
+      id: 1729395276354-source-1728912665829-target
+      selected: false
+      source: '1729395276354'
+      sourceHandle: source
+      target: '1728912665829'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: if-else
+      id: 1728913424986-source-1729416391754-target
+      selected: false
+      source: '1728913424986'
+      sourceHandle: source
+      target: '1729416391754'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: iteration
+      id: 1729416391754-true-1728912649383-target
+      selected: false
+      source: '1729416391754'
+      sourceHandle: 'true'
+      target: '1728912649383'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: iteration
+      id: 1729416391754-false-17294164297430-target
+      selected: false
+      source: '1729416391754'
+      sourceHandle: 'false'
+      target: '17294164297430'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        iteration_id: '17294164297430'
+        sourceType: iteration-start
+        targetType: code
+      id: 1729416429743start-source-1729416429743017294164297434-target
+      selected: false
+      source: 1729416429743start
+      sourceHandle: source
+      target: '1729416429743017294164297434'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        iteration_id: '17294164297430'
+        sourceType: code
+        targetType: llm
+      id: 1729416429743017294164297434-source-1729416429743017294164297430-target
+      selected: false
+      source: '1729416429743017294164297434'
+      sourceHandle: source
+      target: '1729416429743017294164297430'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        iteration_id: '17294164297430'
+        sourceType: llm
+        targetType: template-transform
+      id: 1729416429743017294164297430-source-1729416429743017294164297435-target
+      source: '1729416429743017294164297430'
+      sourceHandle: source
+      target: '1729416429743017294164297435'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        iteration_id: '17294164297430'
+        sourceType: template-transform
+        targetType: answer
+      id: 1729416429743017294164297435-source-1729416429743017294164297431-target
+      source: '1729416429743017294164297435'
+      sourceHandle: source
+      target: '1729416429743017294164297431'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: Target Languages/目标语言（支持多种语言，用空格分隔）
+          max_length: 500
+          options:
+          - ''
+          required: true
+          type: paragraph
+          variable: language
+        - label: Style/翻译风格场景（如推特推文、押韵诗歌、技术报告等）
+          max_length: 100
+          options: []
+          required: true
+          type: text-input
+          variable: style
+        - label: Mode/翻译模式
+          max_length: 48
+          options:
+          - 质量优先模式
+          - 速度优先模式
+          required: true
+          type: select
+          variable: mode
+      height: 142
+      id: '1728905819683'
+      position:
+        x: 91.36343029591596
+        y: 383.5803612688547
+      positionAbsolute:
+        x: 91.36343029591596
+        y: 383.5803612688547
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: Qwen/Qwen2.5-7B-Instruct
+          provider: siliconflow
+        prompt_template:
+        - id: 29e84a93-8304-42e2-a6d8-4becee2f488e
+          role: system
+          text: "你是一个翻译参数提取大师，擅长将用户的输入转换为list列表对象，每个元素其中包含语言属性`language`，翻译风格属性`style`，具体示例如下：\n\
+            \n<INPUT Example>\nLanguage: 中文 英文 日文\nStyle: Twitter Post\n</INPUT Example>\n\
+            <Output Example>\n[\n    {\n      \"language\": \"中文\",\n      \"style\"\
+            : \"Twitter Post\"\n    },\n    {\n      \"language\": \"英文\",\n     \
+            \ \"style\": \"Twitter Post\"\n    },\n    {\n      \"language\": \"日文\"\
+            ,\n      \"style\": \"Twitter Post\"\n    }\n]\n</Output Example>\n\n\
+            请遵循以上指令，对用户输入进行转换，只输出list转换结果，不输出其他内容。"
+        - id: 9a1b838f-8de2-4e1b-a269-054e5eb5a939
+          role: user
+          text: '<INPUT>
+
+            Language: {{#1728905819683.language#}}
+
+            Style: {{#1728905819683.style#}}
+
+            </INPUT>'
+        selected: false
+        title: 准备翻译流程
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1728911450642'
+      position:
+        x: 453.65904358955447
+        y: 383.5803612688547
+      positionAbsolute:
+        x: 453.65904358955447
+        y: 383.5803612688547
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        error_handle_mode: terminated
+        height: 517
+        is_parallel: true
+        iterator_selector:
+        - '1728913424986'
+        - result
+        output_selector:
+        - '1729395276354'
+        - output
+        output_type: array[string]
+        parallel_nums: 10
+        selected: true
+        start_node_id: 1728912649383start
+        title: 多语言翻译（质量优先）
+        type: iteration
+        width: 1353.2902263261306
+      height: 517
+      id: '1728912649383'
+      position:
+        x: 1746.9966626381724
+        y: 383.5803612688547
+      positionAbsolute:
+        x: 1746.9966626381724
+        y: 383.5803612688547
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 1353
+      zIndex: 1
+    - data:
+        desc: ''
+        isInIteration: true
+        selected: false
+        title: ''
+        type: iteration-start
+      draggable: false
+      height: 48
+      id: 1728912649383start
+      parentId: '1728912649383'
+      position:
+        x: 24
+        y: 68
+      positionAbsolute:
+        x: 1770.9966626381724
+        y: 451.5803612688547
+      selectable: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-iteration-start
+      width: 44
+      zIndex: 1002
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - sys
+          - query
+        desc: ''
+        isInIteration: true
+        iteration_id: '1728912649383'
+        model:
+          completion_params:
+            max_tokens: 8192
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: openai_api_compatible
+        prompt_template:
+        - id: 75ca8d70-a9a0-4ed6-a263-6c5fd468fc7a
+          role: system
+          text: '<角色>
+
+            你是一位精通{{#1729394862920.language#}}的专业翻译，擅长将用户提供的内容采用直译的方式翻译为目标语言{{#1729394862920.language#}}。风格保持与{{#1729394862920.language#}}的{{#1729394862920.style#}}相似。
+
+            </角色>
+
+
+            <要求>
+
+            - 根据原始内容直译成{{#1729394862920.language#}}
+
+            - 不要遗漏任何信息，不要进行多余的发挥，要准确传达原文的事实和背景
+
+            - 人名不翻译，对专业术语翻译时需要在被翻译的术语后使用括号附加上术语原文
+
+            - 保持原有格式，当存在Markdown格式时保留其格式
+
+            - 直接输出直译结果，不要增加任何原文不存在的内容
+
+            </要求>
+
+
+            <输出要求示例>
+
+            (这里直接填充直译结果，除直译结果外不要输出任何其他内容)
+
+            </输出要求示例>
+
+
+
+            现在请按照上面的要求从第一行开始将以下内容直译为目标语言{{#1729394862920.language#}}，待直译内容如下：
+
+            <待直译内容>
+
+            {{#context#}}
+
+            </待直译内容>'
+        selected: false
+        title: 直译
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1728912661000'
+      parentId: '1728912649383'
+      position:
+        x: 439.5269192967239
+        y: 66.6780191979758
+      positionAbsolute:
+        x: 2186.5235819348964
+        y: 450.2583804668305
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        answer: '{{#1729395276354.output#}}'
+        desc: ''
+        isInIteration: true
+        iteration_id: '1728912649383'
+        selected: false
+        title: 直接回复 2
+        type: answer
+        variables: []
+      height: 103
+      id: '1728912665829'
+      parentId: '1728912649383'
+      position:
+        x: 1091.0763953460473
+        y: 65
+      positionAbsolute:
+        x: 2838.0730579842198
+        y: 448.5803612688547
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        code: "\nfunction main({arg1}) {\n    return {\n        result: JSON.parse(arg1)\n\
+          \    }\n}\n"
+        code_language: javascript
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: array[object]
+        selected: false
+        title: 设置翻译参数
+        type: code
+        variables:
+        - value_selector:
+          - '1728911450642'
+          - text
+          variable: arg1
+      height: 54
+      id: '1728913424986'
+      position:
+        x: 846.3736906924028
+        y: 383.5803612688547
+      positionAbsolute:
+        x: 846.3736906924028
+        y: 383.5803612688547
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - sys
+          - query
+        desc: ''
+        isInIteration: true
+        iteration_id: '1728912649383'
+        model:
+          completion_params:
+            max_tokens: 8192
+            temperature: 1
+          mode: chat
+          name: deepseek-chat
+          provider: openai_api_compatible
+        prompt_template:
+        - id: b0a02ef2-7757-4e1c-9de2-479dd35ce3c5
+          role: system
+          text: "<角色>\n你是一位精通{{#1729394862920.language#}}的专业翻译和资深审核编辑，擅长对已有的翻译进行审核校订，指出其中的翻译问题。\n\
+            </角色>\n\n<要求>\n根据提供的直译的结果，指出其中存在的具体问题，要准确描述，不要笼统的表示，也不需要增加原文不存在的内容或格式，包括但不仅限于：\n\
+            \  - 不符合{{#1729394862920.language#}}表达习惯，要明确指出不符合的地方\n  - 语句不通顺，指出位置，不需要给出修改意见\n\
+            \  - 晦涩难懂，不易理解，可以尝试给出解释\n  - 不符合{{#1729394862920.style#}}风格语境的地方\n  -\
+            \ 不符合{{#1729394862920.language#}}标点符号和书写使用习惯的地方\n</要求>\n\n<输出要求示例>\n(这里直接填充翻译审定意见，除意见外不要输出任何其他内容)\n\
+            </输出要求示例>\n\n现在请按照上面的要求，对以下原文及直译内容进行审定：\n<原文>\n{{#context#}}\n</原文>\n\n\
+            <直译内容>\n{{#1728912661000.text#}}\n</直译内容>"
+        selected: false
+        title: 反思
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1729394715737'
+      parentId: '1728912649383'
+      position:
+        x: 441.7552117925252
+        y: 220.8630262129472
+      positionAbsolute:
+        x: 2188.7518744306976
+        y: 604.4433874818019
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        isInIteration: true
+        iteration_id: '1728912649383'
+        model:
+          completion_params:
+            max_tokens: 8192
+            temperature: 1
+          mode: chat
+          name: deepseek-chat
+          provider: openai_api_compatible
+        prompt_template:
+        - id: 87cbb2db-2076-409a-a574-611061d6a3ee
+          role: system
+          text: '<角色>
+
+            你是一位精通{{#1729394862920.language#}}的专业翻译，擅长根据提供的翻译建议对已有的直译结果重新进行意译。
+
+            </角色>
+
+
+            <要求>
+
+            根据直译的结果和提出的建议，重新进行意译，保证内容的原意的基础上，使其更易于理解，更符合{{#1729394862920.language#}}的自然表达习惯，且更符合{{#1729394862920.style#}}的风格，同时保持原有的格式不变，完整意译所有内容。
+
+            </要求>
+
+
+            <输出要求示例>
+
+            (这里直接填充意译结果，除意译结果外不要输出任何其他内容)
+
+            </输出要求示例>
+
+
+            现在请按照上面的要求，根据直译内容和修改建议进行意译：
+
+            <直译结果>
+
+            {{#1728912661000.text#}}
+
+            </直译结果>
+
+
+            <修改建议>
+
+            {{#1729394715737.text#}}
+
+            </修改建议>'
+        selected: false
+        title: 意译
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1729394720619'
+      parentId: '1728912649383'
+      position:
+        x: 444.4758461348431
+        y: 363.9366273944183
+      positionAbsolute:
+        x: 2191.4725087730158
+        y: 747.516988663273
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        code: "\nfunction main({arg1}) {\n    var item = arg1\n    return {\n    \
+          \    language: item.language,\n        style: item.style\n    }\n}\n"
+        code_language: javascript
+        desc: ''
+        isInIteration: true
+        iteration_id: '1728912649383'
+        outputs:
+          language:
+            children: null
+            type: string
+          style:
+            children: null
+            type: string
+        selected: false
+        title: 代码执行 2
+        type: code
+        variables:
+        - value_selector:
+          - '1728912649383'
+          - item
+          variable: arg1
+      height: 54
+      id: '1729394862920'
+      parentId: '1728912649383'
+      position:
+        x: 134.4912471783789
+        y: 65
+      positionAbsolute:
+        x: 1881.4879098165513
+        y: 448.5803612688547
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        desc: ''
+        isInIteration: true
+        iteration_id: '1728912649383'
+        selected: false
+        template: '## Language: {{ language }}
+
+          {{ translate }}
+
+          \n
+
+          ---
+
+          \n'
+        title: 模板转换
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1729394720619'
+          - text
+          variable: translate
+        - value_selector:
+          - '1729394862920'
+          - language
+          variable: language
+      height: 54
+      id: '1729395276354'
+      parentId: '1728912649383'
+      position:
+        x: 799.1109727962553
+        y: 65
+      positionAbsolute:
+        x: 2546.1076354344277
+        y: 448.5803612688547
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: 791dde96-a5f0-4e59-b110-c09d8fa4c1e1
+            value: 质量优先模式
+            varType: string
+            variable_selector:
+            - '1728905819683'
+            - mode
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 检测翻译模式
+        type: if-else
+      height: 126
+      id: '1729416391754'
+      position:
+        x: 1240.6327833364992
+        y: 383.5803612688547
+      positionAbsolute:
+        x: 1240.6327833364992
+        y: 383.5803612688547
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        error_handle_mode: terminated
+        height: 263
+        is_parallel: true
+        iterator_selector:
+        - '1728913424986'
+        - result
+        output_selector:
+        - '1729416429743017294164297435'
+        - output
+        output_type: array[string]
+        parallel_nums: 10
+        selected: false
+        start_node_id: 1729416429743start
+        title: 多语言翻译（快速）
+        type: iteration
+        width: 1359
+      height: 263
+      id: '17294164297430'
+      position:
+        x: 1746.9966626381724
+        y: 993.968198250104
+      positionAbsolute:
+        x: 1746.9966626381724
+        y: 993.968198250104
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 1359
+      zIndex: 1
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - sys
+          - query
+        desc: ''
+        isInIteration: true
+        iteration_id: '17294164297430'
+        model:
+          completion_params:
+            temperature: 1.3
+          mode: chat
+          name: deepseek-chat
+          provider: openai_api_compatible
+        prompt_template:
+        - id: 75ca8d70-a9a0-4ed6-a263-6c5fd468fc7a
+          role: system
+          text: '<角色>
+
+            你是一位精通{{#1729416429743017294164297434.language#}}的专业翻译，擅长将用户提供的内容翻译为目标语言{{#1729416429743017294164297434.language#}}。风格保持与{{#1729416429743017294164297434.language#}}的{{#1729416429743017294164297434.style#}}相似。
+
+            </角色>
+
+
+            <要求>
+
+            - 根据原始内容翻译成{{#1729416429743017294164297434.language#}}，要求翻译要符合信、达、雅，保持翻译的流畅自然、不生硬，要具备{{#1729416429743017294164297434.language#}}本土人表达习惯
+
+            - 不要遗漏任何信息，不要进行多余的发挥，要准确传达原文的事实和背景
+
+            - 人名不翻译，对专业术语翻译时需要在被翻译的术语后使用括号附加上术语原文
+
+            - 保持原有格式，当存在Markdown时保留其格式
+
+            - 直接输出翻译结果，不要增加任何原文不存在的内容
+
+            </要求>
+
+
+            <输出要求示例>
+
+            (这里直接填充翻译结果，除翻译结果外不要输出任何其他内容)
+
+            </输出要求示例>
+
+
+
+            现在请按照上面的要求从第一行开始将以下内容直译为目标语言{{#1729416429743017294164297434.language#}}，待翻译内容如下：
+
+            <待翻译内容>
+
+            {{#context#}}
+
+            </待翻译内容>'
+        selected: false
+        title: LLM 5
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1729416429743017294164297430'
+      parentId: '17294164297430'
+      position:
+        x: 441.2049384946997
+        y: 65
+      positionAbsolute:
+        x: 2188.2016011328724
+        y: 1058.968198250104
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        answer: '{{#1729416429743017294164297435.output#}}'
+        desc: ''
+        isInIteration: true
+        iteration_id: '17294164297430'
+        selected: false
+        title: 直接回复 2
+        type: answer
+        variables: []
+      height: 103
+      id: '1729416429743017294164297431'
+      parentId: '17294164297430'
+      position:
+        x: 1091.0763953460473
+        y: 65
+      positionAbsolute:
+        x: 2838.0730579842198
+        y: 1058.968198250104
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        code: "\nfunction main({arg1}) {\n    var item = arg1\n    return {\n    \
+          \    language: item.language,\n        style: item.style\n    }\n}\n"
+        code_language: javascript
+        desc: ''
+        isInIteration: true
+        iteration_id: '17294164297430'
+        outputs:
+          language:
+            children: null
+            type: string
+          style:
+            children: null
+            type: string
+        selected: false
+        title: 代码执行 3
+        type: code
+        variables:
+        - value_selector:
+          - '17294164297430'
+          - item
+          variable: arg1
+      height: 54
+      id: '1729416429743017294164297434'
+      parentId: '17294164297430'
+      position:
+        x: 134.4912471783789
+        y: 65
+      positionAbsolute:
+        x: 1881.4879098165513
+        y: 1058.968198250104
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        desc: ''
+        isInIteration: true
+        iteration_id: '17294164297430'
+        selected: false
+        template: '## Language: {{ language }}
+
+          {{ translate }}
+
+          \n
+
+          ---
+
+          \n'
+        title: 模板转换 2
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1729416429743017294164297430'
+          - text
+          variable: translate
+        - value_selector:
+          - '1729416429743017294164297434'
+          - language
+          variable: language
+      height: 54
+      id: '1729416429743017294164297435'
+      parentId: '17294164297430'
+      position:
+        x: 770.0910522694576
+        y: 65
+      positionAbsolute:
+        x: 2517.08771490763
+        y: 1058.968198250104
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        desc: ''
+        isInIteration: true
+        selected: false
+        title: ''
+        type: iteration-start
+      draggable: false
+      height: 48
+      id: 1729416429743start
+      parentId: '17294164297430'
+      position:
+        x: 24
+        y: 68
+      positionAbsolute:
+        x: 1770.9966626381724
+        y: 1061.968198250104
+      selectable: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-iteration-start
+      width: 44
+      zIndex: 1002
+    - data:
+        author: greener
+        desc: ''
+        height: 753
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"Introduction","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"This
+          is a Chatflow that can achieve specified translation styles and multiple
+          translation languages. Inspired by the three-step translation method (literal
+          translation, reflection, free translation) and the inefficiencies encountered
+          in the multilingual translation process during the construction of the Diflowy
+          website, we developed this Chatflow. It operates in either ''quality-first''
+          mode for the highest translation quality or ''speed-first'' mode for relatively
+          economical Token consumption and translation speed. It defaults to using
+          the Deepseek Chat V2.5 model, but you can replace it with your preferred
+          LLM.","type":"text","version":1},{"type":"linebreak","version":1},{"type":"linebreak","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"Capabilities","type":"text","version":1}],"direction":"ltr","format":"start","indent":0,"type":"paragraph","version":1,"textFormat":1},{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Allows
+          specifying multiple target languages for one-input, automatic multiple translations
+          (translation capability requires the LLM itself to have multilingual capabilities;
+          specific supported languages can be checked in the LLM)","type":"text","version":1}],"direction":"ltr","format":"start","indent":0,"type":"listitem","version":1,"value":1},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Can
+          specify translation styles, such as \"Twitter Post\", \"Product Marketing
+          Copy\", \"Prose\", \"Technical Report\", \"Github README\", etc.","type":"text","version":1}],"direction":"ltr","format":"start","indent":0,"type":"listitem","version":1,"value":2},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Can
+          choose the ''quality-first'' mode to enable the three-step translation method
+          for higher translation quality (but this will increase Token consumption
+          and translation time); or choose the ''speed-first'' mode for faster translation
+          time and fewer Tokens (but this will result in lower quality)","type":"text","version":1},{"type":"linebreak","version":1}],"direction":"ltr","format":"start","indent":0,"type":"listitem","version":1,"value":3}],"direction":"ltr","format":"","indent":0,"type":"list","version":1,"listType":"bullet","start":1,"tag":"ul"},{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"Author and Copyright","type":"text","version":1}],"direction":"ltr","format":"start","indent":0,"type":"paragraph","version":1,"textFormat":1},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"This
+          Chatflow was created by ","type":"text","version":1},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Diflowy","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"link","version":1,"rel":"noreferrer","target":null,"title":null,"url":"https://diflowy.greenerai.top"},{"detail":0,"format":0,"mode":"normal","style":"","text":"
+          official for internal use in multilingual translation on the website and
+          is now freely open to the Diflowy community for everyone to learn and exchange.
+          It follows the CC BY license; please attribute Diflowy when using it.","type":"text","version":1}],"direction":"ltr","format":"start","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"type":"linebreak","version":1},{"detail":0,"format":2,"mode":"normal","style":"","text":"Explore,
+          Share, Download Dify Workflows in ","type":"text","version":1},{"detail":0,"format":3,"mode":"normal","style":"","text":"Diflowy","type":"text","version":1},{"type":"linebreak","version":1},{"children":[{"detail":0,"format":2,"mode":"normal","style":"","text":"https://diflowy.greenerai.top","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"link","version":1,"rel":"noreferrer","target":null,"title":null,"url":"https://diflowy.greenerai.top"}],"direction":"ltr","format":"start","indent":0,"type":"paragraph","version":1,"textFormat":2}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 362
+      height: 753
+      id: '1729431677343'
+      position:
+        x: -362.49613490946405
+        y: 383.5803612688547
+      positionAbsolute:
+        x: -362.49613490946405
+        y: 383.5803612688547
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 362
+    - data:
+        author: greener
+        desc: ''
+        height: 427
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          14px;","text":"Usage","type":"text","version":1}],"direction":"ltr","format":"start","indent":0,"type":"paragraph","version":1,"textFormat":1},{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          12px;","text":"Upon initial launch, fill in the languages you need to translate
+          in the ","type":"text","version":1},{"detail":0,"format":17,"mode":"normal","style":"font-size:
+          12px;","text":"Target Languages","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          12px;","text":" field, separated by spaces, such as ","type":"text","version":1},{"detail":0,"format":18,"mode":"normal","style":"font-size:
+          12px;","text":"Chinese English Japanese French Italian German","type":"text","version":1}],"direction":"ltr","format":"start","indent":0,"type":"listitem","version":1,"value":1},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          12px;","text":"Fill in the ","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"font-size:
+          12px;","text":"Style","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          12px;","text":" required for translation in the ","type":"text","version":1},{"detail":0,"format":16,"mode":"normal","style":"font-size:
+          12px;","text":"Translation Style Scenario","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          12px;","text":" field, such as ","type":"text","version":1},{"detail":0,"format":18,"mode":"normal","style":"font-size:
+          12px;","text":"Twitter Post","type":"text","version":1},{"detail":0,"format":2,"mode":"normal","style":"font-size:
+          12px;","text":", ","type":"text","version":1},{"detail":0,"format":18,"mode":"normal","style":"font-size:
+          12px;","text":"Product Marketing Copy","type":"text","version":1},{"detail":0,"format":2,"mode":"normal","style":"font-size:
+          12px;","text":", ","type":"text","version":1},{"detail":0,"format":18,"mode":"normal","style":"font-size:
+          12px;","text":"Prose","type":"text","version":1},{"detail":0,"format":2,"mode":"normal","style":"font-size:
+          12px;","text":", ","type":"text","version":1},{"detail":0,"format":18,"mode":"normal","style":"font-size:
+          12px;","text":"Poetry","type":"text","version":1},{"detail":0,"format":2,"mode":"normal","style":"font-size:
+          12px;","text":", ","type":"text","version":1},{"detail":0,"format":18,"mode":"normal","style":"font-size:
+          12px;","text":"Technical Report","type":"text","version":1},{"detail":0,"format":2,"mode":"normal","style":"font-size:
+          12px;","text":", etc.","type":"text","version":1}],"direction":"ltr","format":"start","indent":0,"type":"listitem","version":1,"value":2},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          12px;","text":"Select ","type":"text","version":1},{"detail":0,"format":18,"mode":"normal","style":"font-size:
+          12px;","text":"Quality-First","type":"text","version":1},{"detail":0,"format":16,"mode":"normal","style":"font-size:
+          12px;","text":" Mode","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          12px;","text":" or ","type":"text","version":1},{"detail":0,"format":18,"mode":"normal","style":"font-size:
+          12px;","text":"Speed-First","type":"text","version":1},{"detail":0,"format":16,"mode":"normal","style":"font-size:
+          12px;","text":" Mode","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          12px;","text":" in the ","type":"text","version":1},{"detail":0,"format":17,"mode":"normal","style":"font-size:
+          12px;","text":"Mode","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          12px;","text":" field","type":"text","version":1}],"direction":"ltr","format":"start","indent":0,"type":"listitem","version":1,"value":3}],"direction":"ltr","format":"","indent":0,"type":"list","version":1,"listType":"bullet","start":1,"tag":"ul"}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 252
+      height: 427
+      id: '1729431880640'
+      position:
+        x: 91.36343029591596
+        y: 551.955939949752
+      positionAbsolute:
+        x: 91.36343029591596
+        y: 551.955939949752
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 252
+    viewport:
+      x: -481.8998918019588
+      y: 41.27220616518588
+      zoom: 0.3823950618575724

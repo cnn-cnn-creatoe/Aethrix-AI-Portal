@@ -1,0 +1,527 @@
+app:
+  description: ''
+  icon: ▶️
+  icon_background: '#D5D9EB'
+  mode: advanced-chat
+  name: DeepSeek-R1（永不掉线）
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/siliconflow:0.0.7@8b9d2f57d314120744c245b6fe4f8701e1a7490a500d9fb74e9e9dceeaea5f70
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: tool
+      id: 1738896965839-source-1738902347955-target
+      source: '1738896965839'
+      sourceHandle: source
+      target: '1738902347955'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: llm
+      id: 1738902347955-source-llm-target
+      source: '1738902347955'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: answer
+      id: 1739073604460-true-1739073629032-target
+      source: '1739073604460'
+      sourceHandle: 'true'
+      target: '1739073629032'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1739073604460-false-1739073912957-target
+      source: '1739073604460'
+      sourceHandle: 'false'
+      target: '1739073912957'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: answer
+      id: 17390739238790-true-1739073697782-target
+      source: '17390739238790'
+      sourceHandle: 'true'
+      target: '1739073697782'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: 1739073939281-source-1739073951668-target
+      source: '1739073939281'
+      sourceHandle: source
+      target: '1739073951668'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: llm-source-1739074179723-target
+      source: llm
+      sourceHandle: source
+      target: '1739074179723'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: answer
+        targetType: if-else
+      id: 1739074179723-source-1739073604460-target
+      source: '1739074179723'
+      sourceHandle: source
+      target: '1739073604460'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: 1739073912957-source-1739074189186-target
+      source: '1739073912957'
+      sourceHandle: source
+      target: '1739074189186'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: answer
+        targetType: if-else
+      id: 1739074189186-source-17390739238790-target
+      source: '1739074189186'
+      sourceHandle: source
+      target: '17390739238790'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 17390739238790-false-1739073939281-target
+      source: '17390739238790'
+      sourceHandle: 'false'
+      target: '1739073939281'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables: []
+      height: 54
+      id: '1738896965839'
+      position:
+        x: 30
+        y: 362
+      positionAbsolute:
+        x: 30
+        y: 362
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1738902347955'
+          - text
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-r1
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_template:
+        - id: 9ada77a4-dc3c-423b-9c50-20575b95afc9
+          role: system
+          text: You are an AI assistant who helps users conduct thorough and detailed
+            research, using {{#1738902347955.text#}}
+        retry_config:
+          max_retries: 3
+          retry_enabled: false
+          retry_interval: 1000
+        selected: false
+        title: LLM 1
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 96
+      id: llm
+      position:
+        x: 638
+        y: 362
+      positionAbsolute:
+        x: 638
+        y: 362
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: perplexity
+        provider_name: perplexity
+        provider_type: builtin
+        selected: false
+        title: Perplexity Search
+        tool_configurations:
+          frequency_penalty: 1
+          max_tokens: 4096
+          model: llama-3.1-sonar-small-128k-online
+          presence_penalty: 0
+          return_citations: 1
+          search_domain_filter: ''
+          search_recency_filter: month
+          temperature: 0.7
+          top_k: 5
+          top_p: 1
+        tool_label: Perplexity Search
+        tool_name: perplexity
+        tool_parameters:
+          query:
+            type: mixed
+            value: '{{#sys.query#}}'
+        type: tool
+      height: 324
+      id: '1738902347955'
+      position:
+        x: 334
+        y: 362
+      positionAbsolute:
+        x: 334
+        y: 362
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not empty
+            id: 50f702fa-bf7c-46b8-9a0b-55dd420cdc85
+            value: ''
+            varType: string
+            variable_selector:
+            - llm
+            - text
+          id: 'true'
+          logical_operator: or
+        desc: ''
+        selected: false
+        title: 条件分支
+        type: if-else
+      height: 126
+      id: '1739073604460'
+      position:
+        x: 1275.1374757306066
+        y: 402.9555725138963
+      positionAbsolute:
+        x: 1275.1374757306066
+        y: 402.9555725138963
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '  '
+        desc: ''
+        selected: false
+        title: 直接回复 2
+        type: answer
+        variables: []
+      height: 86
+      id: '1739073629032'
+      position:
+        x: 1624.1724623949258
+        y: 421.3991914976
+      positionAbsolute:
+        x: 1624.1724623949258
+        y: 421.3991914976
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '  '
+        desc: ''
+        selected: false
+        title: 直接回复 3
+        type: answer
+        variables: []
+      height: 86
+      id: '1739073697782'
+      position:
+        x: 2823.7730071211045
+        y: 449.0166251058354
+      positionAbsolute:
+        x: 2823.7730071211045
+        y: 449.0166251058354
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - sys
+          - query
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek/deepseek-r1
+          provider: langgenius/openrouter/openrouter
+        prompt_template:
+        - id: 45ecdc73-e323-4a16-a12e-0b040bb2ed0d
+          role: system
+          text: You are an AI assistant who helps users conduct thorough and detailed
+            research, using {{#1738902347955.text#}}
+        selected: false
+        title: LLM 2
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 96
+      id: '1739073912957'
+      position:
+        x: 1624.1724623949258
+        y: 563.3991914976
+      positionAbsolute:
+        x: 1624.1724623949258
+        y: 563.3991914976
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not empty
+            id: 50f702fa-bf7c-46b8-9a0b-55dd420cdc85
+            value: ''
+            varType: string
+            variable_selector:
+            - '1739073912957'
+            - text
+          id: 'true'
+          logical_operator: or
+        desc: ''
+        selected: false
+        title: 条件分支 (1)
+        type: if-else
+      height: 126
+      id: '17390739238790'
+      position:
+        x: 2234.6078143979057
+        y: 521.4265373525132
+      positionAbsolute:
+        x: 2234.6078143979057
+        y: 521.4265373525132
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - sys
+          - query
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-ai/DeepSeek-R1
+          provider: langgenius/siliconflow/siliconflow
+        prompt_template:
+        - id: 4dc327c2-0c58-4fe7-a117-872e00d7ae20
+          role: system
+          text: You are an AI assistant who helps users conduct thorough and detailed
+            research, using {{#1738902347955.text#}}
+        selected: false
+        title: LLM 3
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1739073939281'
+      position:
+        x: 2858.6329554343292
+        y: 786.6091853486621
+      positionAbsolute:
+        x: 2858.6329554343292
+        y: 786.6091853486621
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1739073939281.text#}}'
+        desc: ''
+        selected: false
+        title: 直接回复 3
+        type: answer
+        variables: []
+      height: 105
+      id: '1739073951668'
+      position:
+        x: 3162.6329554343292
+        y: 786.6091853486621
+      positionAbsolute:
+        x: 3162.6329554343292
+        y: 786.6091853486621
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#llm.text#}}'
+        desc: ''
+        selected: false
+        title: 直接回复 4
+        type: answer
+        variables: []
+      height: 105
+      id: '1739074179723'
+      position:
+        x: 984.9253540642378
+        y: 362
+      positionAbsolute:
+        x: 984.9253540642378
+        y: 362
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1739073912957.text#}}'
+        desc: ''
+        selected: false
+        title: 直接回复 5
+        type: answer
+        variables: []
+      height: 105
+      id: '1739074189186'
+      position:
+        x: 1932.965560958813
+        y: 521.4265373525132
+      positionAbsolute:
+        x: 1932.965560958813
+        y: 521.4265373525132
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -11.645480600709902
+      y: 58.17771992322389
+      zoom: 0.5034737713072432

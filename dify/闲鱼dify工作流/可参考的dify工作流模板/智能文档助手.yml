@@ -1,0 +1,715 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 智能文档助手
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/volcengine_maas:0.0.7@f8e44422cfa5b9a6ac1f2d3b43ef1069868efdad1e5cec2590de3f53ceac37b0
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/siliconflow:0.0.8@217f973bd7ced1b099c2f0c669f1356bdf4cc38b8372fd58d7874f9940b95de3
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions: []
+      allowed_file_types:
+      - image
+      - document
+      allowed_file_upload_methods:
+      - remote_url
+      - local_file
+      enabled: true
+      fileUploadConfig:
+        audio_file_size_limit: 500
+        batch_count_limit: 5
+        file_size_limit: 1024
+        image_file_size_limit: 1000
+        video_file_size_limit: 10000
+        workflow_file_upload_limit: 20
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 5
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: document-extractor
+      id: 1739410798078-081a8428-2827-4d33-b53d-1d91a9d95422-1739408738723-target
+      source: '1739410798078'
+      sourceHandle: 081a8428-2827-4d33-b53d-1d91a9d95422
+      target: '1739408738723'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: document-extractor
+        targetType: llm
+      id: 1739408738723-source-1739411157995-target
+      source: '1739408738723'
+      sourceHandle: source
+      target: '1739411157995'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1739410798078-true-1739411216762-target
+      source: '1739410798078'
+      sourceHandle: 'true'
+      target: '1739411216762'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: 1739411216762-source-1739411366521-target
+      source: '1739411216762'
+      sourceHandle: source
+      target: '1739411366521'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: 1739411157995-source-1739411368737-target
+      source: '1739411157995'
+      sourceHandle: source
+      target: '1739411368737'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: list-operator
+      id: 1739410798078-e6cf6613-e3a1-4295-ac4c-06bbccd1cf0a-1739411882591-target
+      source: '1739410798078'
+      sourceHandle: e6cf6613-e3a1-4295-ac4c-06bbccd1cf0a
+      target: '1739411882591'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: list-operator
+      id: 1739410798078-e6cf6613-e3a1-4295-ac4c-06bbccd1cf0a-1739411885505-target
+      source: '1739410798078'
+      sourceHandle: e6cf6613-e3a1-4295-ac4c-06bbccd1cf0a
+      target: '1739411885505'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: list-operator
+        targetType: document-extractor
+      id: 1739411882591-source-1739412083660-target
+      source: '1739411882591'
+      sourceHandle: source
+      target: '1739412083660'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: document-extractor
+        targetType: llm
+      id: 1739412083660-source-1739412110533-target
+      source: '1739412083660'
+      sourceHandle: source
+      target: '1739412110533'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: list-operator
+        targetType: llm
+      id: 1739411885505-source-1739412110533-target
+      source: '1739411885505'
+      sourceHandle: source
+      target: '1739412110533'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: 1739412110533-source-1739412321117-target
+      source: '1739412110533'
+      sourceHandle: source
+      target: '1739412321117'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: if-else
+      id: 1739408327565-source-1742742533945-target
+      source: '1739408327565'
+      sourceHandle: source
+      target: '1742742533945'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: if-else
+      id: 1742742533945-true-1739410798078-target
+      source: '1742742533945'
+      sourceHandle: 'true'
+      target: '1739410798078'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1742742533945-false-1742741890616-target
+      source: '1742742533945'
+      sourceHandle: 'false'
+      target: '1742741890616'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1739410798078-false-1739412788403-target
+      source: '1739410798078'
+      sourceHandle: 'false'
+      target: '1739412788403'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables: []
+      height: 54
+      id: '1739408327565'
+      position:
+        x: 342.4459525591933
+        y: 239.39968917534105
+      positionAbsolute:
+        x: 342.4459525591933
+        y: 239.39968917534105
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_array_file: true
+        selected: false
+        title: 文档提取器1
+        type: document-extractor
+        variable_selector:
+        - sys
+        - files
+      height: 92
+      id: '1739408738723'
+      position:
+        x: 938
+        y: 371.5
+      positionAbsolute:
+        x: 938
+        y: 371.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: e6cf6613-e3a1-4295-ac4c-06bbccd1cf0a
+          conditions:
+          - comparison_operator: contains
+            id: aa476e0b-147d-4e37-898c-12c6d8d119e4
+            sub_variable_condition:
+              case_id: 7805d72e-618a-48dc-9c79-b8b5fbebcfcf
+              conditions:
+              - comparison_operator: in
+                id: 0f2b7656-ae17-44a5-95c7-b7d71764a7db
+                key: type
+                value:
+                - image
+                varType: string
+              logical_operator: and
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - sys
+            - files
+          - comparison_operator: contains
+            id: 534fe900-1b39-4a01-9e15-013899329857
+            sub_variable_condition:
+              case_id: 72a0b7a7-4de8-44ea-b465-cd5ba1095dc3
+              conditions:
+              - comparison_operator: in
+                id: 931696ee-0f50-4296-88d1-cc7a157d2371
+                key: type
+                value:
+                - document
+                varType: string
+              logical_operator: and
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - sys
+            - files
+          id: e6cf6613-e3a1-4295-ac4c-06bbccd1cf0a
+          logical_operator: and
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: all of
+            id: 0b3ca692-5909-4da6-a52c-d7a507a00b47
+            sub_variable_condition:
+              case_id: a0593f8a-2734-4be8-ae3f-24cd96eab922
+              conditions:
+              - comparison_operator: in
+                id: c80f5fe4-d50c-429d-9f6a-bb66b88a7348
+                key: type
+                value:
+                - image
+                varType: string
+              logical_operator: and
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - sys
+            - files
+          id: 'true'
+          logical_operator: and
+        - case_id: 081a8428-2827-4d33-b53d-1d91a9d95422
+          conditions:
+          - comparison_operator: all of
+            id: a2ac4e5f-e668-41c5-b41e-008cd8d7cf0d
+            sub_variable_condition:
+              case_id: 68864dd6-97c1-4e40-bb22-990df56da205
+              conditions:
+              - comparison_operator: in
+                id: e6a3b399-761b-426e-b69d-b729ed656492
+                key: type
+                value:
+                - document
+                varType: string
+              logical_operator: and
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - sys
+            - files
+          id: 081a8428-2827-4d33-b53d-1d91a9d95422
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 判定文件类型
+        type: if-else
+      height: 344
+      id: '1739410798078'
+      position:
+        x: 634
+        y: 371.5
+      positionAbsolute:
+        x: 634
+        y: 371.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: DeepSeek-R1
+          provider: langgenius/volcengine_maas/volcengine_maas
+        prompt_template:
+        - id: db97dc68-20ae-48b3-b157-faf9239a83cc
+          role: system
+          text: 根据{{#1739408738723.text#}}并结合{{#sys.query#}}回答
+        selected: false
+        title: 语言回答LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1739411157995'
+      position:
+        x: 1242
+        y: 371.5
+      positionAbsolute:
+        x: 1242
+        y: 371.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: Qwen/Qwen2-VL-72B-Instruct
+          provider: langgenius/siliconflow/siliconflow
+        prompt_template:
+        - id: 47f39c20-55d3-48a3-b3cb-68b11f9e4a2c
+          role: system
+          text: 结合{{#sys.query#}}回答
+        selected: false
+        title: 图片识别LLM
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - sys
+            - files
+          enabled: true
+      height: 90
+      id: '1739411216762'
+      position:
+        x: 938
+        y: 508.1956214788397
+      positionAbsolute:
+        x: 938
+        y: 508.1956214788397
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1739411216762.text#}}'
+        desc: ''
+        selected: false
+        title: 图片识别回答
+        type: answer
+        variables: []
+      height: 105
+      id: '1739411366521'
+      position:
+        x: 1242
+        y: 500.5
+      positionAbsolute:
+        x: 1242
+        y: 500.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1739411157995.text#}}'
+        desc: ''
+        selected: false
+        title: 文档识别回答
+        type: answer
+        variables: []
+      height: 105
+      id: '1739411368737'
+      position:
+        x: 1546
+        y: 371.5
+      positionAbsolute:
+        x: 1546
+        y: 371.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        extract_by:
+          enabled: false
+          serial: '1'
+        filter_by:
+          conditions:
+          - comparison_operator: is
+            key: extension
+            value: xlsx
+          enabled: true
+        item_var_type: file
+        limit:
+          enabled: false
+          size: 10
+        order_by:
+          enabled: false
+          key: ''
+          value: asc
+        selected: false
+        title: 文档
+        type: list-operator
+        var_type: array[file]
+        variable:
+        - sys
+        - files
+      height: 92
+      id: '1739411882591'
+      position:
+        x: 938
+        y: 644.5
+      positionAbsolute:
+        x: 938
+        y: 644.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        extract_by:
+          enabled: false
+          serial: '1'
+        filter_by:
+          conditions:
+          - comparison_operator: in
+            key: type
+            value:
+            - image
+          enabled: true
+        item_var_type: file
+        limit:
+          enabled: false
+          size: 10
+        order_by:
+          enabled: false
+          key: ''
+          value: asc
+        selected: false
+        title: 图片
+        type: list-operator
+        var_type: array[file]
+        variable:
+        - sys
+        - files
+      height: 92
+      id: '1739411885505'
+      position:
+        x: 1242
+        y: 861
+      positionAbsolute:
+        x: 1242
+        y: 861
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_array_file: true
+        selected: false
+        title: 文档提取器2
+        type: document-extractor
+        variable_selector:
+        - '1739411882591'
+        - result
+      height: 92
+      id: '1739412083660'
+      position:
+        x: 1242
+        y: 644.5
+      positionAbsolute:
+        x: 1242
+        y: 644.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: Qwen/QVQ-72B-Preview
+          provider: langgenius/siliconflow/siliconflow
+        prompt_template:
+        - id: 6cba9988-bdd8-4177-a622-f607429f7a0a
+          role: system
+          text: 请根据{{#sys.query#}}结合{{#1739412083660.text#}}回答
+        selected: true
+        title: 图片+文档LLM
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - '1739411885505'
+            - result
+          enabled: true
+      height: 90
+      id: '1739412110533'
+      position:
+        x: 1546
+        y: 653
+      positionAbsolute:
+        x: 1546
+        y: 653
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1739412110533.text#}}/'
+        desc: ''
+        selected: false
+        title: '文档+图片回复 '
+        type: answer
+        variables: []
+      height: 105
+      id: '1739412321117'
+      position:
+        x: 1550.624647095626
+        y: 824.8207615585536
+      positionAbsolute:
+        x: 1550.624647095626
+        y: 824.8207615585536
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: 抱歉，目前不支持！
+        desc: ''
+        selected: false
+        title: 拒绝
+        type: answer
+        variables: []
+      height: 102
+      id: '1739412788403'
+      position:
+        x: 938
+        y: 824.8207615585536
+      positionAbsolute:
+        x: 938
+        y: 824.8207615585536
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: 请上传文件后继续！
+        desc: ''
+        selected: false
+        title: 提示未上传文档
+        type: answer
+        variables: []
+      height: 102
+      id: '1742741890616'
+      position:
+        x: 354.4612356615065
+        y: 661.1748737608544
+      positionAbsolute:
+        x: 354.4612356615065
+        y: 661.1748737608544
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not empty
+            id: bd99081a-cda1-45c4-972f-5685f90f677c
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - sys
+            - files
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 判定是否存在文件
+        type: if-else
+      height: 126
+      id: '1742742533945'
+      position:
+        x: 336.297396709994
+        y: 371.5
+      positionAbsolute:
+        x: 336.297396709994
+        y: 371.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -1142.6261299660227
+      y: -544.2028170487035
+      zoom: 1.0000000000000007

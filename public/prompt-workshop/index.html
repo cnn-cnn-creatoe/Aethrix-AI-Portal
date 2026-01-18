@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROMPT 工坊 - AI 提示词资源库</title>
+    <meta name="description" content="探索精选 AI 提示词工具和模板，涵盖教育、营销、编程、创作等多个行业">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- 主容器 -->
+    <div class="app-container">
+        <!-- 导航栏 -->
+        <nav class="navbar">
+            <a href="/" class="nav-logo">
+                <span class="logo-icon">🤖</span>
+                <span class="logo-text">PROMPT 工坊</span>
+            </a>
+            <div class="nav-links">
+                <a href="#tools" class="nav-link active">工具</a>
+                <a href="#templates" class="nav-link">模板</a>
+                <a href="#community" class="nav-link">社区</a>
+                <a href="/" class="nav-link nav-back">← 返回主站</a>
+            </div>
+        </nav>
+
+        <!-- Bento 网格布局 -->
+        <main class="bento-grid">
+            <!-- Hero 大卡片 -->
+            <section class="bento-card bento-hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">PROMPT<br>工坊</h1>
+                    <p class="hero-subtitle">探索、创造与优化你的 AI 提示词</p>
+                </div>
+                <div class="hero-mascot">🤖</div>
+            </section>
+
+            <!-- 统计卡片 -->
+            <section class="bento-card bento-stat stat-users">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">精选工具</div>
+            </section>
+
+            <section class="bento-card bento-stat stat-templates">
+                <div class="stat-number">100+</div>
+                <div class="stat-label">提示词模板</div>
+            </section>
+
+            <!-- 工具卡片 1 -->
+            <section class="bento-card bento-tool tool-green" data-url="https://github.com/linshenkx/prompt-optimizer">
+                <div class="tool-preview">
+                    <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'><rect fill='%23e8f5e9' width='100' height='60'/><text x='50' y='35' text-anchor='middle' font-size='12' fill='%234caf50'>预览</text></svg>"
+                        alt="工具预览">
+                </div>
+                <div class="tool-info">
+                    <span class="tool-icon">🔧</span>
+                    <h3 class="tool-name">Prompt Optimizer</h3>
+                    <p class="tool-desc">AI 智能优化提示词</p>
+                </div>
+                <div class="tool-tags">
+                    <span class="tag tag-free">开源</span>
+                    <span class="tag">免费</span>
+                </div>
+            </section>
+
+            <!-- 工具卡片 2 -->
+            <section class="bento-card bento-tool tool-blue" data-url="https://github.com/langgptai/LangGPT">
+                <div class="tool-preview">
+                    <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'><rect fill='%23e3f2fd' width='100' height='60'/><text x='50' y='35' text-anchor='middle' font-size='12' fill='%232196f3'>预览</text></svg>"
+                        alt="工具预览">
+                </div>
+                <div class="tool-info">
+                    <span class="tool-icon">📝</span>
+                    <h3 class="tool-name">LangGPT</h3>
+                    <p class="tool-desc">结构化提示词框架</p>
+                </div>
+                <div class="tool-tags">
+                    <span class="tag tag-free">开源</span>
+                    <span class="tag">教程</span>
+                </div>
+            </section>
+
+            <!-- 提示词市场卡片 -->
+            <section class="bento-card bento-feature feature-market">
+                <div class="feature-icon">🏪</div>
+                <h3 class="feature-title">提示词市场</h3>
+                <p class="feature-desc">发现更多优质提示词</p>
+            </section>
+
+            <!-- 创意灵感库 -->
+            <section class="bento-card bento-feature feature-inspiration">
+                <div class="feature-icon">💡</div>
+                <h3 class="feature-title">创意灵感库</h3>
+            </section>
+
+            <!-- 大型工具展示卡片 -->
+            <section class="bento-card bento-tool-large tool-pink"
+                data-url="https://huggingface.co/spaces/pharmapsychotic/CLIP-Interrogator">
+                <div class="tool-large-content">
+                    <span class="tool-icon-large">🖼️</span>
+                    <div>
+                        <h3 class="tool-name">CLIP Interrogator</h3>
+                        <p class="tool-desc">上传图片自动生成 AI 绘画提示词，完全免费无限制</p>
+                    </div>
+                </div>
+                <div class="tool-tags">
+                    <span class="tag tag-free">免费</span>
+                    <span class="tag">图片反推</span>
+                    <span class="tag">SD</span>
+                </div>
+            </section>
+
+            <!-- AI 绘图助手 -->
+            <section class="bento-card bento-category cat-art" data-category="art">
+                <div class="cat-icon">🎨</div>
+                <h3 class="cat-title">AI 绘图助手</h3>
+                <span class="cat-count">15 个模板</span>
+            </section>
+
+            <!-- 会员中心 -->
+            <section class="bento-card bento-feature feature-vip">
+                <div class="feature-icon">⭐</div>
+                <h3 class="feature-title">更多功能</h3>
+                <p class="feature-desc">敬请期待...</p>
+            </section>
+
+            <!-- 社区卡片 -->
+            <section class="bento-card bento-community" data-url="https://flowgpt.com/">
+                <div class="community-content">
+                    <span class="community-icon">🌐</span>
+                    <div>
+                        <h3 class="community-title">FlowGPT 社区</h3>
+                        <p class="community-desc">全球最大的 ChatGPT 提示词分享社区</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 更多工具预告 -->
+            <section class="bento-card bento-more">
+                <h3 class="more-title">📚 更多精选工具</h3>
+                <div class="more-tools">
+                    <a href="https://prompthero.com/" target="_blank" class="more-tool-item">
+                        <span>🎨</span> PromptHero
+                    </a>
+                    <a href="https://lexica.art/" target="_blank" class="more-tool-item">
+                        <span>🔍</span> Lexica
+                    </a>
+                    <a href="https://github.com/prompt-engineering/click-prompt" target="_blank" class="more-tool-item">
+                        <span>⚡</span> ClickPrompt
+                    </a>
+                    <a href="https://flowgpt.com/" target="_blank" class="more-tool-item">
+                        <span>🌐</span> FlowGPT
+                    </a>
+                </div>
+            </section>
+        </main>
+
+        <!-- 行业分类导航 -->
+        <section class="category-section" id="templates">
+            <h2 class="section-title">📋 行业提示词模板</h2>
+            <div class="category-grid">
+                <div class="category-card cat-education">
+                    <span class="cat-emoji">📚</span>
+                    <span class="cat-name">教育培训</span>
+                    <span class="cat-badge">8</span>
+                </div>
+                <div class="category-card cat-work">
+                    <span class="cat-emoji">💼</span>
+                    <span class="cat-name">职场办公</span>
+                    <span class="cat-badge">10</span>
+                </div>
+                <div class="category-card cat-content">
+                    <span class="cat-emoji">📝</span>
+                    <span class="cat-name">内容创作</span>
+                    <span class="cat-badge">12</span>
+                </div>
+                <div class="category-card cat-code">
+                    <span class="cat-emoji">💻</span>
+                    <span class="cat-name">编程开发</span>
+                    <span class="cat-badge">8</span>
+                </div>
+                <div class="category-card cat-marketing">
+                    <span class="cat-emoji">📊</span>
+                    <span class="cat-name">营销运营</span>
+                    <span class="cat-badge">10</span>
+                </div>
+                <div class="category-card cat-art">
+                    <span class="cat-emoji">🎨</span>
+                    <span class="cat-name">AI 绘画</span>
+                    <span class="cat-badge">15</span>
+                </div>
+                <div class="category-card cat-video">
+                    <span class="cat-emoji">🎬</span>
+                    <span class="cat-name">视频创作</span>
+                    <span class="cat-badge">6</span>
+                </div>
+                <div class="category-card cat-research">
+                    <span class="cat-emoji">🔬</span>
+                    <span class="cat-name">学习研究</span>
+                    <span class="cat-badge">8</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 底部 -->
+        <footer class="footer">
+            <p>© 2024 PROMPT 工坊 · AI 提示词资源库</p>
+            <p class="footer-links">
+                <a href="/">返回主站</a> ·
+                <a href="https://github.com" target="_blank">GitHub</a>
+            </p>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,355 @@
+app:
+  description: 通过代码执行节点，处理LLM的思考信息，解决输出带有思考内容的问题
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 推理模型选择是否输出思考内容
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.5@fd6efd37c2a931911de8ab9ca3ba2da303bef146d45ee87ad896b04b36d09403
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 500
+        batch_count_limit: 50
+        file_size_limit: 1024
+        image_file_size_limit: 1000
+        video_file_size_limit: 10000
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1742917319583-source-1743068646403-target
+      source: '1742917319583'
+      sourceHandle: source
+      target: '1743068646403'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: if-else
+      id: 1743068646403-source-1743069712543-target
+      source: '1743068646403'
+      sourceHandle: source
+      target: '1743069712543'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1743069712543-false-1743069300839-target
+      source: '1743069712543'
+      sourceHandle: 'false'
+      target: '1743069300839'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: variable-aggregator
+      id: 1743069300839-source-1743069766380-target
+      source: '1743069300839'
+      sourceHandle: source
+      target: '1743069766380'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: variable-aggregator
+        targetType: end
+      id: 1743069766380-source-1742917329083-target
+      source: '1743069766380'
+      sourceHandle: source
+      target: '1742917329083'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: template-transform
+      id: 1743069712543-true-1743070230920-target
+      source: '1743069712543'
+      sourceHandle: 'true'
+      target: '1743070230920'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: template-transform
+        targetType: variable-aggregator
+      id: 1743070230920-source-1743069766380-target
+      source: '1743070230920'
+      sourceHandle: source
+      target: '1743069766380'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: query
+          max_length: 256
+          options: []
+          required: true
+          type: text-input
+          variable: query
+        - label: 是否显示思考过程
+          max_length: 48
+          options:
+          - 显示
+          - 不显示
+          required: true
+          type: select
+          variable: type
+      height: 116
+      id: '1742917319583'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1743069766380'
+          - output
+          variable: result
+        selected: false
+        title: 结束
+        type: end
+      height: 90
+      id: '1742917329083'
+      position:
+        x: 1915
+        y: 314
+      positionAbsolute:
+        x: 1915
+        y: 314
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: deepseek-reasoner
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 76da9c93-1e3c-4327-b9a7-096154afd410
+          role: system
+          text: 根据{{#1742917319583.query#}}回答
+        - id: 39ae6dbe-0584-4fba-b4e0-55ee164f1aea
+          role: user
+          text: '{{#1742917319583.query#}}'
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1743068646403'
+      position:
+        x: 422
+        y: 282
+      positionAbsolute:
+        x: 422
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import re\ndef main(query: str, answer: str) -> dict:\n    cleaned_answer\
+          \ = re.sub(r'<details[^>]*>.*?</details>', '', answer, flags=re.DOTALL)\n\
+          \    final_answer = re.sub(r'^\\n+', '', cleaned_answer)\n    return {\n\
+          \        \"result\": final_answer,\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 代码执行
+        type: code
+        variables:
+        - value_selector:
+          - '1742917319583'
+          - query
+          variable: query
+        - value_selector:
+          - '1743068646403'
+          - text
+          variable: answer
+      height: 54
+      id: '1743069300839'
+      position:
+        x: 1236
+        y: 433
+      positionAbsolute:
+        x: 1236
+        y: 433
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: 5fc1c21e-dae6-4234-862f-402661ef8128
+            value: 显示
+            varType: string
+            variable_selector:
+            - '1742917319583'
+            - type
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支
+        type: if-else
+      height: 126
+      id: '1743069712543'
+      position:
+        x: 849
+        y: 282
+      positionAbsolute:
+        x: 849
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        output_type: string
+        selected: false
+        title: 变量聚合器
+        type: variable-aggregator
+        variables:
+        - - '1743070230920'
+          - output
+        - - '1743069300839'
+          - result
+      height: 130
+      id: '1743069766380'
+      position:
+        x: 1601
+        y: 314
+      positionAbsolute:
+        x: 1601
+        y: 314
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        selected: false
+        template: '{{ arg1 }}'
+        title: 模板转换
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1743068646403'
+          - text
+          variable: arg1
+      height: 54
+      id: '1743070230920'
+      position:
+        x: 1244
+        y: 233
+      positionAbsolute:
+        x: 1244
+        y: 233
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -94.51685110786093
+      y: 29.187364608348048
+      zoom: 0.8705505632961242

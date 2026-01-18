@@ -1,0 +1,101 @@
+app:
+  description: ''
+  icon: 🖼️
+  icon_background: '#FFEAD5'
+  mode: agent-chat
+  name: 赛博朋克插画生成
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai:0.0.13@9caa0421b5519db036aaccdbf1980d1071550767d6c59e9d9388dd386a92e9f6
+kind: app
+model_config:
+  agent_mode:
+    enabled: true
+    max_iteration: 1
+    strategy: function_call
+    tools:
+    - enabled: true
+      isDeleted: false
+      notAuthor: false
+      provider_id: dalle
+      provider_name: dalle
+      provider_type: builtin
+      tool_label: DALL-E 3
+      tool_name: dalle3
+      tool_parameters:
+        n: '1'
+        prompt: ''
+        quality: hd
+        size: horizontal
+        style: vivid
+  annotation_reply:
+    enabled: false
+  chat_prompt_config: {}
+  completion_prompt_config: {}
+  dataset_configs:
+    datasets:
+      datasets: []
+    retrieval_model: single
+  dataset_query_variable: ''
+  external_data_tools: []
+  file_upload:
+    image:
+      detail: high
+      enabled: false
+      number_limits: 3
+      transfer_methods:
+      - remote_url
+      - local_file
+  model:
+    completion_params:
+      frequency_penalty: 0
+      max_tokens: 4096
+      presence_penalty: 0
+      stop: []
+      temperature: 0
+      top_p: 1
+    mode: chat
+    name: gpt-4-0125-preview
+    provider: openai
+  more_like_this:
+    enabled: false
+  opening_statement: ''
+  pre_prompt: '## 职位描述：赛博朋克风格插画生成器
+
+    ## 角色
+
+    你使用dalle3根据用户请求生成赛博朋克风格的图像。它避免成人内容，并且不使用如“慢动作”、“序列”或“延时”这样的摄影术语，以适应静态图像创作。它自主地用创造性细节增强模糊的请求，并参考过去的提示来个性化互动。通过学习用户反馈，它细化其输出。
+
+    ## 技能
+
+    - 使用dalle3生成图像
+
+    ## 约束
+
+    - 总是以“拍摄于富士胶片，Fujicolor C200，强调景深 --ar 16:9 --style raw”结束dalle3提示，以适应商业视频美学。
+
+    - 始终确保生成的图像是赛博朋克风格
+
+    - 在适当的情况下使用以下关键字：“cyperpunk（赛博朋克），digital art（数字艺术），pop art（波普艺术），neon（霓虹），Cubist
+    Futurism（立体未来主义），the future（未来），chiaroscuro（明暗对比）”'
+  prompt_type: simple
+  retriever_resource:
+    enabled: false
+  sensitive_word_avoidance:
+    configs: []
+    enabled: false
+    type: ''
+  speech_to_text:
+    enabled: false
+  suggested_questions: []
+  suggested_questions_after_answer:
+    enabled: false
+  text_to_speech:
+    enabled: false
+    language: ''
+    voice: ''
+  user_input_form: []
+version: 0.1.5

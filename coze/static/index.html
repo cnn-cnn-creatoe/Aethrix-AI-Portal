@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coze 工作流库 | 精选 AI 工作流模板</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      /* Neubrutalism 配色 */
+      --yellow: #FFEB3B;
+      --red: #FF5252;
+      --blue: #2196F3;
+      --green: #00FF00;
+      --pink: #FF00FF;
+      --black: #000000;
+      --white: #FFFFFF;
+      --grey: #F5F5F5;
+      
+      /* 阴影 */
+      --shadow: 4px 4px 0 #000000;
+      --shadow-hover: 6px 6px 0 #000000;
+      --shadow-sm: 2px 2px 0 #000000;
+      
+      /* 字体 */
+      --font-heading: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+    
+    body {
+      font-family: var(--font-body);
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    
+    /* Header */
+    .header {
+      background: var(--yellow);
+      border-bottom: 4px solid var(--black);
+      padding: 2rem 0;
+      position: relative;
+    }
+    
+    .header-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: center;
+    }
+    
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .logo {
+      width: 80px;
+      height: 80px;
+      background: var(--red);
+      border: 4px solid var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      transform: rotate(-5deg);
+      box-shadow: var(--shadow);
+    }
+    
+    .title-block {
+      flex: 1;
+    }
+    
+    .title {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    
+    .subtitle {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--black);
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    
+    .stat-box {
+      background: var(--white);
+      border: 3px solid var(--black);
+      padding: 1rem;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .stat-number {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--red);
+    }
+    
+    .stat-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    
+    /* Controls */
+    .controls {
+      background: var(--blue);
+      border-bottom: 4px solid var(--black);
+      padding: 1.5rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .search-bar {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .search-input {
+      flex: 1;
+      padding: 1rem 1.5rem;
+      border: 3px solid var(--black);
+      background: var(--white);
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: var(--font-body);
+    }
+    
+    .search-input:focus {
+      outline: none;
+      box-shadow: var(--shadow);
+    }
+    
+    .search-input::placeholder {
+      color: #999;
+    }
+    
+    .btn {
+      padding: 1rem 2rem;
+      border: 3px solid var(--black);
+      background: var(--yellow);
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: var(--font-body);
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.1s;
+      box-shadow: var(--shadow);
+    }
+    
+    .btn:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 var(--black);
+    }
+    
+    .btn:active {
+      transform: translate(4px, 4px);
+      box-shadow: none;
+    }
+    
+    .btn-red {
+      background: var(--red);
+      color: var(--white);
+    }
+    
+    .btn-green {
+      background: var(--green);
+    }
+    
+    /* Category Pills */
+    .category-pills {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    
+    .category-pill {
+      padding: 0.5rem 1.25rem;
+      border: 3px solid var(--black);
+      background: var(--white);
+      font-size: 0.875rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.1s;
+    }
+    
+    .category-pill:hover {
+      background: var(--grey);
+    }
+    
+    .category-pill.active {
+      background: var(--pink);
+      color: var(--white);
+      transform: rotate(-2deg);
+    }
+    
+    .category-pill .count {
+      background: var(--black);
+      color: var(--white);
+      padding: 0.125rem 0.5rem;
+      margin-left: 0.5rem;
+      font-size: 0.75rem;
+    }
+    
+    /* Main Content */
+    .main {
+      padding: 3rem 0;
+      min-height: 60vh;
+    }
+    
+    .results-bar {
+      background: var(--grey);
+      border: 3px solid var(--black);
+      padding: 1rem 1.5rem;
+      margin-bottom: 2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    /* Workflow Grid - Asymmetric Bento */
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+    
+    /* Workflow Card */
+    .workflow-card {
+      background: var(--white);
+      border: 4px solid var(--black);
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    
+    .workflow-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hover);
+    }
+    
+    .workflow-card:nth-child(3n+1) {
+      background: var(--yellow);
+    }
+    
+    .workflow-card:nth-child(3n+2) {
+      background: var(--blue);
+      color: var(--white);
+    }
+    
+    .workflow-card:nth-child(3n+3) {
+      background: var(--red);
+      color: var(--white);
+    }
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      gap: 1rem;
+    }
+    
+    .card-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    
+    .badge {
+      padding: 0.25rem 0.75rem;
+      border: 2px solid var(--black);
+      background: var(--white);
+      color: var(--black);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    
+    .badge-source {
+      background: var(--green);
+    }
+    
+    .card-icon {
+      font-size: 2.5rem;
+      line-height: 1;
+    }
+    
+    .card-title {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+    }
+    
+    .card-description {
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .workflow-card:nth-child(3n+2) .card-description,
+    .workflow-card:nth-child(3n+3) .card-description {
+      opacity: 0.95;
+    }
+    
+    .card-footer {
+      border-top: 2px solid var(--black);
+      padding-top: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .card-tags {
+      display: flex;
+      gap: 0.375rem;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+    
+    .tag {
+      padding: 0.25rem 0.5rem;
+      background: rgba(0,0,0,0.1);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      border: 1px solid var(--black);
+    }
+    
+    .workflow-card:nth-child(3n+2) .tag,
+    .workflow-card:nth-child(3n+3) .tag {
+      background: rgba(255,255,255,0.2);
+      border-color: var(--white);
+    }
+    
+    /* States */
+    .state {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+    
+    .state-icon {
+      font-size: 5rem;
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+    
+    .state h3 {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    
+    .state p {
+      font-size: 1.125rem;
+      margin-bottom: 2rem;
+    }
+    
+    .hidden {
+      display: none !important;
+    }
+    
+    /* Load More */
+    .load-more {
+      text-align: center;
+      padding: 3rem 0;
+    }
+    
+    /* Modal */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    
+    .modal-content {
+      background: var(--white);
+      border: 4px solid var(--black);
+      max-width: 800px;
+      width: 100%;
+      max-height: 90vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 8px 8px 0 var(--black);
+    }
+    
+    .modal-header {
+      background: var(--yellow);
+      border-bottom: 4px solid var(--black);
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .modal-title {
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    
+    .modal-close {
+      background: var(--red);
+      border: 3px solid var(--black);
+      color: var(--white);
+      width: 40px;
+      height: 40px;
+      font-size: 1.5rem;
+      font-weight: 900;
+      cursor: pointer;
+      line-height: 1;
+    }
+    
+    .modal-close:hover {
+      background: var(--black);
+    }
+    
+    .modal-body {
+      padding: 2rem;
+      overflow-y: auto;
+    }
+    
+    .detail-section {
+      margin-bottom: 2rem;
+    }
+    
+    .detail-section h4 {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 3px solid var(--black);
+    }
+    
+    .detail-section p {
+      line-height: 1.7;
+    }
+    
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .action-btn {
+      padding: 0.75rem 1.5rem;
+      border: 3px solid var(--black);
+      background: var(--blue);
+      color: var(--white);
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: all 0.1s;
+    }
+    
+    .action-btn:hover {
+      transform: translate(2px, 2px);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .workflow-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .logo {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+      }
+      
+      .title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-grid">
+        <div class="logo-section">
+          <div class="title-block">
+            <h1 class="title">Coze 工作流库</h1>
+            <p class="subtitle">精选 AI 工作流模板 · 官方 + 社区</p>
+          </div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <span class="stat-number" id="totalCount">0</span>
+            <span class="stat-label">工作流</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number" id="sourceCount">2</span>
+            <span class="stat-label">数据源</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number" id="categoryCount">0</span>
+            <span class="stat-label">分类</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number" id="officialCount">0</span>
+            <span class="stat-label">官方</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="controls">
+    <div class="container">
+      <div class="search-bar">
+        <input type="text" id="searchInput" class="search-input" placeholder="搜索工作流名称、描述...">
+        <button id="randomBtn" class="btn btn-red">🎲 随机</button>
+      </div>
+      <div class="category-pills" id="categoryPills">
+        <!-- 动态生成 -->
+      </div>
+    </div>
+  </div>
+
+  <main class="main">
+    <div class="container">
+      <div class="results-bar">
+        <span id="resultsText">加载中...</span>
+      </div>
+      
+      <div id="loadingState" class="state">
+        <span class="state-icon">⚡</span>
+        <h3>正在加载工作流...</h3>
+        <p>请稍候</p>
+      </div>
+      
+      <div id="errorState" class="state hidden">
+        <span class="state-icon">❌</span>
+        <h3>加载失败</h3>
+        <p id="errorMessage">出了点问题</p>
+        <button id="retryBtn" class="btn btn-red">重新加载</button>
+      </div>
+      
+      <div id="noResultsState" class="state hidden">
+        <span class="state-icon">🔍</span>
+        <h3>未找到工作流</h3>
+        <p>试试调整搜索条件</p>
+      </div>
+      
+      <div id="workflowGrid" class="workflow-grid hidden"></div>
+      
+      <div id="loadMoreContainer" class="load-more hidden">
+        <button id="loadMoreBtn" class="btn btn-green">加载更多</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal -->
+  <div id="workflowModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle">工作流详情</h2>
+        <button class="modal-close" id="modalClose">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="detail-section">
+          <h4>📝 描述</h4>
+          <p id="modalDescription">加载中...</p>
+        </div>
+        <div class="detail-section">
+          <h4>🏷️ 信息</h4>
+          <div id="modalInfo"></div>
+        </div>
+        <div class="detail-section">
+          <h4>🔗 操作</h4>
+          <div class="action-buttons">
+            <a id="downloadBtn" class="action-btn" href="#" download>📥 下载</a>
+            <a id="officialBtn" class="action-btn" href="#" target="_blank">🌐 查看官方</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

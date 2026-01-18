@@ -1,0 +1,407 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 上传多文件，图文理解
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.2
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      - document
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: true
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: list-operator
+      id: 1729745506050-source-1729745610135-target
+      source: '1729745506050'
+      sourceHandle: source
+      target: '1729745610135'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: list-operator
+      id: 1729745506050-source-1729745656955-target
+      source: '1729745506050'
+      sourceHandle: source
+      target: '1729745656955'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: list-operator
+        targetType: document-extractor
+      id: 1729745656955-source-1729745812798-target
+      source: '1729745656955'
+      sourceHandle: source
+      target: '1729745812798'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: list-operator
+        targetType: llm
+      id: 1729745610135-source-llm-target
+      source: '1729745610135'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: document-extractor
+        targetType: llm
+      id: 1729745812798-source-1729745833319-target
+      source: '1729745812798'
+      sourceHandle: source
+      target: '1729745833319'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: template-transform
+      id: llm-source-1729746146331-target
+      source: llm
+      sourceHandle: source
+      target: '1729746146331'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: template-transform
+      id: 1729745833319-source-1729746146331-target
+      source: '1729745833319'
+      sourceHandle: source
+      target: '1729746146331'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: answer
+      id: 1729746146331-source-1729746188871-target
+      source: '1729746146331'
+      sourceHandle: source
+      target: '1729746188871'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables: []
+      height: 54
+      id: '1729745506050'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1729745610135'
+          - last_record
+        desc: ''
+        memory:
+          query_prompt_template: ''
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o-mini
+          provider: azure_openai
+        prompt_template:
+        - id: 93bf2586-0ea2-4f1c-8735-db18d483869d
+          role: system
+          text: 分析图片{{#context#}}的内容。
+        selected: false
+        title: 图片总结
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - '1729745610135'
+            - last_record
+          enabled: true
+      height: 98
+      id: llm
+      position:
+        x: 947.597527265154
+        y: 157.87337454558082
+      positionAbsolute:
+        x: 947.597527265154
+        y: 157.87337454558082
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        filter_by:
+          conditions:
+          - comparison_operator: in
+            key: type
+            value:
+            - image
+          enabled: true
+        item_var_type: file
+        limit:
+          enabled: false
+          size: 10
+        order_by:
+          enabled: false
+          key: ''
+          value: asc
+        selected: false
+        title: 筛选图片
+        type: list-operator
+        var_type: array[file]
+        variable:
+        - sys
+        - files
+      height: 94
+      id: '1729745610135'
+      position:
+        x: 382
+        y: 187.89726063163266
+      positionAbsolute:
+        x: 382
+        y: 187.89726063163266
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        filter_by:
+          conditions:
+          - comparison_operator: in
+            key: type
+            value:
+            - document
+          enabled: true
+        item_var_type: file
+        limit:
+          enabled: false
+          size: 10
+        order_by:
+          enabled: false
+          key: name
+          value: asc
+        selected: false
+        title: 筛选文档
+        type: list-operator
+        var_type: array[file]
+        variable:
+        - sys
+        - files
+      height: 94
+      id: '1729745656955'
+      position:
+        x: 382
+        y: 416
+      positionAbsolute:
+        x: 382
+        y: 416
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_array_file: false
+        selected: false
+        title: 文档提取器
+        type: document-extractor
+        variable_selector:
+        - '1729745656955'
+        - last_record
+      height: 94
+      id: '1729745812798'
+      position:
+        x: 686
+        y: 441
+      positionAbsolute:
+        x: 686
+        y: 441
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1729745812798'
+          - text
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o-mini
+          provider: azure_openai
+        prompt_template:
+        - id: 8f1f437e-b1c3-49ae-8442-fdda8a6db5c8
+          role: system
+          text: '## 角色
+
+            - 你是一个文档总结专家。
+
+
+            ## 技能
+
+            - 用简单的文字总结{{#context#}}的核心内容， 不超过100字。'
+        selected: false
+        title: 文档总结
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1729745833319'
+      position:
+        x: 990
+        y: 399
+      positionAbsolute:
+        x: 990
+        y: 399
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        selected: false
+        template: '{{ image }}
+
+
+          ---------------
+
+
+          {{ text }}
+
+          '
+        title: 模板转换
+        type: template-transform
+        variables:
+        - value_selector:
+          - llm
+          - text
+          variable: image
+        - value_selector:
+          - '1729745833319'
+          - text
+          variable: text
+      height: 54
+      id: '1729746146331'
+      position:
+        x: 1361.6721381781576
+        y: 220.11454546506414
+      positionAbsolute:
+        x: 1361.6721381781576
+        y: 220.11454546506414
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1729746146331.output#}}'
+        desc: ''
+        selected: false
+        title: 直接回复
+        type: answer
+        variables: []
+      height: 103
+      id: '1729746188871'
+      position:
+        x: 1685.8584497097556
+        y: 220.11454546506414
+      positionAbsolute:
+        x: 1685.8584497097556
+        y: 220.11454546506414
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -209.3160026715036
+      y: 78.45050323006512
+      zoom: 0.655657625004093

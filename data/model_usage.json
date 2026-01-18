@@ -1,0 +1,18 @@
+{
+  "currentModelIndex": 0,
+  "usageCount": 2,
+  "users": {
+    "wUrb1s9sXGeSmh2jN6ygAGivagI2": {
+      "modelIndex": 0,
+      "usageCount": 3
+    },
+    "_global": {
+      "modelIndex": 5,
+      "usageCount": 3
+    },
+    "3236606446@qq.com": {
+      "modelIndex": 2,
+      "usageCount": 1
+    }
+  }
+}

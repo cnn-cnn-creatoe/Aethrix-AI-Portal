@@ -1,0 +1,273 @@
+{
+  "name": "微信群聊总结工作流",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=总结“ {{ $json.name }}”",
+        "options": {
+          "systemMessage": "=你是一个中文的群聊总结的助手，你可以为一个微信的群聊记录，提取并总结每个时间段大家在重点讨论的话题内容。\n\n请帮我将 \"<talker>\" 在{{ $('Edit Fields').item.json.date }}的群聊内容总结成一个群聊报告，包含不多于5个的话题的总结（如果还有更多话题，可以在后面简单补充）。每个话题包含以下内容：\n- 话题名(50字以内，用有序列表排列并用markdown h2标题显示，同时附带热度，以🔥数量表示）\n- 参与者(不超过5个人，将重复的人名去重)\n- 时间段(从几点到几点)\n- 过程(50到200字左右）\n- 评价(50字以下)\n- 分割线： ------------\n\n另外有以下要求：\n1. 每个话题结束使用 ------------ 分割\n2. 使用中文冒号\n3. 无需大标题\n4. 开始给出本群讨论风格的整体评价，例如活跃、太水、太黄、太暴力、话题不集中、无聊诸如此类\n\n当前时间为：{{ $now }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        160,
+        40
+      ],
+      "id": "c681cc4d-8f18-408c-8702-a4bdd4966cbe",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "sseEndpoint": "http://host.docker.internal:5030/sse"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1,
+      "position": [
+        340,
+        280
+      ],
+      "id": "9359ee62-ac8a-4eb5-aec8-08e078068388",
+      "name": "MCP Client1"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "1a8629a6-152d-8038-9fa8-ca68e6c5503a",
+          "mode": "list",
+          "cachedResultName": "群聊记录",
+          "cachedResultUrl": "https://www.notion.so/1a8629a6152d80389fa8ca68e6c5503a"
+        },
+        "title": "群聊记录",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "名称|title",
+              "title": "={{ $today.minus(1,'days').toFormat(\"yyyy-MM-dd\")}}“{{ $('Loop Over Items').item.json.name }}”群聊简报"
+            }
+          ]
+        },
+        "blockUi": {
+          "blockValues": [
+            {
+              "textContent": "={{ $json.output }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        520,
+        40
+      ],
+      "id": "3e071efe-f0bf-4c69-bbf1-95aec23a62ad",
+      "name": "Notion",
+      "credentials": {
+        "notionApi": {
+          "id": "tHqNwAxXQ88MGWlm",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -740,
+        25
+      ],
+      "id": "a7b9c252-424e-4c89-9beb-5f5afed7d49e",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fc601f8f-3b9b-4f0c-b5e4-977470dc1d57",
+              "name": "name",
+              "value": "[\"AI学长交流群\", \"AI学长会员2群\", \"N8N工作流会员群\"]",
+              "type": "array"
+            },
+            {
+              "id": "8600b5f9-1e93-442a-8b2a-b8bad4f79e5d",
+              "name": "date",
+              "value": "={{ $today.minus(1,\"days\").toFormat(\"yyyy-MM-dd\")}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -520,
+        25
+      ],
+      "id": "54fa0632-7b2b-4d00-ae3b-64960f8f215f",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        100,
+        280
+      ],
+      "id": "c4f96ca9-c3a1-4c0c-8ea1-fdbaf2ab1982",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "W0zHfj3CAmXyIv00",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "name",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -300,
+        20
+      ],
+      "id": "01cfd1f4-4cfe-4225-9de7-f883c4b3cfde",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -80,
+        25
+      ],
+      "id": "5ff3e3d0-8a51-4ed7-a6d4-a005950fb113",
+      "name": "Loop Over Items"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "MCP Client1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notion": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c55c24de-3561-469f-9494-b7e3236dd558",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "667f8e49cea6f05a4f2d4764a2ef083b44c681d7bcf3709cc71f85be90eeca2e"
+  },
+  "id": "LAsrBlvUymgAgl1L",
+  "tags": []
+}

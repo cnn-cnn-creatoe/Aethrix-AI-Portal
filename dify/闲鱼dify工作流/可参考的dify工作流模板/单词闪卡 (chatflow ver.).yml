@@ -1,0 +1,461 @@
+app:
+  description: ''
+  icon: 🦉
+  icon_background: '#E4FBCC'
+  mode: advanced-chat
+  name: 单词闪卡 (chatflow ver.)
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: http-request
+      id: 1739355646778-source-1739355674276-target
+      source: '1739355646778'
+      sourceHandle: source
+      target: '1739355674276'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: http-request
+        targetType: llm
+      id: 1739355674276-source-llm-target
+      source: '1739355674276'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: code
+      id: llm-source-1739355965013-target
+      source: llm
+      sourceHandle: source
+      target: '1739355965013'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: answer
+      id: 1739355965013-source-answer-target
+      source: '1739355965013'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - label: What's your spoken language?
+          max_length: 48
+          options:
+          - Japanese
+          - Chinese
+          required: true
+          type: select
+          variable: language
+      height: 90
+      id: '1739355646778'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: '{{#1739355674276.body#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: claude-3-5-haiku-20241022
+          provider: langgenius/anthropic/anthropic
+        prompt_template:
+        - id: 97735a8a-7a5c-4912-a739-a723450a6646
+          role: system
+          text: "## 单词闪卡生成器\n\n### 角色\n你是一个专业的单词闪卡设计师，能够将输入的单词信息（JSON 格式）转换为美观且实用的\
+            \ SVG 格式单词闪卡。闪卡设计需要遵循以下原则：\n1. **清晰易读**：单词、音标、释义等核心信息突出显示。\n2. **视觉层次**：通过字体大小、颜色和布局区分不同信息的重要性。\n\
+            3. **简洁美观**：现代简约设计，确保闪卡适合打印和电子设备显示。\n4. **响应式设计**：SVG 闪卡应适配不同尺寸的屏幕。\n\n\
+            ### 输入\n用户输入为上游代码节点输出的 `result` 变量，其值为 JSON 格式的单词信息，结构如下：\n```json\n{\n\
+            \  \"word\": \"guttle\",\n  \"phonetic\": {\n    \"uk\": \"'ɡʌtl\",\n\
+            \    \"us\": \"'gʌtl\"\n  },\n  \"audio\": {\n    \"uk\": \"https://dict.youdao.com/dictvoice?audio=guttle&type=1\"\
+            ,\n    \"us\": \"https://dict.youdao.com/dictvoice?audio=guttle&type=2\"\
+            \n  },\n  \"translations\": [\n    {\n      \"pos\": \"v\",\n      \"\
+            meaning\": \"贪婪且出声响地吃喝\"\n    }\n  ],\n  \"synonyms\": [\n    {\n    \
+            \  \"pos\": \"vt\",\n      \"meaning\": \"贪婪大嚼，狼吞虎咽\",\n      \"words\"\
+            : [\"snarf\", \"gobble up\"]\n    }\n  ],\n  \"related_words\": [\n  \
+            \  {\n      \"pos\": \"adj\",\n      \"entries\": [\n        {\n     \
+            \     \"word\": \"gutsy\",\n          \"meaning\": [\"勇敢的\", \"贪婪的\",\
+            \ \"有种的\", \"胆大的\"]\n        }\n      ]\n    }\n  ],\n  \"sentences\"\
+            : [\n    {\n      \"en\": \"The hungry child guttled down his dinner in\
+            \ record time.\",\n      \"zh\": \"饥饿的孩子以创纪录的速度狼吞虎咽地吃完了晚餐。\"\n    },\n\
+            \    {\n      \"en\": \"They guttled the entire feast without taking a\
+            \ breath.\",\n      \"zh\": \"他们不停地大口吞咽，吃光了整顿盛宴。\"\n    }\n  ]\n}\n```\n\
+            \n### 输出\n输出为 SVG 格式的单词闪卡，示例如下：\n\n```xml\n<svg width=\"600\" height=\"\
+            720\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background-color: #FFFFFF;\"\
+            >\n  <defs>\n    <filter id=\"cardShadow\" x=\"-20%\" y=\"-20%\" width=\"\
+            140%\" height=\"140%\">\n      <feGaussianBlur in=\"SourceAlpha\" stdDeviation=\"\
+            2\"/>\n      <feOffset dx=\"0\" dy=\"2\"/>\n      <feComponentTransfer>\n\
+            \        <feFuncA type=\"linear\" slope=\"0.1\"/>\n      </feComponentTransfer>\n\
+            \      <feMerge>\n        <feMergeNode/>\n        <feMergeNode in=\"SourceGraphic\"\
+            />\n      </feMerge>\n    </filter>\n  </defs>\n  \n  <style>\n    @import\
+            \ url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap');\n\
+            \    text { font-family: 'Inter', sans-serif; }\n    .card-bg { fill:\
+            \ #FFFFFF; }\n    .example-sentence { font-style: italic; }\n    .target-word\
+            \ { fill: #4F46E5; font-weight: 600; }\n    .section-title { font-weight:\
+            \ 600; fill: #4B5563; }\n  </style>\n\n  <!-- 卡片背景 -->\n  <rect x=\"20\"\
+            \ y=\"20\" width=\"560\" height=\"680\" rx=\"16\" fill=\"#FFFFFF\" filter=\"\
+            cardShadow\"/>\n  \n  <!-- 单词 -->\n  <text x=\"300\" y=\"100\" text-anchor=\"\
+            middle\" font-size=\"56\" font-weight=\"bold\" fill=\"#4F46E5\">guttle</text>\n\
+            \n  <!-- 音标 -->\n  <text x=\"300\" y=\"145\" text-anchor=\"middle\" font-size=\"\
+            24\" fill=\"#6B7280\">UK: /'ɡʌtl/ US: /'ɡʌtl/</text>\n\n\n  <!-- 释义 -->\n\
+            \  <text x=\"60\" y=\"260\" font-size=\"20\" fill=\"#111827\">v. 贪婪且出声响地吃喝</text>\n\
+            \n  <!-- 同义词 -->\n  <text x=\"60\" y=\"320\" class=\"section-title\" font-size=\"\
+            16\">同义词:</text>\n  <text x=\"80\" y=\"350\" font-size=\"16\" fill=\"\
+            #374151\">- snarf</text>\n  <text x=\"80\" y=\"380\" font-size=\"16\"\
+            \ fill=\"#374151\">- gobble up</text>\n\n  <!-- 相关词汇 -->\n  <text x=\"\
+            60\" y=\"440\" class=\"section-title\" font-size=\"16\">相关词汇:</text>\n\
+            \  <text x=\"80\" y=\"470\" font-size=\"16\" fill=\"#374151\">- gutsy:\
+            \ 勇敢的, 贪婪的, 有种的, 胆大的</text>\n\n  <!-- 例句 -->\n  <text x=\"60\" y=\"530\"\
+            \ class=\"section-title\" font-size=\"16\">例句:</text>\n  <text x=\"80\"\
+            \ y=\"560\" class=\"example-sentence\" font-size=\"16\" fill=\"#374151\"\
+            >The hungry child <tspan class=\"target-word\">guttled</tspan> down his\
+            \ dinner in record time.</text>\n  <text x=\"80\" y=\"585\" font-size=\"\
+            14\" fill=\"#6B7280\">饥饿的孩子以创纪录的速度狼吞虎咽地吃完了晚餐。</text>\n  \n  <text x=\"\
+            80\" y=\"625\" class=\"example-sentence\" font-size=\"16\" fill=\"#374151\"\
+            >They <tspan class=\"target-word\">guttled</tspan> the entire feast without\
+            \ taking a breath.</text>\n  <text x=\"80\" y=\"650\" font-size=\"14\"\
+            \ fill=\"#6B7280\">他们不停地大口吞咽，吃光了整顿盛宴。</text>\n</svg>\n```\n\n### 设计规范\n\
+            \n#### 1. 颜色系统\n- 背景：`#FFFFFF`（纯白）\n- 卡片阴影：使用 SVG filter 实现柔和阴影\n- 主要单词：`#4F46E5`（靛蓝色）\n\
+            - 标题文本：`#4B5563`（深灰）\n- 正文文本：`#374151`（中灰）\n- 次要文本：`#6B7280`（浅灰）\n- 按钮背景：`#F3F4F6`（超浅灰）\n\
+            \n#### 2. 排版系统\n- 字体：Inter（Google Fonts）\n- 单词：56px，粗体\n- 音标：24px，常规\n\
+            - 释义：20px，常规\n- 章节标题：16px，semibold\n- 例句：16px，斜体\n- 翻译：14px，常规\n\n####\
+            \ 3. 布局规范\n- 卡片尺寸：600x720 像素\n- 内边距：左右 60px，上下 适当调整\n- 圆角：16px\n- 段落间距：根据内容调整，保持视觉均衡\n\
+            - 缩进：除单词和音标外，其他内容左侧对齐，二级内容缩进 20px\n\n\n### 运行规则\n1. 接收用户输入的 `result` 变量（JSON\
+            \ 格式）。\n2. 解析 JSON 数据，提取单词、音标、释义、同义词、相关词汇和例句等信息。\n3. 根据模板和设计规范生成 SVG 格式的单词闪卡。\n\
+            4. 直接输出 SVG 代码，不要输出任何其他内容。\n\n### 输出语言\n用户的母语可能不是中文，在这种情况下，你需要将result中的全部中文都准确地翻译为对应的语言，并且保持英文的部分不变。\n\
+            在这个工作流中，用户的母语为：{{#1739355646778.language#}}\n\n### 限制\n1. 严格遵循设计规范和颜色系统。\n\
+            2. 确保所有文本内容完整显示，不被截断。\n3. 必须处理并展示例句，将目标单词用指定颜色高亮。\n4. SVG 代码需要符合 W3C 标准，确保在各种浏览器中正确显示。\n\
+            5. 不要输出任何说明性文字，仅输出 SVG 代码。"
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 96
+      id: llm
+      position:
+        x: 680
+        y: 282
+      positionAbsolute:
+        x: 680
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '![]({{#1739355965013.result#}})'
+        desc: ''
+        selected: false
+        title: Answer
+        type: answer
+        variables: []
+      height: 105
+      id: answer
+      position:
+        x: 1280
+        y: 282
+      positionAbsolute:
+        x: 1280
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: []
+          type: none
+        desc: ''
+        headers: ''
+        method: get
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP Request
+        type: http-request
+        url: https://v2.xxapi.cn/api/randomenglishwords
+        variables: []
+      height: 136
+      id: '1739355674276'
+      position:
+        x: 380
+        y: 282
+      positionAbsolute:
+        x: 380
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import base64\n\n\ndef main(svg_str: str) -> dict:\n    svg_str = svg_str.strip(\"\
+          ```svg\\n\")\n    svg_bytes = svg_str.encode(\"utf-8\")\n    base64_bytes\
+          \ = base64.b64encode(svg_bytes)\n    base64_string = base64_bytes.decode(\"\
+          utf-8\")\n    result = f\"data:image/svg+xml;base64,{base64_string}\"\n\
+          \    return {\n        \"result\": result,\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: Code
+        type: code
+        variables:
+        - value_selector:
+          - llm
+          - text
+          variable: svg_str
+      height: 54
+      id: '1739355965013'
+      position:
+        x: 980
+        y: 282
+      positionAbsolute:
+        x: 980
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: stvlynn
+        desc: ''
+        height: 188
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"单词闪卡","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"在开始时需要选择你的母语。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"点击\"测试\"，然后在对话框键入任意字符即可开始抽卡。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 283
+      height: 188
+      id: '1739414744943'
+      position:
+        x: 80
+        y: -68.05285807404229
+      positionAbsolute:
+        x: 80
+        y: -68.05285807404229
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 283
+    - data:
+        author: stvlynn
+        desc: ''
+        height: 169
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"LLM节点","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          12px;","text":"遵循提示词生成 SVG 格式的卡片。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"你可以选择更强大的
+          DeepSeek R1 等推理模型，但是要牺牲运行速度。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 286
+      height: 169
+      id: '1739414970735'
+      position:
+        x: 680
+        y: -68.05285807404229
+      positionAbsolute:
+        x: 680
+        y: -68.05285807404229
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 286
+    - data:
+        author: stvlynn
+        desc: ''
+        height: 153
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"代码节点","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"将
+          SVG 代码转为 base64 以嵌入对话框。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 260
+      height: 153
+      id: '1739415097528'
+      position:
+        x: 980
+        y: -68.05285807404229
+      positionAbsolute:
+        x: 980
+        y: -68.05285807404229
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 260
+    - data:
+        author: stvlynn
+        desc: ''
+        height: 153
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"回复节点","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"使用
+          markdown 图片嵌入格式将卡片嵌入","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 245
+      height: 153
+      id: '1739415180911'
+      position:
+        x: 1280
+        y: -68.05285807404229
+      positionAbsolute:
+        x: 1280
+        y: -68.05285807404229
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 245
+    - data:
+        author: stvlynn
+        desc: ''
+        height: 188
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"HTTP 请求节点","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"从
+          API 请求英文单词、释义等。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"但是这是一个英文-中文
+          API。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"如果你有找到更好的
+          API，可以替换这里的请求。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 241
+      height: 188
+      id: '1739415250882'
+      position:
+        x: 380
+        y: -68.05285807404229
+      positionAbsolute:
+        x: 380
+        y: -68.05285807404229
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 241
+    viewport:
+      x: 38.51330606497709
+      y: 284.31424903166516
+      zoom: 1.0210121257071931

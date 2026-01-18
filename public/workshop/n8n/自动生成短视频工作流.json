@@ -1,0 +1,1184 @@
+{
+  "name": "自动生成短视频工作流 copy",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "视频主题",
+        "formDescription": "根据主题，自动生成短视频",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "视频主题",
+              "placeholder": "请输入主题",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "素材来源",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "免费素材"
+                  },
+                  {
+                    "option": "AI生成"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "AI生成素材类型",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "图片"
+                  },
+                  {
+                    "option": "视频"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "视频时长",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "10秒"
+                  },
+                  {
+                    "option": "15秒"
+                  },
+                  {
+                    "option": "30秒"
+                  },
+                  {
+                    "option": "60秒"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -840,
+        -210
+      ],
+      "id": "e9ec3026-c5e4-4080-9cfb-88e6f92489ee",
+      "name": "On form submission",
+      "webhookId": "07e4f111-6f76-49bc-9d4d-49f8ebed9f58"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('On form submission').item.json['视频主题'] }}",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=## Role:\n你是一名专业的爆款短视频创作者，专注于掌握和运用短视频文案创作技巧，帮助用户生成吸引眼球的短视频脚本。\n\n## Skills:\n- 熟悉抖音短视频平台的脚本爆款逻辑，了解哪种类型的脚本可能成为爆款\n- 擅长用幽默风趣，通俗易懂的语言风格\n- 擅长在前3句脚本，就能抓住目标群体的眼球\n- 根据文案内容生成一组和主题密切相关的英文关键词，用英文逗号分隔，以便我搜索素材\n\n## Constrains:\n- 脚本时长{{ $('On form submission').item.json['视频时长']}}左右\n- 直接输出脚本段落，不得包含任何类型的标记或格式，永远不要使用标题\n- 使用逗号和句号进行正常的语句分隔\n- 脚本长度不得低于60个汉字"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        -600,
+        -220
+      ],
+      "id": "d3972a78-f31c-4cc2-85a2-b75290192a12",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Basic LLM Chain').item.json.output.text }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# Role\n你是一个专业的爆款短视频创作者，擅长分析用户提供的文案内容并将其拆分成短视频脚本。你的任务是根据用户给的文案生成一份详细的短视频脚本，包括旁白和画面描述。\n\n## Skills\n### Skill 1: 分析与拆分内容\n- 当用户提供文案内容时，首先分析其主题和核心信息。\n- 将内容拆分为几个关键点，以便更好地组织视频脚本。\n\n### Skill 2: 生成短视频脚本\n- 根据拆分后的内容，编写旁白部分，确保语言流畅且吸引观众。\n- 为每个旁白段落生成画面描述，提供详细的视觉提示词，以指导图片或视频的制作。\n- 画面描述应与旁白内容紧密结合，增强观众的理解和体验。\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        200,
+        -40
+      ],
+      "id": "f99d7ea9-4816-4408-a497-1e665fdc09be",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1,
+      "position": [
+        224,
+        185
+      ],
+      "id": "f0dd2c73-5451-44d2-8aa9-245bf6f3f0e0",
+      "name": "DeepSeek Chat Model1",
+      "credentials": {
+        "deepSeekApi": {
+          "id": "peOp7pcjSxphhmmF",
+          "name": "DeepSeek account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"video_script\": [\n    {\n    \t\"voiceover\": \"文案/旁白\",\n    \t\"visual_description\": \"生成图片/视频的提示词\"\n    },\n    {\n    \t\"voiceover\": \"文案/旁白\",\n    \t\"visual_description\": \"生成图片/视频的提示词\"\n    }\n  ]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        344,
+        185
+      ],
+      "id": "939d01cd-e62f-459f-829c-dfe2284c9fd3",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "output.video_script",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        580,
+        -40
+      ],
+      "id": "91551922-71ea-4475-a989-f3e779a57088",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1000,
+        -60
+      ],
+      "id": "8c72d0bd-5eaf-4d69-89a7-4c88c5db7a87",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://host.docker.internal:8080/api/v1/videos",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"video_subject\": \"{{ $('On form submission').first().json[\"视频主题\"] }}\",\n    \"video_script\": \"{{ $('Basic LLM Chain').first().json.output.text }}\",\n    \"video_terms\": \"{{ $('On form submission').first().json[\"视频主题\"] }}\",\n    \"video_aspect\": \"9:16\",\n    \"video_concat_mode\": \"sequential\",\n    \"video_transition_mode\": \"None\",\n    \"video_clip_duration\": 4,\n    \"video_count\": 1,\n    \"video_source\": \"local\",\n    \"video_materials\":{{ $json.images.toJsonString() }},\n    \"video_language\": \"\",\n    \"voice_name\": \"siliconflow:FunAudioLLM/CosyVoice2-0.5B:benjamin-Male\",\n    \"voice_volume\": 1.0,\n    \"voice_rate\": 1.0,\n    \"bgm_type\": \"random\",\n    \"bgm_file\": \"\",\n    \"bgm_volume\": 0.2,\n    \"subtitle_enabled\": true,\n    \"subtitle_position\": \"bottom\",\n    \"custom_position\": 70.0,\n    \"font_name\": \"MicrosoftYaHeiBold.ttc\",\n    \"text_fore_color\": \"#FFFFFF\",\n    \"text_background_color\": true,\n    \"font_size\": 60,\n    \"stroke_color\": \"#000000\",\n    \"stroke_width\": 1.5,\n    \"n_threads\": 2,\n    \"paragraph_number\": 1\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1440,
+        -320
+      ],
+      "id": "e80e11ac-e3b5-4d62-a93b-8885a466ed29",
+      "name": "生成视频"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 定义输入项\nconst inputItems = $input.all();\nconst folderName = $('On form submission').first().json['视频主题']; // 添加文件夹名称输入项\n// 处理数据并创建合并后的数组\nconst output = {\n  json: {\n    images: inputItems.map(item => {\n      const originalPath = item.json.fileName;\n      const fileName = originalPath.split('/').pop();\n      const newPath = `/MoneyPrinterTurbo/storage/local_videos/${folderName}/${fileName}`;\n      \n      return {\n        provider: \"local\",\n        url: newPath,\n        duration: 0\n      };\n    })\n  }\n};\n\n// 返回单个对象\nreturn [output];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1240,
+        -320
+      ],
+      "id": "6e330dc1-696d-4bed-9390-52d3a64deac0",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1660,
+        -320
+      ],
+      "id": "c3ac460e-eb1a-4765-b417-3d8e52650c77",
+      "name": "Wait",
+      "webhookId": "9c3dcdaf-b53e-408f-9daa-59fd4a615db6"
+    },
+    {
+      "parameters": {
+        "url": "=http://host.docker.internal:8080/api/v1/tasks/{{ $json.data.task_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1900,
+        -320
+      ],
+      "id": "9a79242e-61d3-45ba-a13c-d60c78e8b6d5",
+      "name": "查询视频"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "f5d66584-990a-4d75-ae70-22e521de4e91",
+              "leftValue": "={{ $json.data.progress }}",
+              "rightValue": 100,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2120,
+        -320
+      ],
+      "id": "e9237347-b0ad-49d3-81ab-7940c2a9f0c0",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.data.videos[0] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2340,
+        -320
+      ],
+      "id": "dc924049-b667-4e3a-b349-40262f89f42c",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "  https://api.replicate.com/v1/models/google/imagen-4/predictions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer replicate密钥"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Prefer",
+              "value": "wait"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"input\": {\n      \"prompt\": \"{{ $json.visual_description }}\",\n      \"aspect_ratio\": \"9:16\",\n      \"output_format\": \"jpg\",\n      \"safety_filter_level\": \"block_medium_and_above\"\n    }\n  }",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1240,
+        -60
+      ],
+      "id": "ee7995b6-00bc-4996-9683-eee32ea8626d",
+      "name": "生成图片"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1452,
+        -60
+      ],
+      "id": "bf2964df-2c4b-487d-a6d9-cc582c5f60af",
+      "name": "下载图片"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "=./n8ndata/{{ $('On form submission').item.json[\"视频主题\"] }}/{{$node[\"Loop Over Items\"].context[\"currentRunIndex\"] + 1}}.jpg",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        1660,
+        -40
+      ],
+      "id": "3e8517cf-7424-4c86-a7ed-c5b478f08402",
+      "name": "写入磁盘"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://host.docker.internal:8080/api/v1/videos",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"video_subject\": \"{{ $('On form submission').first().json[\"视频主题\"] }}\",\n    \"video_script\": \"{{ $('Basic LLM Chain').first().json.output.text }}\",\n    \"video_terms\": \"\",\n    \"video_aspect\": \"9:16\",\n    \"video_concat_mode\": \"random\",\n    \"video_transition_mode\": \"None\",\n    \"video_clip_duration\": 3,\n    \"video_count\": 1,\n    \"video_source\": \"pexels\",\n    \"video_materials\": null,\n    \"video_language\": \"\",\n    \"voice_name\": \"siliconflow:FunAudioLLM/CosyVoice2-0.5B:benjamin-Male\",\n    \"voice_volume\": 1.0,\n    \"voice_rate\": 1.0,\n    \"bgm_type\": \"random\",\n    \"bgm_file\": \"\",\n    \"bgm_volume\": 0.2,\n    \"subtitle_enabled\": true,\n    \"subtitle_position\": \"bottom\",\n    \"custom_position\": 70.0,\n    \"font_name\": \"MicrosoftYaHeiBold.ttc\",\n    \"text_fore_color\": \"#FFFFFF\",\n    \"text_background_color\": true,\n    \"font_size\": 60,\n    \"stroke_color\": \"#000000\",\n    \"stroke_width\": 1.5,\n    \"n_threads\": 2,\n    \"paragraph_number\": 1\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -20,
+        -340
+      ],
+      "id": "3ffb5bd8-b53b-4a19-8891-2e559ef1c9a2",
+      "name": "生成视频1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        200,
+        -340
+      ],
+      "id": "1666461e-33ee-4ee9-bd83-61354a0ae293",
+      "name": "Wait1",
+      "webhookId": "53bf3fb3-3f0b-4e64-8c85-d39aa70eb131"
+    },
+    {
+      "parameters": {
+        "url": "=http://host.docker.internal:8080/api/v1/tasks/{{ $json.data.task_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        420,
+        -340
+      ],
+      "id": "1dbe1be2-2309-4939-be9c-f20242e5a077",
+      "name": "查询视频1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "f5d66584-990a-4d75-ae70-22e521de4e91",
+              "leftValue": "={{ $json.data.progress }}",
+              "rightValue": 100,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        620,
+        -340
+      ],
+      "id": "8e9b1b98-da0e-4774-9cf1-cbd0ba5b5efa",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.data.videos[0] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        820,
+        -360
+      ],
+      "id": "dfaefd05-e91b-409f-b488-5224b78d705b",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2a345237-6f76-4ae3-a3c8-3a15635ebfb7",
+              "leftValue": "={{ $('On form submission').item.json['素材来源'] }}",
+              "rightValue": "=免费素材",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -240,
+        -200
+      ],
+      "id": "5b4b308f-f077-4914-87f1-c963de714781",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"text\": \"文案内容\",\n\t\"keywords\": \"keyword1,keyword2,keyword3\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        -400,
+        20
+      ],
+      "id": "f3984dd9-272d-4a40-a796-7dd4a37ffc1d",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7d4edfb0-f06b-4dd5-89ad-b7e4603d3bc3",
+              "leftValue": "={{ $('On form submission').item.json['AI生成素材类型'] }}",
+              "rightValue": "图片",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        792,
+        -35
+      ],
+      "id": "75a3b646-c569-41c1-950a-a48826931028",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "command": "= mkdir -p ./n8ndata/{{ $('On form submission').item.json['视频主题'] }}"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        -24,
+        -35
+      ],
+      "id": "42e79477-7e2b-4a58-b516-c5bb02ec042f",
+      "name": "Execute Command1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1000,
+        220
+      ],
+      "id": "db790802-9bfb-4c6e-8199-fdc2a6397cbe",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "  https://api.replicate.com/v1/models/kwaivgi/kling-v1.6-standard/predictions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer replicate密钥"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Prefer",
+              "value": "wait"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"input\": {\n      \"prompt\": \"{{ $json.visual_description }}\",\n      \"duration\": 5,\n      \"cfg_scale\": 0.5,\n      \"aspect_ratio\": \"9:16\",\n      \"negative_prompt\": \"\"\n    }\n  }\n\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1220,
+        220
+      ],
+      "id": "05de5f54-2de7-46ff-9908-dd0d94dc6b42",
+      "name": "生成视频2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1440,
+        220
+      ],
+      "id": "756c3678-b810-4565-8015-537ac7b183cf",
+      "name": "Wait2",
+      "webhookId": "5d8432ae-2a2c-42a1-b944-68fd779bdcca"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.replicate.com/v1/predictions/{{ $json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer r8_SB3uiKbf2IBg1pIyZeMlgQ8d6nGUVJ41l876r"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1680,
+        220
+      ],
+      "id": "8bd635c1-f153-4c44-b0ba-ad67e791b925",
+      "name": "查询视频2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "f5d66584-990a-4d75-ae70-22e521de4e91",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "succeeded",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1900,
+        240
+      ],
+      "id": "8918ce7a-518b-4e1f-8f50-d4e1184f6601",
+      "name": "If4"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2120,
+        220
+      ],
+      "id": "462a6827-2902-4651-af03-81807daab9f6",
+      "name": "下载视频"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "=./n8ndata/{{ $('On form submission').item.json[\"视频主题\"] }}/{{$node[\"Loop Over Items1\"].context[\"currentRunIndex\"] + 1}}.mp4",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        2360,
+        220
+      ],
+      "id": "f39996f8-a83f-47c4-97a9-790192352d59",
+      "name": "写入磁盘1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -620,
+        20
+      ],
+      "id": "6dd25af1-ce91-4d88-a94c-f119ec8e1838",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "W0zHfj3CAmXyIv00",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "=./n8ndata/{{ $('On form submission').first().json[\"视频主题\"] }}/{{ $('On form submission').first().json[\"视频主题\"] }}.mp4",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        2560,
+        -320
+      ],
+      "id": "3af984e0-799b-4bb0-840f-db6c520fe55b",
+      "name": "写入磁盘3"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "=./n8ndata/{{ $('On form submission').item.json[\"视频主题\"] }}.mp4",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        -360
+      ],
+      "id": "9559901b-e5b9-4c88-880f-c9218390b0dd",
+      "name": "写入磁盘2"
+    }
+  ],
+  "pinData": {
+    "AI Agent": [
+      {
+        "json": {
+          "output": {
+            "video_script": [
+              {
+                "voiceover": "人生就像一场电影，高潮迭起，曲折离奇。",
+                "visual_description": "画面从一本翻开的书或电影胶片开始，镜头缓缓拉远，展现出一部电影的放映场景，背景音乐轻快。"
+              },
+              {
+                "voiceover": "但当我们学会笑对生命的起伏，便能品尝到更多精彩。",
+                "visual_description": "切换到一个阳光明媚的公园，主角（可以是任何人）在微笑面对生活中的小挑战，比如捡起掉落的冰淇淋或雨中撑伞。"
+              },
+              {
+                "voiceover": "珍惜每一个瞬间，你我皆主角。",
+                "visual_description": "镜头切换到多个生活片段：朋友聚会、家人拥抱、独自旅行等，最后定格在一面镜子前，观众看到自己，字幕浮现：'你的故事，正在上演。'"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeepSeek Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "生成图片",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "生成视频": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "生成视频",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "查询视频",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "查询视频": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "生成图片": {
+      "main": [
+        [
+          {
+            "node": "下载图片",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "下载图片": {
+      "main": [
+        [
+          {
+            "node": "写入磁盘",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "写入磁盘": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "生成视频1": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "查询视频1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "查询视频1": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "生成视频1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Execute Command1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "生成视频2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "生成视频2": {
+      "main": [
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "查询视频2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "查询视频2": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "下载视频",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "下载视频": {
+      "main": [
+        [
+          {
+            "node": "写入磁盘1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "写入磁盘1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "写入磁盘2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "写入磁盘3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "12cd1e34-b9b7-427e-b3fe-f0252819c48a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "667f8e49cea6f05a4f2d4764a2ef083b44c681d7bcf3709cc71f85be90eeca2e"
+  },
+  "id": "bzSJRN7NdKvkEFpl",
+  "tags": []
+}

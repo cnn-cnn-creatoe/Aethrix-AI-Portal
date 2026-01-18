@@ -1,0 +1,346 @@
+app:
+  description: ''
+  icon: 📄
+  icon_background: '#E0EAFF'
+  mode: workflow
+  name: deepseek 文档翻译器
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: iteration
+      id: 1739172739942-source-1739176506871-target
+      source: '1739172739942'
+      sourceHandle: source
+      target: '1739176506871'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        iteration_id: '1739176506871'
+        sourceType: iteration-start
+        targetType: document-extractor
+      id: 1739176506871start-source-1739176527617-target
+      source: 1739176506871start
+      sourceHandle: source
+      target: '1739176527617'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        iteration_id: '1739176506871'
+        sourceType: document-extractor
+        targetType: llm
+      id: 1739176527617-source-1739176531313-target
+      source: '1739176527617'
+      sourceHandle: source
+      target: '1739176531313'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: false
+        sourceType: iteration
+        targetType: end
+      id: 1739176506871-source-1739177400993-target
+      source: '1739176506871'
+      sourceHandle: source
+      target: '1739177400993'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - label: style
+          max_length: 48
+          options:
+          - Formal
+          - Professional
+          - Casual
+          - Enthusiastic
+          - Humorous
+          required: true
+          type: select
+          variable: style
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: file
+          max_length: 5
+          options: []
+          required: true
+          type: file-list
+          variable: file
+      height: 116
+      id: '1739172739942'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        error_handle_mode: terminated
+        height: 190
+        is_parallel: true
+        iterator_selector:
+        - '1739172739942'
+        - file
+        output_selector:
+        - '1739176531313'
+        - text
+        output_type: array[string]
+        parallel_nums: 10
+        selected: false
+        start_node_id: 1739176506871start
+        title: Iteration
+        type: iteration
+        width: 774
+      height: 190
+      id: '1739176506871'
+      position:
+        x: 384
+        y: 282
+      positionAbsolute:
+        x: 384
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 774
+      zIndex: 1
+    - data:
+        desc: ''
+        isInIteration: true
+        selected: false
+        title: ''
+        type: iteration-start
+      draggable: false
+      height: 48
+      id: 1739176506871start
+      parentId: '1739176506871'
+      position:
+        x: 24
+        y: 68
+      positionAbsolute:
+        x: 408
+        y: 350
+      selectable: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-iteration-start
+      width: 44
+      zIndex: 1002
+    - data:
+        desc: ''
+        isInIteration: true
+        is_array_file: true
+        iteration_id: '1739176506871'
+        selected: false
+        title: Doc Extractor
+        type: document-extractor
+        variable_selector:
+        - '1739172739942'
+        - file
+      height: 92
+      id: '1739176527617'
+      parentId: '1739176506871'
+      position:
+        x: 128
+        y: 68
+      positionAbsolute:
+        x: 512
+        y: 350
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        isInIteration: true
+        iteration_id: '1739176506871'
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-reasoner
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: fff544b2-f15d-44b6-9109-6d708c0a9809
+          role: system
+          text: '<角色>
+
+            你是一个中英文翻译专家，将用户输入的中文翻译成英文，或将用户输入的英文翻译成中文。
+
+            </角色>
+
+
+            <任务>
+
+            你需要遵循要求的翻译风格。
+
+            对于非中文内容，它将提供中文翻译结果。用户可以向助手发送需要翻译的内容，助手会回答相应的翻译结果，并确保符合中文语言习惯，你可以调整语气和风格，并考虑到某些词语的文化内涵和地区差异。
+
+            同时作为翻译家，需将原文翻译成具有信达雅标准的译文。"信" 即忠实于原文的内容与意图；"达" 意味着译文应通顺易懂，表达清晰；"雅" 则追求译文的文化审美和语言的优美。目标是创作出既忠于原作精神，又符合目标语言文化和读者审美的翻译。
+
+            翻译风格：{{#1739172739942.style#}}
+
+            </任务>
+
+
+            <限制>
+
+            不得输出和原文无关的废话
+
+            </限制>
+
+            '
+        - id: 54e921f3-e4ef-43c8-9090-1bffca1f8d94
+          role: user
+          text: '{{#1739176527617.text#}}'
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 96
+      id: '1739176531313'
+      parentId: '1739176506871'
+      position:
+        x: 432
+        y: 68
+      positionAbsolute:
+        x: 816
+        y: 350
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1739176506871'
+          - output
+          variable: output
+        selected: false
+        title: End
+        type: end
+      height: 90
+      id: '1739177400993'
+      position:
+        x: 1301
+        y: 282
+      positionAbsolute:
+        x: 1301
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: stvlynn
+        desc: ''
+        height: 183
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"多语言文档翻译工具","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"这是一款可以自动化文档解析、风格翻译和批量处理的翻译工具。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"你可以在开始时设置翻译风格。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 379
+      height: 183
+      id: '1739451232752'
+      position:
+        x: 80
+        y: 15.798696612205717
+      positionAbsolute:
+        x: 80
+        y: 15.798696612205717
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 379
+    viewport:
+      x: 86.3347640578379
+      y: 187.42202014095642
+      zoom: 0.8133791981321256

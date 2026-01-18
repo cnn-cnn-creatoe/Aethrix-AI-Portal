@@ -1,0 +1,290 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 查询数据库工作流
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 50
+        file_size_limit: 1024
+        image_file_size_limit: 1000
+        video_file_size_limit: 10000
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: http-request
+      id: 1740627784948-source-1740633996649-target
+      source: '1740627784948'
+      sourceHandle: source
+      target: '1740633996649'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: knowledge-retrieval
+      id: 1740626471634-source-1740634309122-target
+      source: '1740626471634'
+      sourceHandle: source
+      target: '1740634309122'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1740634309122-source-1740627784948-target
+      source: '1740634309122'
+      sourceHandle: source
+      target: '1740627784948'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: http-request
+        targetType: end
+      id: 1740633996649-source-1740635415636-target
+      source: '1740633996649'
+      sourceHandle: source
+      target: '1740635415636'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: 输入内容
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: content
+      height: 90
+      id: '1740626471634'
+      position:
+        x: 6.356798079078658
+        y: 527.6428718769624
+      positionAbsolute:
+        x: 6.356798079078658
+        y: 527.6428718769624
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1740634309122'
+          - result
+        desc: 大模型推导SQL
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-v3
+          provider: volcengine_maas
+        prompt_template:
+        - id: 5798076a-17f9-435a-b776-f02af3cfe685
+          role: system
+          text: '你是一个数据分析师，根据用户输入的{{#1740626471634.content#}}需求以及检索到{{#context#}}，生成对应的查询SQL，SQL必须经过严格的校验。
+
+
+            ## 你可以使用的其他方法
+
+            用户输入类似于“求和”或“总和”时，则在sql语句中使用SUM()。
+
+            用户输入类似于“平均数”或“平均”时，在在sql语句中使用AVG()。
+
+
+            ## 要求
+
+            1.如果用户输入的内容无法生成为sql语句，请直接说“抱歉，该命令无法形成数据库查询操作”。
+
+            2.当可以生成sql语句时，请确保输出的内容为完整正确的sql语句，不要输出此外的其他任何字符，确保你生成的内容用户可以直接执行查询操作。
+
+            3.对于字符串内容的查询请使用LIKE操作而不是等于操作。
+
+            4.请不要在回复中包括除sql语句之外的任何内容。
+
+            5.禁止中间过程输出。
+
+            6.输出的sql为一整行。
+
+            '
+        selected: false
+        title: 自然语言推导SQL语句LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 126
+      id: '1740627784948'
+      position:
+        x: 566.1189601966895
+        y: 476.8809160368261
+      positionAbsolute:
+        x: 566.1189601966895
+        y: 476.8809160368261
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - id: key-value-217
+            key: ''
+            type: text
+            value: '{ "sql":"{{#1740627784948.text#}}"}'
+          type: json
+        desc: 根据LLM推导的sql语句去查询
+        headers: ''
+        method: post
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: false
+          retry_interval: 100
+        selected: false
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: 查询sql结果请求
+        type: http-request
+        url: http://host.docker.internal:5000/query
+        variables: []
+      height: 138
+      id: '1740633996649'
+      position:
+        x: 858.404662695119
+        y: 833.1907983762455
+      positionAbsolute:
+        x: 858.404662695119
+        y: 833.1907983762455
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        dataset_ids:
+        - fa18503e-5572-4fc0-842a-07c834fd1d7f
+        desc: ''
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: weighted_score
+          top_k: 4
+          weights:
+            keyword_setting:
+              keyword_weight: 0
+            vector_setting:
+              embedding_model_name: nomic-embed-text
+              embedding_provider_name: ollama
+              vector_weight: 1
+        query_variable_selector:
+        - '1740626471634'
+        - content
+        retrieval_mode: multiple
+        selected: false
+        title: 知识检索
+        type: knowledge-retrieval
+      height: 92
+      id: '1740634309122'
+      position:
+        x: 296.4045801841297
+        y: 806.833628997713
+      positionAbsolute:
+        x: 296.4045801841297
+        y: 806.833628997713
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1740633996649'
+          - body
+          variable: json
+        selected: true
+        title: 结束
+        type: end
+      height: 90
+      id: '1740635415636'
+      position:
+        x: 1131.1665360242657
+        y: 527.6428718769624
+      positionAbsolute:
+        x: 1131.1665360242657
+        y: 527.6428718769624
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 310.26971824168004
+      y: -307.10918092635075
+      zoom: 1.0243892131296606

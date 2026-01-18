@@ -1,0 +1,18 @@
+##问题现在要求撰写mysql的语句，将可用库存占比80%（库存总量占比80%）（占比前80%的）的产品从高到低罗列出来
+##业务逻辑：先将所有可用库存加起来作为总库存，然后筛选出可用库存占总库存80%以上的产品，然后从高到低进行罗列
+##sql语句：
+
+-- 首先计算总库存
+SET @total_stock = (SELECT SUM(CAST(可用库存 AS UNSIGNED)) FROM mytable);
+
+-- 然后选择可用库存占总库存80%以上的产品，并以指定的JSON格式输出
+SELECT 
+    JSON_OBJECT(
+        '产品', 产品, 
+        '可用库存总数', SUM(CAST(可用库存 AS UNSIGNED)), 
+        '计量单位', 计量单位
+    ) AS result
+FROM mytable
+GROUP BY 产品, 计量单位
+HAVING SUM(CAST(可用库存 AS UNSIGNED)) > (@total_stock * 0.8);
+

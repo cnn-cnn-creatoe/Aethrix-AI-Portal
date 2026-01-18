@@ -1,0 +1,1406 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 数据统计分析
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.3
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 1000
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: true
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: true
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: 1732151456981-source-answer-target
+      selected: false
+      source: '1732151456981'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: code
+      id: 1732153817994-true-1732152926114-target
+      selected: false
+      source: '1732153817994'
+      sourceHandle: 'true'
+      target: '1732152926114'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: answer
+      id: 1732152926114-source-1732152908893-target
+      selected: false
+      source: '1732152926114'
+      sourceHandle: source
+      target: '1732152908893'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: if-else
+      id: 1732153817994-false-1732153988019-target
+      selected: false
+      source: '1732153817994'
+      sourceHandle: 'false'
+      target: '1732153988019'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: code
+      id: 1732153988019-true-1732154023290-target
+      selected: false
+      source: '1732153988019'
+      sourceHandle: 'true'
+      target: '1732154023290'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: answer
+      id: 1732154023290-source-1732154058355-target
+      selected: false
+      source: '1732154023290'
+      sourceHandle: source
+      target: '1732154058355'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: if-else
+      id: 1732153988019-false-1732154079951-target
+      selected: false
+      source: '1732153988019'
+      sourceHandle: 'false'
+      target: '1732154079951'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: code
+      id: 1732154079951-true-1732154109789-target
+      selected: false
+      source: '1732154079951'
+      sourceHandle: 'true'
+      target: '1732154109789'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: code
+      id: 1732154079951-false-1732154160372-target
+      selected: false
+      source: '1732154079951'
+      sourceHandle: 'false'
+      target: '1732154160372'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: answer
+      id: 1732154109789-source-1732154236106-target
+      selected: false
+      source: '1732154109789'
+      sourceHandle: source
+      target: '1732154236106'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: answer
+      id: 1732154160372-source-1732154244433-target
+      selected: false
+      source: '1732154160372'
+      sourceHandle: source
+      target: '1732154244433'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: knowledge-retrieval
+      id: 1732151368697-source-1732158935880-target
+      source: '1732151368697'
+      sourceHandle: source
+      target: '1732158935880'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1732158935880-source-1732158952605-target
+      source: '1732158935880'
+      sourceHandle: source
+      target: '1732158952605'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: answer
+      id: 1732152827381-source-1732159209172-target
+      source: '1732152827381'
+      sourceHandle: source
+      target: '1732159209172'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: answer
+        targetType: if-else
+      id: 1732159209172-source-1732153817994-target
+      source: '1732159209172'
+      sourceHandle: source
+      target: '1732153817994'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: if-else
+      id: 1732159087819-source-1732167735392-target
+      source: '1732159087819'
+      sourceHandle: source
+      target: '1732167735392'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1732167735392-false-1732151456981-target
+      source: '1732167735392'
+      sourceHandle: 'false'
+      target: '1732151456981'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: answer
+        targetType: code
+      id: answer-source-1732152827381-target
+      source: answer
+      sourceHandle: source
+      target: '1732152827381'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: answer
+      id: 1732167735392-true-1732167773905-target
+      source: '1732167735392'
+      sourceHandle: 'true'
+      target: '1732167773905'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: answer
+        targetType: llm
+      id: 1732167773905-source-1732167981036-target
+      source: '1732167773905'
+      sourceHandle: source
+      target: '1732167981036'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: 1732167941415-source-1732168063554-target
+      source: '1732167941415'
+      sourceHandle: source
+      target: '1732168063554'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: code
+      id: 1732177530436-source-1732159087819-target
+      source: '1732177530436'
+      sourceHandle: source
+      target: '1732159087819'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: if-else
+      id: 1732167981036-source-1732236636187-target
+      source: '1732167981036'
+      sourceHandle: source
+      target: '1732236636187'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1732236636187-false-1732167941415-target
+      source: '1732236636187'
+      sourceHandle: 'false'
+      target: '1732167941415'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: answer
+      id: 1732236636187-true-1732236667696-target
+      source: '1732236636187'
+      sourceHandle: 'true'
+      target: '1732236667696'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1732158952605-source-1732237109866-target
+      source: '1732158952605'
+      sourceHandle: source
+      target: '1732237109866'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: if-else
+      id: 1732237109866-source-1732237157896-target
+      source: '1732237109866'
+      sourceHandle: source
+      target: '1732237157896'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: code
+      id: 1732237157896-false-1732177530436-target
+      source: '1732237157896'
+      sourceHandle: 'false'
+      target: '1732177530436'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: answer
+      id: 1732237157896-true-1732237193635-target
+      source: '1732237157896'
+      sourceHandle: 'true'
+      target: '1732237193635'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables: []
+      height: 54
+      id: '1732151368697'
+      position:
+        x: 30
+        y: 263
+      positionAbsolute:
+        x: 30
+        y: 263
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1732151456981.text#}}
+
+
+          '
+        desc: ''
+        selected: false
+        title: 直接回复
+        type: answer
+        variables: []
+      height: 103
+      id: answer
+      position:
+        x: 2766
+        y: 263
+      positionAbsolute:
+        x: 2766
+        y: 263
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            frequency_penalty: 0.3
+            presence_penalty: 0.2
+            temperature: 0.5
+            top_p: 0.85
+          mode: chat
+          name: gpt-4o
+          provider: openai
+        prompt_template:
+        - id: fd4debf9-b795-4d08-8cc6-999dc604348d
+          role: system
+          text: '##角色：你是制造业数据分析专家。分析JSON格式的SQL查询结果，并撰写分析报告
+
+            ##关键规则：
+
+            1.所有数据已符合用户问题中的条件(如产品类型、日期范围）
+
+            2.直接使用提供的数据分析，不要质疑数据是否符合条件
+
+            3.不需再次筛选或确认数据类别/时间范围
+
+            4.数据为[]或空时，回复”没有查询到相关数据”，不得编造数据
+
+            5.不要有任何提示性语言
+
+            ##分析报告要求：
+
+            1.对需要统计的数据{{#1732159087819.result#}}进行统计分析.
+
+            2.记住:所有数据都符合用户问题条件，直接分析提供的数据。'
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1732151456981'
+      position:
+        x: 2461.374940603958
+        y: 263
+      positionAbsolute:
+        x: 2461.374940603958
+        y: 263
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import json\n\ndef main(json_data: str) -> dict:\n    data = json.loads(json_data)\n\
+          \    headers = data[0].keys()\n    table = \"| \" + \" | \".join(headers)\
+          \ + \" |\\n\"\n    table += \"| \" + \" | \".join([\"---\"] * len(headers))\
+          \ + \" |\\n\"\n    for row in data:\n        table += \"| \" + \" | \".join([str(row[header])\
+          \ for header in headers]) + \" |\\n\"\n    return {\"result\": table}  #\
+          \ Fixed closing parenthesis"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 生成表格
+        type: code
+        variables:
+        - value_selector:
+          - '1732159087819'
+          - result
+          variable: json_data
+      height: 54
+      id: '1732152827381'
+      position:
+        x: 3070
+        y: 263
+      positionAbsolute:
+        x: 3070
+        y: 263
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1732152926114.output#}}'
+        desc: ''
+        selected: false
+        title: 直接回复 2
+        type: answer
+        variables: []
+      height: 103
+      id: '1732152908893'
+      position:
+        x: 4286
+        y: 263
+      positionAbsolute:
+        x: 4286
+        y: 263
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import json\nimport random\n\ndef main(data):\n    weather_data = json.loads(data)\n\
+          \    \n    # 确保数据不为空且至少有一个元素\n    if not weather_data or len(weather_data)\
+          \ == 0:\n        return {\"output\": \"数据为空，无法生成饼图。\"}\n    \n    field_names\
+          \ = list(weather_data[0].keys())  # 获取字段名列表\n    \n    # 确保每个字典项至少有两个字段\n\
+          \    if len(field_names) < 2:\n        return {\"output\": \"数据字段不足，无法生成饼图。\"\
+          }\n    \n    field_data = {field: [] for field in field_names}  # 使用字段名作为字典的键\n\
+          \n    for item in weather_data:\n        for field in field_names:\n   \
+          \         field_data[field].append(item[field])\n\n    # 假设饼图的分类数据来自第一列，值来自第二列\n\
+          \    categories = field_data[field_names[0]]\n    values = field_data[field_names[1]]\n\
+          \n    # 生成饼图颜色和数据\n    pie_colors = [\n        f\"rgb({random.randint(0,\
+          \ 255)}, {random.randint(0, 255)}, {random.randint(0, 255)})\"\n       \
+          \ for _ in categories\n    ]\n    pie_data = [\n        {\"name\": category,\
+          \ \"value\": value, \"itemStyle\": {\"color\": color}}\n        for category,\
+          \ value, color in zip(categories, values, pie_colors)\n    ]\n\n    # 生成\
+          \ ECharts 图表配置\n    echarts_config = {\n        \"tooltip\": {\n       \
+          \     \"trigger\": \"item\",           \n            \"formatter\": \"{a}\
+          \ <br/>{b}: {c} ({d}%)\"\n        },\n        \"legend\": None,  # 不显示图例\n\
+          \        \"series\": [\n            {\n                \"name\": \"分类数据\"\
+          ,\n                \"type\": \"pie\",\n                \"radius\": \"50%\"\
+          ,\n                \"data\": pie_data,\n                \"label\": {\n \
+          \                  \"show\": False,  # 不显示标签\n                   \"position\"\
+          : \"center\"\n                },                \n                \"emphasis\"\
+          : {\n                    \"itemStyle\": {\n                        \"shadowBlur\"\
+          : 10,\n                        \"shadowOffsetX\": 0,\n                 \
+          \       \"shadowColor\": \"rgba(0, 0, 0, 0.5)\"\n                    }\n\
+          \                }\n            }\n        ]\n    }\n\n\n\n    # 输出结果\n\
+          \    output = (\n        \"```echarts\\n\" +\n        json.dumps(echarts_config,\
+          \ indent=2, ensure_ascii=False) +\n        \"\\n```\\n\\n图例:\\n\" \n   \
+          \ )\n    return {\"output\": output}"
+        code_language: python3
+        desc: ''
+        outputs:
+          output:
+            children: null
+            type: string
+        selected: false
+        title: 饼状图
+        type: code
+        variables:
+        - value_selector:
+          - '1732159087819'
+          - result
+          variable: data
+      height: 54
+      id: '1732152926114'
+      position:
+        x: 3982
+        y: 263
+      positionAbsolute:
+        x: 3982
+        y: 263
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: 469280df-4af4-4332-b80e-cc8080b315a3
+            value: 饼状图
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支
+        type: if-else
+      height: 126
+      id: '1732153817994'
+      position:
+        x: 3678
+        y: 263
+      positionAbsolute:
+        x: 3678
+        y: 263
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: bec1eae2-108d-4b0a-8cea-e149b2cc9c92
+            value: 折线图
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          - comparison_operator: contains
+            id: 2cb04889-61fb-4d4d-bb12-562f05b46faa
+            value: 趋势
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: 'true'
+          logical_operator: or
+        desc: ''
+        selected: false
+        title: 条件分支 2
+        type: if-else
+      height: 152
+      id: '1732153988019'
+      position:
+        x: 3982
+        y: 357
+      positionAbsolute:
+        x: 3982
+        y: 357
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import json\nimport random\n\ndef main(data):\n    weather_data = json.loads(data)\n\
+          \    \n    # 确保数据不为空且至少有一个元素\n    if not weather_data or len(weather_data)\
+          \ == 0:\n        return {\"output\": \"数据为空，无法生成折线图。\"}\n    \n    field_names\
+          \ = list(weather_data[0].keys())  # 获取字段名列表\n    \n    # 确保每个字典项至少有两个字段\n\
+          \    if len(field_names) < 2:\n        return {\"output\": \"数据字段不足，无法生成折线图。\"\
+          }\n    \n    field_data = {field: [] for field in field_names}  # 使用字段名作为字典的键\n\
+          \n    for item in weather_data:\n        for field in field_names:\n   \
+          \         field_data[field].append(item[field])\n\n    # 假设折线图的x轴数据来自第一列，y轴数据来自第二列\n\
+          \    x_axis_data = field_data[field_names[0]]\n    y_axis_data = field_data[field_names[1]]\n\
+          \n    # 生成 ECharts 图表配置\n    echarts_config = {\n        \"tooltip\": {\n\
+          \            \"trigger\": \"axis\",\n            \"formatter\": \"{a} <br/>{b}:\
+          \ {c}\"\n        },\n        \"xAxis\": {\n            \"type\": \"category\"\
+          ,\n            \"data\": x_axis_data,\n            \"axisLabel\": {\n  \
+          \              \"show\": False  # 不显示 X 轴的标签\n            }\n        },\n\
+          \        \"yAxis\": {\n            \"type\": \"value\"\n        },\n   \
+          \     \"series\": [\n            {\n                \"name\": \"分类数据\",\n\
+          \                \"type\": \"line\",\n                \"data\": y_axis_data,\n\
+          \                \"smooth\": True,  # 平滑曲线\n                \"lineStyle\"\
+          : {\n                    \"width\": 2\n                },\n            \
+          \    \"itemStyle\": {\n                    \"color\": f\"rgb({random.randint(0,\
+          \ 255)}, {random.randint(0, 255)}, {random.randint(0, 255)})\"\n       \
+          \         },\n                \"symbolSize\": 8,  # 点的大小\n             \
+          \   \"label\": {\n                    \"show\": True,  # 显示数据标签\n      \
+          \              \"position\": \"top\",  # 标签显示在点的上方\n                   \
+          \ \"formatter\": \"{c}\"  # 标签内容为数据值\n                }\n            }\n\
+          \        ]\n    }\n\n    # 输出结果\n    output = (\n        \"```echarts\\\
+          n\" +\n        json.dumps(echarts_config, indent=2, ensure_ascii=False)\
+          \ +\n        \"\\n```\\n\\n图例:\\n\"\n    )\n    return {\"output\": output}"
+        code_language: python3
+        desc: ''
+        outputs:
+          output:
+            children: null
+            type: string
+        selected: false
+        title: 折线图
+        type: code
+        variables:
+        - value_selector:
+          - '1732159087819'
+          - result
+          variable: data
+      height: 54
+      id: '1732154023290'
+      position:
+        x: 4286
+        y: 430.5
+      positionAbsolute:
+        x: 4286
+        y: 430.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1732154023290.output#}}'
+        desc: ''
+        selected: false
+        title: 直接回复 3
+        type: answer
+        variables: []
+      height: 103
+      id: '1732154058355'
+      position:
+        x: 4590
+        y: 406
+      positionAbsolute:
+        x: 4590
+        y: 406
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: 9ff96c7c-60f4-4ee4-ac5d-4ebc378c2c33
+            value: 折线图
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          - comparison_operator: contains
+            id: d65e0f92-7845-49c3-bede-9540ddfa657e
+            value: 柱状图
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: 'true'
+          logical_operator: and
+        - case_id: 28bb6146-9170-4d56-bb27-f628962cb9fb
+          conditions:
+          - comparison_operator: contains
+            id: bfd9bc9d-40f1-43d8-a219-fa3fb63c4737
+            value: 复合图
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: 28bb6146-9170-4d56-bb27-f628962cb9fb
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支 3
+        type: if-else
+      height: 200
+      id: '1732154079951'
+      position:
+        x: 4286
+        y: 524.5
+      positionAbsolute:
+        x: 4286
+        y: 524.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import json\nimport random\n\ndef main(data):\n    weather_data = json.loads(data)\n\
+          \    field_names = list(weather_data[0].keys())  # 获取字段名列表\n    field_data\
+          \ = {field: [] for field in field_names}  # 使用字段名作为字典的键\n\n    # 按字段逐项整理数据\n\
+          \    for item in weather_data:\n        for field in field_names:\n    \
+          \        field_data[field].append(item[field])\n\n    # 确保折线图和柱状图严格对应分类轴\
+          \ (X 轴)\n    x_axis_data = field_data[field_names[0]]  # 分类轴数据\n    bar_values\
+          \ = field_data[field_names[1]]  # 柱状图数据\n    line_values = field_data[field_names[1]]\
+          \  # 折线图数据 (保持一致)\n\n    # 生成柱状图系列数据\n    bar_colors = [\n        f\"rgb({random.randint(0,\
+          \ 255)}, {random.randint(0, 255)}, {random.randint(0, 255)})\"\n       \
+          \ for _ in bar_values\n    ]\n    bar_series = {\n        \"name\": \"柱状图\"\
+          ,\n        \"type\": \"bar\",\n    \"data\": [\n        {\"value\": value,\
+          \ \"itemStyle\": {\"color\": color}, \"label\": {\"show\": True, \"position\"\
+          : \"top\", \"color\": \"#000\"}}\n        for value, color in zip(bar_values,\
+          \ bar_colors)\n    ],\n        \"barGap\": \"0%\",  # 禁止柱间间距\n        \"\
+          barCategoryGap\": \"50%\",  # 设置分类间距\n    }\n\n    # 生成折线图系列数据\n    line_series\
+          \ = {\n        \"name\": \"折线图\",\n        \"type\": \"line\",\n       \
+          \ \"data\": [{\"value\": value} for value in line_values],  # 与柱状图数据严格对应\n\
+          \        \"smooth\": True,\n        \"lineStyle\": {\n            \"width\"\
+          : 2\n        },\n        \"itemStyle\": {\n            \"color\": f\"rgb({random.randint(0,\
+          \ 255)}, {random.randint(0, 255)}, {random.randint(0, 255)})\"\n       \
+          \ },\n        \"symbolSize\": 8,\n        \"label\": {\n            \"show\"\
+          : False  # 隐藏折线图标注\n        }\n    }\n\n    # ECharts 配置\n    echarts_config\
+          \ = {\n        \"title\": {\n            \"text\": \"库存数据\"\n        },\n\
+          \        \"tooltip\": {\n            \"trigger\": \"axis\",\n          \
+          \  \"axisPointer\": {\n                \"type\": \"cross\",\n          \
+          \      \"label\": {\n                    \"backgroundColor\": \"#6a7985\"\
+          \n                }\n            }\n        },\n        \"legend\": {\n\
+          \            \"show\": False  # 隐藏图例\n        },\n        \"xAxis\": {\n\
+          \            \"type\": \"category\",\n            \"data\": x_axis_data,\
+          \  # 分类轴\n            \"axisLabel\": {\n                \"show\": False\
+          \  # 隐藏X轴标签\n            }\n        },\n        \"yAxis\": {\n         \
+          \   \"type\": \"value\"\n        },\n        \"series\": [bar_series, line_series]\
+          \  # 合并系列数据\n    }\n\n    # 输出结果\n    output = (\n        \"```echarts\\\
+          n\" +\n        json.dumps(echarts_config, indent=2, ensure_ascii=False)\
+          \ +\n        \"\\n```\"\n    )\n    return {\"output\": output}"
+        code_language: python3
+        desc: ''
+        outputs:
+          output:
+            children: null
+            type: string
+        selected: false
+        title: 折线+柱状图
+        type: code
+        variables:
+        - value_selector:
+          - '1732159087819'
+          - result
+          variable: data
+      height: 54
+      id: '1732154109789'
+      position:
+        x: 4590
+        y: 597.5
+      positionAbsolute:
+        x: 4590
+        y: 597.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import json\nimport random\n\ndef main(data):\n    weather_data = json.loads(data)\n\
+          \    field_names = list(weather_data[0].keys())  # 获取字段名列表\n    field_data\
+          \ = {field: [] for field in field_names}  # 使用字段名作为字典的键\n\n    for item\
+          \ in weather_data:\n        for field in field_names:\n            field_data[field].append(item[field])\n\
+          \n    # 生成每个柱子的颜色\n    series_data = []\n    for field in field_names[1:]:\
+          \  # 排除分类轴\n        field_colors = [\n            f\"rgb({random.randint(0,\
+          \ 255)}, {random.randint(0, 255)}, {random.randint(0, 255)})\"\n       \
+          \     for _ in field_data[field_names[0]]  # 生成与分类轴数据相同数量的颜色\n        ]\n\
+          \        series_data.append({\n            \"name\": field,\n          \
+          \  \"type\": \"bar\",\n            \"data\": [\n                {\"value\"\
+          : value, \"itemStyle\": {\"color\": color}}\n                for value,\
+          \ color in zip(field_data[field], field_colors)\n            ],\n      \
+          \      \"label\": {\n                \"show\": True,\n                \"\
+          position\": \"top\",\n                \"formatter\": \"{c}\"\n         \
+          \   }\n        })\n\n    # 生成 ECharts 图表配置\n    echarts_config = {\n   \
+          \     \"title\": {\n            \"text\": \"库存数据\"\n        },\n       \
+          \ \"tooltip\": {},\n        \"xAxis\": {\n            \"type\": \"category\"\
+          ,\n            \"data\": field_data[field_names[0]],\n            \"axisLabel\"\
+          : {\n                \"show\": False  # 不显示x轴的数据标签\n            }\n    \
+          \    },\n        \"yAxis\": {},\n        \"series\": series_data\n    }\n\
+          \n    # 输出结果\n    output = (\n        \"```echarts\\n\" +\n        json.dumps(echarts_config,\
+          \ indent=2, ensure_ascii=False) +\n        \"\\n```\"\n    )\n    return\
+          \ {\"output\": output}"
+        code_language: python3
+        desc: ''
+        outputs:
+          output:
+            children: null
+            type: string
+        selected: false
+        title: 柱状图
+        type: code
+        variables:
+        - value_selector:
+          - '1732159087819'
+          - result
+          variable: data
+      height: 54
+      id: '1732154160372'
+      position:
+        x: 4590
+        y: 740.5
+      positionAbsolute:
+        x: 4590
+        y: 740.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1732154109789.output#}}'
+        desc: ''
+        selected: false
+        title: 直接回复 4
+        type: answer
+        variables: []
+      height: 103
+      id: '1732154236106'
+      position:
+        x: 4894
+        y: 573
+      positionAbsolute:
+        x: 4894
+        y: 573
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1732154160372.output#}}'
+        desc: ''
+        selected: false
+        title: 直接回复 5
+        type: answer
+        variables: []
+      height: 103
+      id: '1732154244433'
+      position:
+        x: 4894
+        y: 716
+      positionAbsolute:
+        x: 4894
+        y: 716
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        dataset_ids:
+        - fb5c7c53-fec8-41ac-b9be-871e8e730bf1
+        desc: ''
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: reranking_model
+          reranking_model:
+            model: gte-rerank
+            provider: tongyi
+          score_threshold: null
+          top_k: 10
+          weights:
+            keyword_setting:
+              keyword_weight: 0.3
+            vector_setting:
+              embedding_model_name: text-embedding-3-small
+              embedding_provider_name: openai
+              vector_weight: 0.7
+        query_variable_selector:
+        - '1732151368697'
+        - sys.query
+        retrieval_mode: multiple
+        selected: false
+        title: 知识检索
+        type: knowledge-retrieval
+      height: 92
+      id: '1732158935880'
+      position:
+        x: 334
+        y: 263
+      positionAbsolute:
+        x: 334
+        y: 263
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1732158935880'
+          - result
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o
+          provider: openai
+        prompt_template:
+        - id: 6c642e66-b135-4e38-a805-dab1af90b1e0
+          role: system
+          text: "你是制造业数据分析专家，精通MYSQL，根据用户问题生成SQL查询。\n核心规则：\n1.仅使用用户提到的表和字段\n2.确保SQL兼容MYSQL\n\
+            3.只用简体中文，禁用繁体中文\n4.只输出一个完整SQL语句，无注释\n5.无论是否需要输出产品名，都请将产品名放在第一列进行输出\n6.无论是否需要输出产品可用库存都需要输出，并保证可用库存在第二列\n\
+            \n关键技巧：\n1.WHERE语句：\n -对于字符串和长文本字段用LIKE操作，而不是等于操作，例如：WHERE 产品型号 LIKE N'%关键词%'，而不是WHERE\
+            \ 产品型号=‘关键词’\n -日期用DATEDIFF: WHERE DATEDIFF(day,生成完成时间，GETDATE()) = 0\n\
+            \n2.日期处理：\n - 用CAST转换日期：CAST(生成完成时间 AS DATE)\n - 用DATEADD和DATEDIFF计算\n\
+            \ - 用GETDATE()获取当前日期\n - 禁用DATE()函数\n\n3.聚合函数：\n - SUM():总和（如总产量）\n -\
+            \ AVG():平均值（如平均时间）\n - COUNT():计数（如产品数量）\n\n4.除法处理：\n必须用模板：\nCASE WHEN\
+            \ [除数] =0 THEN 0\nELSE CAST([被除数] AS FLOAT)/[除数]\nEND AS [结果列名]\n\n5.日期范围示例：\n\
+            \ - 今天：CAST(生产完成时间 AS DATE) = CAST(GETDATE() AS DATE)\n - 本周：DATEPART(week,生产完成时间)\
+            \ = DATEPART(week,GETDATE())\n   AND DATEPART(year,生产完成时间) = DATEPART(year,GETDATE())\n\
+            \n注意：\n- 检查表名和字段名\n- 字符字段用LIKE N‘%关键词%’\n- 所有除法用指定模板\n- 日期处理用正确函数\n- 根据需求选择正确的聚合函数\n\
+            \n参考示例与业务逻辑说明：{{#context#}}"
+        - id: 316ce6ce-c68e-4ff9-8059-2195ad4c8364
+          role: user
+          text: "(填入你的数据库表结构描述）\n 问题：{{#sys.query#}}"
+        selected: false
+        title: LLM 2
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1732158952605'
+      position:
+        x: 638
+        y: 263
+      positionAbsolute:
+        x: 638
+        y: 263
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import urllib.request\n\nimport json\n\ndef main(sql_query: str) ->\
+          \ dict:\n\n    # Flask 服务端点，这个服务运行在后台，用途是接收一个sql语句，提交给数据库查询并获得结果\n\n   \
+          \ api_url = \"http://(填入你的flask地址)/execute_query\"\n\n    \n\n    #\
+          \ 请求体\n\n    payload = {\n\n        \"sql_query\": sql_query\n\n    }\n\n\
+          \    \n\n    # 将请求体转换为 JSON 字符串\n\n    data = json.dumps(payload).encode('utf-8')\n\
+          \n    \n\n    # 创建请求对象\n\n    req = urllib.request.Request(api_url, data=data,\
+          \ headers={\"Content-Type\": \"application/json\"})\n\n    \n\n    try:\n\
+          \n        # 发送请求并获取响应\n\n        with urllib.request.urlopen(req) as response:\n\
+          \n            # 读取并解码响应\n\n            result_data = json.loads(response.read().decode('utf-8'))\
+          \  \n\n            # 将结果转换为字符串格式\n\n            result_str = json.dumps(result_data,\
+          \ ensure_ascii=False)  # 确保中文字符正常显示\n\n            return {'result': result_str}\
+          \  # 返回字符串类型的结果\n\n    except Exception as e:\n\n        raise Exception(f\"\
+          Error: {str(e)}\")"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 执行查询
+        type: code
+        variables:
+        - value_selector:
+          - '1732177530436'
+          - result
+          variable: sql_query
+      height: 54
+      id: '1732159087819'
+      position:
+        x: 1854
+        y: 263
+      positionAbsolute:
+        x: 1854
+        y: 263
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1732152827381.result#}}'
+        desc: ''
+        selected: false
+        title: 直接回复 6
+        type: answer
+        variables: []
+      height: 103
+      id: '1732159209172'
+      position:
+        x: 3374
+        y: 263
+      positionAbsolute:
+        x: 3374
+        y: 263
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: 55b3014f-36fa-4867-8b64-ba9607d42ea3
+            value: '[]'
+            varType: string
+            variable_selector:
+            - '1732159087819'
+            - result
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 查询结果进行判断
+        type: if-else
+      height: 126
+      id: '1732167735392'
+      position:
+        x: 2158
+        y: 263
+      positionAbsolute:
+        x: 2158
+        y: 263
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: 抱歉在数据库中未查询到相关数据。
+        desc: ''
+        selected: false
+        title: 直接回复 7
+        type: answer
+        variables: []
+      height: 100
+      id: '1732167773905'
+      position:
+        x: 2376.285714285714
+        y: 428
+      positionAbsolute:
+        x: 2376.285714285714
+        y: 428
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: detail
+          provider: openai_api_compatible
+        prompt_template:
+        - id: 3e24d7bf-210f-4d89-b804-ec05a047af7a
+          role: system
+          text: '{{#1732167981036.text#}}的近期市场价格及走势'
+        selected: true
+        title: LLM 3
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1732167941415'
+      position:
+        x: 3374
+        y: 428
+      positionAbsolute:
+        x: 3374
+        y: 428
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o
+          provider: openai
+        prompt_template:
+        - id: 315cd4d2-0deb-4a14-bbc9-8dca3fc29555
+          role: system
+          text: 提取出{{#sys.query#}}问题中的产品名，如果没有具体产品名，请直接输出“null”
+        selected: false
+        title: LLM 4
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1732167981036'
+      position:
+        x: 2766
+        y: 428
+      positionAbsolute:
+        x: 2766
+        y: 428
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '但我在网上帮你查到了这些，希望对您有用！
+
+          {{#1732167941415.text#}}'
+        desc: ''
+        selected: false
+        title: 直接回复 8
+        type: answer
+        variables: []
+      height: 119
+      id: '1732168063554'
+      position:
+        x: 3678
+        y: 429
+      positionAbsolute:
+        x: 3678
+        y: 429
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import re\nimport json\n\ndef main(sql_string):\n    # 检查输入参数类型\n \
+          \   if not isinstance(sql_string, str):\n        return {\n            \"\
+          result\": \"Error: input should be a string.\"\n        }\n\n    # 移除代码块标记\n\
+          \    sql_string = re.sub(r'```sql\\s*', '', sql_string)\n    sql_string\
+          \ = re.sub(r'\\s*```', '', sql_string)\n\n    # 移除指定的字样\n    sql_string\
+          \ = sql_string.replace('mysql', '')\n    sql_string = sql_string.replace('sql\\\
+          \\n', '')\n    \n    # 移除反斜杠n\n    sql_string = sql_string.replace('\\\\\
+          n', ' ')\n\n    # 移除多余的空白字符\n    sql_string = ' '.join(sql_string.split())\n\
+          \n    # 返回处理后的SQL字符串\n    return {\n        \"result\": sql_string,\n  \
+          \  }"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 清除多余符号
+        type: code
+        variables:
+        - value_selector:
+          - '1732158952605'
+          - text
+          variable: sql_string
+      height: 54
+      id: '1732177530436'
+      position:
+        x: 1550
+        y: 263
+      positionAbsolute:
+        x: 1550
+        y: 263
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: 9241134e-0c67-4943-90be-a5b077225b9b
+            value: 'null'
+            varType: string
+            variable_selector:
+            - '1732167981036'
+            - text
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支 5
+        type: if-else
+      height: 126
+      id: '1732236636187'
+      position:
+        x: 3070
+        y: 389.5
+      positionAbsolute:
+        x: 3070
+        y: 389.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: sorry，无法查询相关信息！
+        desc: ''
+        selected: false
+        title: 直接回复 9
+        type: answer
+        variables: []
+      height: 100
+      id: '1732236667696'
+      position:
+        x: 3374
+        y: 566
+      positionAbsolute:
+        x: 3374
+        y: 566
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4
+          provider: openai
+        prompt_template:
+        - id: 484a2276-4390-4e63-9b95-720f795888e5
+          role: system
+          text: 判断{{#1732158952605.text#}}是否是一个sql语句，如果不是请直接输出“null”
+        selected: false
+        title: LLM 5
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1732237109866'
+      position:
+        x: 942
+        y: 263
+      positionAbsolute:
+        x: 942
+        y: 263
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: b4d5cf4f-6280-42d3-a83f-e025c4158a3f
+            value: 'null'
+            varType: string
+            variable_selector:
+            - '1732237109866'
+            - text
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支 6
+        type: if-else
+      height: 126
+      id: '1732237157896'
+      position:
+        x: 1246
+        y: 263
+      positionAbsolute:
+        x: 1246
+        y: 263
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: sorry，无法与您进行交流，只能统计分析数据库信息
+        desc: ''
+        selected: false
+        title: 直接回复 10
+        type: answer
+        variables: []
+      height: 116
+      id: '1732237193635'
+      position:
+        x: 1550
+        y: 357
+      positionAbsolute:
+        x: 1550
+        y: 357
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -2614.970181401974
+      y: -20.475042311386346
+      zoom: 0.9072347108245612

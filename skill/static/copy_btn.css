@@ -1,0 +1,61 @@
+/* Copy Prompt Buttons Container */
+.copy-prompt-btns {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+/* Copy Prompt Button - Base Style */
+.copy-prompt-btn {
+    background: linear-gradient(90deg, #00f3ff, #0066ff);
+    color: #000;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.4);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.copy-prompt-btn.copy-zh {
+    background: linear-gradient(90deg, #ff6b6b, #ffa500);
+}
+
+.copy-prompt-btn.copy-en {
+    background: linear-gradient(90deg, #00f3ff, #0066ff);
+}
+
+.copy-prompt-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+.copy-prompt-btn:active {
+    transform: translateY(0);
+}
+
+/* Ensure modal header handles items properly */
+.modal-skill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 1rem;
+}
+
+.modal-badges {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+}

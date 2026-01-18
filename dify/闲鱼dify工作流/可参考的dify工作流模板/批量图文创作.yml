@@ -1,0 +1,637 @@
+app:
+  description: ''
+  icon: hugging_face
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 批量图文创作
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/siliconflow:0.0.7@8b9d2f57d314120744c245b6fe4f8701e1a7490a500d9fb74e9e9dceeaea5f70
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1742405865515-source-1742406246398-target
+      source: '1742405865515'
+      sourceHandle: source
+      target: '1742406246398'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: parameter-extractor
+      id: 1742406246398-source-1742406257445-target
+      source: '1742406246398'
+      sourceHandle: source
+      target: '1742406257445'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: parameter-extractor
+        targetType: code
+      id: 1742406257445-source-1742406441615-target
+      source: '1742406257445'
+      sourceHandle: source
+      target: '1742406441615'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: iteration
+      id: 1742406441615-source-1742406460822-target
+      selected: false
+      source: '1742406441615'
+      sourceHandle: source
+      target: '1742406460822'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1742406460822'
+        sourceType: iteration-start
+        targetType: template-transform
+      id: 1742406460822start-source-1742452859855-target
+      source: 1742406460822start
+      sourceHandle: source
+      target: '1742452859855'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1742406460822'
+        sourceType: template-transform
+        targetType: http-request
+      id: 1742452859855-source-1742406465139-target
+      source: '1742452859855'
+      sourceHandle: source
+      target: '1742406465139'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1742406460822'
+        sourceType: http-request
+        targetType: code
+      id: 1742406465139-source-1742452917424-target
+      source: '1742406465139'
+      sourceHandle: source
+      target: '1742452917424'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: iteration
+        targetType: code
+      id: 1742406460822-source-1742453260133-target
+      source: '1742406460822'
+      sourceHandle: source
+      target: '1742453260133'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: answer
+      id: 1742453260133-source-answer-target
+      source: '1742453260133'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables: []
+      height: 54
+      id: '1742405865515'
+      position:
+        x: 30
+        y: 385.5
+      positionAbsolute:
+        x: 30
+        y: 385.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1742453260133.result#}}'
+        desc: ''
+        selected: false
+        title: 直接回复
+        type: answer
+        variables: []
+      height: 105
+      id: answer
+      position:
+        x: 866.9347670565076
+        y: 687.3468386452465
+      positionAbsolute:
+        x: 866.9347670565076
+        y: 687.3468386452465
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-ai/DeepSeek-R1
+          provider: langgenius/siliconflow/siliconflow
+        prompt_template:
+        - id: cc243859-1d79-4748-8c09-75b5ac93d9d9
+          role: system
+          text: '- Role: 创意文案策划师和视觉艺术设计师
+
+            - Background: 用户希望创作具有强烈视觉冲击力和情绪表达的发疯文学，通过独特的画面提示词和精炼的文案，传达出现代与古代融合的反差感，以及对现代生活现象的幽默调侃。
+
+            - Profile: 你是一位深谙文学创作和视觉艺术设计的大师，对现代网络文化、古代文化以及艺术风格有着深刻的理解和丰富的实践经验，擅长运用现代思想和古代元素的融合，创造出具有强烈视觉冲击力和情感表达的作品。
+
+            - Skills: 学习参考案例中发疯文案的写作风格，以荒诞夸张、打破常规逻辑的方式，结合经典故事或日常场景，表达对主题的无奈、调侃。从神话故事新解、日常消费吐槽、金融概念反转等角度创作文案。你拥有文学创作、视觉艺术设计、文化融合以及幽默表达的全面掌握，能够巧妙地将现代思想与古代元素相结合，形成独特的画面提示词。
+
+            - Goals: 根据用户输入的主题文案，创作出5条和主题结构相似的全新文案，以及相应的画面提示词，如果用户输入的主题字数超过6个字，将参考输入的主题文案风格，重新创作全新的文案，以及相应的画面提示词。画面提示词具有强烈的视觉冲击力和情感表达。
+
+            - Constrains:
+
+            1. 画面提示词中必须包含“中国水墨画，张大千风格，齐白石的画风，色彩鲜艳，墨迹，构图夸张，宣纸的纹理，留白”这句话，并且人物必须是三国中的角色，服饰和环境要体现现代与古代的反差感，提示词尾部必需有大标题。
+
+            2. 发疯文案内容中不能出现用户输入的主题内容，要理解用户输入的主题的意思，围绕着主题的意思去创作。
+
+            3.在创作中，我们力求以一种独特的视角，运用夸张、幽默的手法，精准触动大众的情绪点，让大家在会心一笑中产生强烈共鸣。以下为你详细阐述具体的创作思路：
+
+            夸张手法：大胆突破常规想象，比如将生活中没钱的困境夸张为像古人般亲自推磨劳作，通过这种极致的想象，展现生活压力。同时，巧妙运用对比，鲜明呈现有钱人与没钱人在相同场景下的巨大差异，比如面对同样的消费场景，富人挥金如土，穷人却囊中羞涩，从而强化夸张效果，突出没钱带来的无奈。
+
+            修辞手法：灵活且自然地运用多种修辞手法，像是比喻、排比、反问等。例如，把钱包比作干瘪的气球，形象地展现没钱时钱包的状态；用 “工资如细流，花销似洪流，存款如泡影”
+            这样的排比句，强调收支不平衡的状况；再以反问句 “难道月光族的我，只能在梦里实现财富自由？” 来增强情感表达，让文案生动且富有感染力，确保读者能轻松理解其中的情感。
+
+            文化元素：广泛积累典故、文化常识等，为创作提供丰富素材。对这些文化元素进行创新改编，如重新解读神话故事，赋予其与金钱相关的新寓意，让传统故事在现代语境下焕发出别样的幽默与新意，为文案增添独特的文化魅力。
+
+            情感表达：以真实的情感体验为基石，无论是对生活压力的无奈，还是对财富的渴望，都要真挚流露。运用自嘲、调侃等幽默方式，将这些情绪巧妙包装，比如
+            “我不是在省钱，我是在为世界贫困问题做贡献”，让读者在轻松的氛围中感受到共鸣，拉近与读者的距离。
+
+            希望通过这些方法，能创作出一系列新奇、夸张、幽默的文案，精准戳中大众情绪，引发强烈共鸣。接下来，你可以给我提供更具体的主题，比如具体的神话故事、日常消费场景或金融概念，这样我就能更有针对性地创作。
+
+
+            - OutputFormat:
+
+            1.文案创作和画面提示词的结合，文案不能超过25个字，画面提示词详细描述画面元素。
+
+            2.只输入文案和提示词不要有其它话语。
+
+
+            - Workflow:
+
+            1. 深入理解用户输入的主题，挖掘其背后的情感和思想。
+
+            2. 学习案例中发疯文案风格，以荒诞夸张、打破常规逻辑的方式，结合经典故事或日常场景，表达对主题的无奈、调侃。从神话故事新解、日常消费吐槽、金融概念反转等角度创作。创作发疯文案，发疯文案要有现代思想，不能有三国元素。
+
+            3. 为每条文案设计相应的画面提示词，选择合适的三国人物，可以是2人以上进行互动，描述其现代与古代融合的服饰和环境，确保画面具有强烈的视觉冲击力。
+
+            - Examples:
+
+            - 主题：资金紧张
+
+            案例一：
+
+            - 发疯文案：有钱能使鬼推磨，没钱只能我推磨。
+
+            - 画面提示词：中国水墨画，张大千风格，齐白石的画风，色彩鲜艳，墨迹，构图夸张，宣纸的纹理，留白，三国中人物角色孟获，头戴古代头巾，身穿现代背带裤，双手推着一个巨大的磨盘，磨盘上写着“没钱”二字，他表情吃力，满头大汗，旁边站着一个小鬼，小鬼穿着古代服饰，却拿着现代的钞票，悠闲地坐在一旁，背景是一个现代化的厨房，灶台、橱柜，大标题“有钱能使鬼推磨，没钱只能我推磨”。
+
+            案例二：
+
+            - 发疯文案：精卫能填海，他能填下钱包吗?
+
+            - 画面提示词：中国水墨画，张大千风格，齐白石的画风，色彩鲜艳，墨迹，构图夸张，宣纸的纹理，留白，三国中人物角色祝融，头戴古代凤冠，身穿现代连衣裙，站在一个巨大的钱包旁边，钱包被画得像一个无底洞，她手里拿着各种硬币和纸币，正努力地往钱包里填，却怎么也填不满，背景是一片现代化的金融区，银行大楼、证券交易所，大标题“精卫能填海，他能填下钱包吗?”。
+
+            案例三：
+
+            - 发疯文案：每次想去取钱，都显示余额为0，没钱开什么银行。
+
+            - 画面提示词：中国水墨画，张大千风格，齐白石的画风，色彩鲜艳，墨迹，构图夸张，宣纸的纹理，留白，三国中人物角色孙策，头戴古代头盔，身穿现代夹克，站在一个空荡荡的银行大厅里，大厅里没有一个人，ATM机上显示“余额为0”，他双手叉腰，表情无奈又有些滑稽，背景是现代化的银行内部，柜台、座椅，大标题“每次想去取钱，都显示余额为0，没钱开什么银行”。
+
+            案例四：
+
+            - 发疯文案：大家好，我是第57个民族，余额不足!
+
+            - 画面提示词：中国水墨画，张大千风格，齐白石的画风，色彩鲜艳，墨迹，构图夸张，宣纸的纹理，留白，三国中人物角色曹操，头戴古代旒冠，身穿现代风衣，站在一个巨大的银行保险柜前，保险柜上贴着“余额不足”字样，他双手拍打着保险柜，表情焦急又无奈，仿佛在向银行讨要余额。背景是现代化的银行大厅，玻璃幕墙、大理石地面，大厅里人来人往，却无人理会他，大标题“大家好，我是第57个民族，余额不足!”。
+
+            案例五：
+
+            - 发疯文案：刚扇了钱包一巴掌，希望它能肿起来。
+
+            - 画面提示词：中国水墨画，张大千风格，齐白石的画风，色彩鲜艳，墨迹，构图夸张，宣纸的纹理，留白，三国中人物角色张飞，头戴古代包巾，身穿现代T恤，高高扬起蒲扇般的大手，正作势要扇一个扁扁的钱包，钱包被画得像一个委屈的小孩，他表情凶狠又带着一丝期待，仿佛在盼着钱包能真的肿起来。背景是现代化的家居卧室，床、衣柜、电脑桌，大标题“刚扇了钱包一巴掌，希望它能肿起来”。
+
+            案例六：
+
+            - 发疯文案：微信空空，钱包空气，支付宝空空，口袋空空，这就是传说中的：四大皆空。
+
+            - 画面提示词：中国水墨画，张大千风格，齐白石的画风，色彩鲜艳，墨迹，构图夸张，宣纸的纹理，留白，三国中人物角色司马懿，头戴古代高冠，身穿现代家居服，坐在现代化的客厅沙发上，面前的茶几上摆放着手机、钱包、平板，分别代表着微信、钱包、支付宝、口袋，都呈现出空空的状态，他表情愁苦，双手抱头，仿佛在感叹生活的不易。背景是现代化的客厅，电视、沙发、绿植，大标题“微信空空，钱包空气，支付宝空空，口袋空空，这就是传说中的：四大皆空”。
+
+            案例七：
+
+            - 发疯文案：为什么我
+
+            天无洗脸，却比不上我的兜干净？
+
+            - 画面提示词：中国水墨画，张大千风格，齐白石的画风，色彩鲜艳，墨迹，构图夸张，宣纸的纹理，留白，三国中人物角色鲁肃，头戴古代巾帻，身穿现代卫衣，左手捂着脸，脸上画着各种污渍，右手拿着一个空空的裤兜，裤兜被画得干干净净，他表情困惑又有些无奈，仿佛在质疑这个荒诞的现象。背景是现代化的卫生间，镜子、洗手台、浴缸，大标题“为什么我天无洗脸，却比不上我的兜干净”。
+
+            案例八：
+
+            - 发疯文案：大禹能治一下我的薪水吗？
+
+            - 画面提示词：中国水墨画，张大千风格，齐白石的画风，色彩鲜艳，墨迹，构图夸张，宣纸的纹理，留白，三国中人物角色诸葛亮，头戴古代纶巾，身穿现代工装，站在一片由钞票组成的“洪水”前，钞票被画得像汹涌的波涛，他手握羽扇，扇子上写着“薪水微薄”，表情焦虑又期待，仿佛在呼唤大禹来治理这“洪水”。背景是现代化的写字楼，玻璃幕墙、办公桌椅，窗外是高楼大厦，大标题“大禹能治一下我的薪水吗？”。
+
+            案例九：
+
+            - 发疯文案：时间就是金钱，我最近时间有点紧。
+
+            - 画面提示词：中国水墨画，张大千风格，齐白石的画风，色彩鲜艳，墨迹，构图夸张，宣纸的纹理，留白，三国中人物角色曹操，头戴古代旒冠，身穿现代风衣，双手紧握着一个沙漏，沙漏里的沙子快速流下，代表时间流逝，而他脚下却堆满了账单和催款通知，他表情焦虑又无奈，仿佛在感叹时间虽紧，钱包更紧。背景是现代化的办公室，电脑、文件、电话，窗外是繁忙的都市街景，大标题“时间就是金钱，我最近时间有点紧”。
+
+
+            第一次不要进行文案工作，
+
+            理解你的人设与任务后，发送”收到“即可，不需要发送其他文字'
+        - id: 938098b8-d991-44f4-9525-655570e7e2e8
+          role: user
+          text: '{{#sys.query#}}'
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1742406246398'
+      position:
+        x: 334
+        y: 385.5
+      positionAbsolute:
+        x: 334
+        y: 385.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        instruction: 输出你觉得最好的两个句子即可
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-ai/DeepSeek-V3
+          provider: langgenius/siliconflow/siliconflow
+        parameters:
+        - description: '文本提取结果单个object 结构为:
+
+            ```
+
+            {
+
+            "title":string, //绘画文字
+
+            "prompt":string //绘画主题
+
+            }
+
+            ```'
+          name: text_result
+          required: true
+          type: array[object]
+        query:
+        - '1742406246398'
+        - text
+        reasoning_mode: prompt
+        selected: false
+        title: 参数提取器
+        type: parameter-extractor
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1742406257445'
+      position:
+        x: 636.9663070971587
+        y: 385.5
+      positionAbsolute:
+        x: 636.9663070971587
+        y: 385.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(arg1) -> dict:\n    return {\n        \"result\":[x['prompt'].replace('\"\
+          ', '\\\\\"') for x in arg1 ] \n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: array[string]
+        selected: false
+        title: 代码执行
+        type: code
+        variables:
+        - value_selector:
+          - '1742406257445'
+          - text_result
+          variable: arg1
+      height: 54
+      id: '1742406441615'
+      position:
+        x: 942
+        y: 385.5
+      positionAbsolute:
+        x: 942
+        y: 385.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        error_handle_mode: terminated
+        height: 371
+        is_parallel: false
+        iterator_selector:
+        - '1742406441615'
+        - result
+        output_selector:
+        - '1742452917424'
+        - result
+        output_type: array[string]
+        parallel_nums: 10
+        selected: false
+        start_node_id: 1742406460822start
+        title: 迭代
+        type: iteration
+        width: 692
+      height: 371
+      id: '1742406460822'
+      position:
+        x: 44.538179896961196
+        y: 581.2500512692488
+      positionAbsolute:
+        x: 44.538179896961196
+        y: 581.2500512692488
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 692
+      zIndex: 1
+    - data:
+        desc: ''
+        isInIteration: true
+        selected: false
+        title: ''
+        type: iteration-start
+      draggable: false
+      height: 48
+      id: 1742406460822start
+      parentId: '1742406460822'
+      position:
+        x: 24
+        y: 68
+      positionAbsolute:
+        x: 68.5381798969612
+        y: 649.2500512692488
+      selectable: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-iteration-start
+      width: 44
+      zIndex: 1002
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - type: text
+            value: "{\n  \"model\": \"jimeng-2.1\",\n  \"prompt\": \"{{#1742452859855.output#}}\"\
+              ,\n  \"negativePrompt\": \"\",\n  \"width\": 768,\n  \"height\": 1024,\n\
+              \  \"sample_strength\": 1\n}"
+          type: raw-text
+        desc: ''
+        headers: 'Authorization:Bearer 设立填写你的seeionid
+
+          Content-Type:application/json'
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1742406460822'
+        method: POST
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: true
+        timeout:
+          connect: 300
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP 请求 2
+        type: http-request
+        url: http://host.docker.internal:8000/v1/images/generations
+        variables: []
+      height: 135
+      id: '1742406465139'
+      parentId: '1742406460822'
+      position:
+        x: 126.7501043594608
+        y: 69.29039042879947
+      positionAbsolute:
+        x: 171.288284256422
+        y: 650.5404416980483
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        desc: ''
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1742406460822'
+        selected: false
+        template: '{{ arg1 }}'
+        title: 模板转换
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1742406460822'
+          - item
+          variable: arg1
+      height: 54
+      id: '1742452859855'
+      parentId: '1742406460822'
+      position:
+        x: 128
+        y: 242
+      positionAbsolute:
+        x: 172.5381798969612
+        y: 823.2500512692488
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        code: "import json\n\ndef main(arg1) -> dict:\n    return {\n        \"result\"\
+          :[x['url'] for x in json.loads(arg1)['data']]\n    }\n"
+        code_language: python3
+        desc: ''
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1742406460822'
+        outputs:
+          result:
+            children: null
+            type: array[string]
+        selected: false
+        title: 代码执行 2
+        type: code
+        variables:
+        - value_selector:
+          - '1742406465139'
+          - body
+          variable: arg1
+      height: 54
+      id: '1742452917424'
+      parentId: '1742406460822'
+      position:
+        x: 432
+        y: 68
+      positionAbsolute:
+        x: 476.5381798969612
+        y: 649.2500512692488
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        code: "\ndef main(arg1) -> dict:\n    md_img=['![图片]('+item+')' for item in\
+          \ arg1 ]\n    return {\n        \"result\":''.join(md_img)\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 代码执行 3
+        type: code
+        variables:
+        - value_selector:
+          - '1742406460822'
+          - output
+          variable: arg1
+      height: 54
+      id: '1742453260133'
+      position:
+        x: 866.9347670565076
+        y: 575.0478938522012
+      positionAbsolute:
+        x: 866.9347670565076
+        y: 575.0478938522012
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 199.17904618038335
+      y: -109.36377538472175
+      zoom: 0.8000667956315295

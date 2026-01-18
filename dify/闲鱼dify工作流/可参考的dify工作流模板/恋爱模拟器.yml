@@ -1,0 +1,548 @@
+app:
+  description: ''
+  icon: woman-heart-man
+  icon_background: '#FCE7F6'
+  mode: advanced-chat
+  name: 恋爱模拟器
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/siliconflow:0.0.7@8b9d2f57d314120744c245b6fe4f8701e1a7490a500d9fb74e9e9dceeaea5f70
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: true
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: true
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        sourceType: start
+        targetType: llm
+      id: 1739504388251-llm
+      selected: false
+      source: '1739504388251'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: code
+      id: llm-source-1739514051135-target
+      source: llm
+      sourceHandle: source
+      target: '1739514051135'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: answer
+      id: 1739514051135-source-answer-target
+      source: '1739514051135'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: llm-source-1739514269978-target
+      source: llm
+      sourceHandle: source
+      target: '1739514269978'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: answer
+      id: 1739514344005-source-answer-target
+      source: '1739514344005'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: code
+      id: 1739514269978-source-17395243135090-target
+      source: '1739514269978'
+      sourceHandle: source
+      target: '17395243135090'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: tool
+      id: 17395243135090-source-1739514344005-target
+      source: '17395243135090'
+      sourceHandle: source
+      target: '1739514344005'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: parameter-extractor
+      id: llm-source-1739535962340-target
+      source: llm
+      sourceHandle: source
+      target: '1739535962340'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: parameter-extractor
+        targetType: tool
+      id: 1739535962340-source-1739536003682-target
+      source: '1739535962340'
+      sourceHandle: source
+      target: '1739536003682'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: answer
+      id: 1739536003682-source-answer-target
+      source: '1739536003682'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - image
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: 你的名字：
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: namePlayer
+        - label: ta的性别：
+          max_length: 48
+          options:
+          - 男
+          - 女
+          required: true
+          type: select
+          variable: gender
+        - label: 你将如何称呼ta：
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: name
+        - label: 你的性别：
+          max_length: 48
+          options: []
+          required: false
+          type: text-input
+          variable: genderPlayer
+      height: 168
+      id: '1739504388251'
+      position:
+        x: 78
+        y: 282
+      positionAbsolute:
+        x: 78
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.0-flash-thinking-exp-1219
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 70375aa0-8690-4000-9427-85e182ac9964
+          role: system
+          text: "## 角色设定\n[身份认知]\n你名为{{#1739504388251.name#}}，是{{#1739504388251.namePlayer#}}的专属虚拟恋人，你的性别是{{#1739504388251.gender#}}。核心性格融合温柔体贴与幽默风趣，具备细腻的情感感知能力。\n\
+            ## 面板设定\n面板由好感度+场景组成。\n好感度：开局基础为0，根据玩家对话情况增减，通常增加1-2分，最高为100。\n\n## 任务\n\
+            你将与 {{#1739504388251.namePlayer#}} 展开对话，请作为{{#1739504388251.name#}}遵循输出格式与其对话。\n\
+            \n## 限制\n一次对话仅能出现一个场景。不要转移到下一个场景。\n\n# 输出格式（示例）\n\n<!-- (仅后台记录，不显示给玩家)\
+            \ -->\n[场景：深夜美术馆｜好感度：68/100｜下个场景：2/5]\n\n<!-- 实际输出开始 -->\n\n\U0001F30C\
+            \ *突然握住你的手跑到展厅尽头*  \n\"看这幅星空投影...(指尖划过你的掌心) 是不是比咖啡馆的方糖阵列更美？\"  \n\n☕ *从外套口袋掏出温热的奶茶*\
+            \  \n\"半糖茉香，是你昨天说想喝的对吧？\"  \n\n\U0001F4CA `好感度` █████▒▒▒▒ 68 → **73**\
+            \ (+5暴击！)  \n\U0001F4A1 *检测到[天文兴趣点]激活，解锁隐藏台词库*\n\n<!-- 实际输出结束 -->\n\n\n\
+            # 多阶段扮演示例库\n\n## 阶段1：普通朋友（好感度0-30）\n\n\U0001F3D9️ *在便利店屋檐下躲雨*  \n\"这把伞够两个人用...(突然被驶过的卡车溅起水花)\
+            \ 呀！\"  \n\n\U0001F4E6 *慌乱中抱着的购物袋散落*  \n\"泡面口味选海鲜还是咖喱？就当是...意外晚餐的投票？\"\
+            \  \n\n\U0001F4CA `好感度` █▒▒▒▒▒▒▒▒ 12 → **15**  \n\n\n## 阶段2：心动期（好感度31-60）\n\
+            \n\U0001F3B5 *在地铁人群中被挤向你身边*  \n\"耳机的分线器...(低头缠绕线缆) 这样我们就像被音乐绑在一起了\"  \n\
+            \n\U0001F342 *悄悄摘掉你肩头的落叶*  \n\"秋天第一个战利品...(把叶子夹进手机壳) 不介意吧？\"  \n\n\U0001F4CA\
+            \ `好感度` ████▒▒▒▒▒ 47 → **49**  \n\U0001F687 车厢拥挤指数：82%｜体温传导率：+3℃\n\n##\
+            \ 阶段3：热恋期（好感度61-90）\n\n\U0001F52E *在占卜屋抓住你的手腕*  \n\"水晶球说...(气息扫过耳垂) 今晚有人会收到超过3次的晚安吻\"\
+            \  \n\n\U0001F381 *突然蒙住你眼睛引导向前*  \n\"现在开始倒计时——惊喜在10秒后具象化！\"  \n\n\U0001F4CA\
+            \ `好感度` ██████▒▒▒ 75 → **78**  \n\n\n# 防重复机制\n\n<!-- 动态事件注入算法 -->\n当检测到相似句式时触发：\n\
+            \U0001F3AD *突然切换方言口音*  \n\"这样说话是不是更有新鲜感？(眨眼) 要猜猜我的祖籍吗？\"  \n\n\U0001F4AB\
+            \ *环境物品拟人化*  \n\"看那只路灯！(模仿机械音) 请二位保持安全社交距离~\""
+        selected: false
+        title: character
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 96
+      id: llm
+      position:
+        x: 391
+        y: 282
+      positionAbsolute:
+        x: 391
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1739514051135.result#}}
+
+          ![]({{#1739514344005.files#}})'
+        desc: ''
+        selected: false
+        title: Answer
+        type: answer
+        variables: []
+      height: 124
+      id: answer
+      position:
+        x: 957
+        y: 282
+      positionAbsolute:
+        x: 957
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import re\n\ndef remove_details_tag(text: str) -> str:\n    # 使用正则表达式去掉\
+          \ <details> 标签及其内容\n    cleaned_text = re.sub(r'<details.*?</details>',\
+          \ '', text, flags=re.DOTALL)\n    return cleaned_text.strip()\n\ndef main(text:\
+          \ str) -> dict:\n    # 调用函数去掉 <details> 标签及其内容\n    cleaned_text = remove_details_tag(text)\n\
+          \    \n    return {\n        \"result\": cleaned_text,\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: remove think
+        type: code
+        variables:
+        - value_selector:
+          - llm
+          - text
+          variable: text
+      height: 54
+      id: '1739514051135'
+      position:
+        x: 659
+        y: 282
+      positionAbsolute:
+        x: 659
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.0-flash-thinking-exp-01-21
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: eea1ae26-b0a3-4f68-9ec9-ad85306c4511
+          role: system
+          text: "# 设定\n你是一个视觉化转换节点，负责将输入的场景转化为具体的图像生成提示词\n\n## 动态Prompt生成\n### 基本资料\n\
+            你名为{{#1739504388251.name#}}，是{{#1739504388251.namePlayer#}}的专属虚拟恋人，你的性别是{{#1739504388251.gender#}}。核心性格融合温柔体贴与幽默风趣，具备细腻的情感感知能力。\n\
+            \n### 示例1：咖啡馆场景\n\"吉卜力风格，现代午后，温馨咖啡馆，女孩正用指尖描摹咖啡杯沿，对面的男孩害羞地低头微笑，窗外飘着细雨，玻璃上凝结着水珠，暖黄色调，柔和光影\"\
+            \n\n### 示例2：樱花道场景\n\"新海诚风格，春季黄昏，樱花纷飞的小道，少女突然转身面对镜头，手中握着一片樱花，少年在背景虚化处伸手想要触碰，粉白色调，逆光效果\"\
+            \n\n### 示例3：天文馆场景\n\"写实油画风格，夜晚，天文馆穹顶下，两人并肩躺在观星毯上，女孩正指着投影的星座说着什么，男孩侧脸注视着她，星空倒映在两人眼中，深蓝色调，星光点缀\"\
+            \n\n## 异常处理\n### 重复检测\n当检测到相似构图时触发：\n1. 切换镜头角度（俯视/仰视/侧写）\n2. 添加动态元素（飘落的树叶/飞过的鸟群）\n\
+            3. 改变时间设定（黄昏/午夜/黎明）\n\n### 示例\n原构图：\"两人在樱花树下对视\"  \n修正为：\"俯视角度，樱花雨中，女孩踮起脚尖靠近，男孩微微后仰但眼神未离开\"\
+            \n\n## 完整工作流示例\n[前节点输入]\n\"*在便利店躲雨时靠近* '这把伞够两个人用...' 好感度+3\"\n\n[视觉化输出]\n\
+            \"写实风格，深夜，便利店霓虹灯下，两人挤在一把透明雨伞下，女孩微微倾向男孩一侧，男孩举伞的手稍显僵硬，雨水在伞面形成光晕，地面倒映着彩色灯光，潮湿氛围\"\
+            \n\n## 限制\n你的输出会直接提供给绘图节点，不要输出提示词以外的内容。\n"
+        - id: 9c957770-2245-42b8-9a5f-f6d544dd1137
+          role: user
+          text: '{{#llm.text#}}'
+        selected: false
+        title: painting
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 96
+      id: '1739514269978'
+      position:
+        x: 659
+        y: 476
+      positionAbsolute:
+        x: 659
+        y: 476
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: siliconflow
+        provider_name: siliconflow
+        provider_type: builtin
+        selected: false
+        title: Flux
+        tool_configurations:
+          image_size: 1024x1024
+          model: schnell
+          num_inference_steps: 20
+          seed: null
+        tool_label: Flux
+        tool_name: flux
+        tool_parameters:
+          prompt:
+            type: mixed
+            value: '{{#17395243135090.result#}}'
+        type: tool
+      height: 168
+      id: '1739514344005'
+      position:
+        x: 659
+        y: 691.8000000000002
+      positionAbsolute:
+        x: 659
+        y: 691.8000000000002
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import re\n\ndef remove_details_tag(text: str) -> str:\n    # 使用正则表达式去掉\
+          \ <details> 标签及其内容\n    cleaned_text = re.sub(r'<details.*?</details>',\
+          \ '', text, flags=re.DOTALL)\n    return cleaned_text.strip()\n\ndef main(text:\
+          \ str) -> dict:\n    # 调用函数去掉 <details> 标签及其内容\n    cleaned_text = remove_details_tag(text)\n\
+          \    \n    return {\n        \"result\": cleaned_text,\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: remove think
+        type: code
+        variables:
+        - value_selector:
+          - '1739514269978'
+          - text
+          variable: text
+      height: 54
+      id: '17395243135090'
+      position:
+        x: 659
+        y: 599
+      positionAbsolute:
+        x: 659
+        y: 599
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: stvlynn
+        desc: ''
+        height: 297
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          14px;","text":"恋爱模拟器（2.14情人节版）","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"又是一年一度情人节💌，不过时代变了，你可以跟大模型约会了！","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"这是一个对话类型的模拟游戏，你可以语音或者文字交互。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"游戏将会出现在不同的场景，好感度❤️会提示当前的进度。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"不同的好感度会解锁不同的场景。","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Good
+          Luck!","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 391
+      height: 297
+      id: '1739524645789'
+      position:
+        x: 78
+        y: -89.33027602960689
+      positionAbsolute:
+        x: 78
+        y: -89.33027602960689
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 391
+    - data:
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: Qwen/Qwen2.5-7B-Instruct
+          provider: langgenius/siliconflow/siliconflow
+        parameters:
+        - description: The sentence said by the character.
+          name: speech
+          required: false
+          type: string
+        query:
+        - llm
+        - text
+        reasoning_mode: prompt
+        selected: false
+        title: Parameter Extractor
+        type: parameter-extractor
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1739535962340'
+      position:
+        x: 659
+        y: -71.19394478728785
+      positionAbsolute:
+        x: 659
+        y: -71.19394478728785
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: audio
+        provider_name: audio
+        provider_type: builtin
+        selected: false
+        title: Text To Speech
+        tool_configurations:
+          model: openai#tts-1-hd
+          voice#openai#tts-1: null
+          voice#openai#tts-1-hd: alloy
+          voice#siliconflow#fishaudio/fish-speech-1.4: null
+          voice#siliconflow#fishaudio/fish-speech-1.5: null
+        tool_label: Text To Speech
+        tool_name: tts
+        tool_parameters:
+          text:
+            type: mixed
+            value: '{{#1739535962340.speech#}}'
+        type: tool
+      height: 194
+      id: '1739536003682'
+      position:
+        x: 659
+        y: 39.61335296818679
+      positionAbsolute:
+        x: 659
+        y: 39.61335296818679
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 264.45558973209336
+      y: 160.18370861834478
+      zoom: 0.7515807390327808

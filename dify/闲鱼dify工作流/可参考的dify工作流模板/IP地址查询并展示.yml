@@ -1,0 +1,737 @@
+app:
+  description: 通过IP地址查询结果，进行html页面的编辑，然后再dify上直接展示html页面内容，而不是带html标签的文本内容
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: IP地址查询并展示
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/volcengine_maas:0.0.7@f8e44422cfa5b9a6ac1f2d3b43ef1069868efdad1e5cec2590de3f53ceac37b0
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 500
+        batch_count_limit: 50
+        file_size_limit: 1024
+        image_file_size_limit: 1000
+        video_file_size_limit: 10000
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: parameter-extractor
+        targetType: if-else
+      id: 1742971637089-source-1742975488354-target
+      source: '1742971637089'
+      sourceHandle: source
+      target: '1742975488354'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1742975488354-true-1742971951636-target
+      source: '1742975488354'
+      sourceHandle: 'true'
+      target: '1742971951636'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: template-transform
+      id: 1742975488354-false-1742973316000-target
+      source: '1742975488354'
+      sourceHandle: 'false'
+      target: '1742973316000'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: variable-aggregator
+      id: 1742971951636-source-1742975844503-target
+      source: '1742971951636'
+      sourceHandle: source
+      target: '1742975844503'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: variable-aggregator
+        targetType: end
+      id: 1742975844503-source-1742971566530-target
+      source: '1742975844503'
+      sourceHandle: source
+      target: '1742971566530'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: template-transform
+        targetType: variable-aggregator
+      id: 1742973316000-source-1742975844503-target
+      source: '1742973316000'
+      sourceHandle: source
+      target: '1742975844503'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: if-else
+      id: 1742971513638-source-1742976553035-target
+      source: '1742971513638'
+      sourceHandle: source
+      target: '1742976553035'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: tool
+      id: 1742976553035-true-1742971521243-target
+      source: '1742976553035'
+      sourceHandle: 'true'
+      target: '1742971521243'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: http-request
+      id: 1742976553035-false-1742976403171-target
+      source: '1742976553035'
+      sourceHandle: 'false'
+      target: '1742976403171'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: tool
+        targetType: variable-aggregator
+      id: 1742971521243-source-1742982988677-target
+      source: '1742971521243'
+      sourceHandle: source
+      target: '1742982988677'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: variable-aggregator
+        targetType: parameter-extractor
+      id: 1742982988677-source-1742971637089-target
+      source: '1742982988677'
+      sourceHandle: source
+      target: '1742971637089'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: http-request
+        targetType: variable-aggregator
+      id: 1742976403171-source-1742982988677-target
+      source: '1742976403171'
+      sourceHandle: source
+      target: '1742982988677'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: 请输入ipv4地址
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: ip
+        - label: 选择查询方式
+          max_length: 48
+          options:
+          - 工具
+          - HTTP请求
+          required: true
+          type: select
+          variable: type
+      height: 115
+      id: '1742971513638'
+      position:
+        x: -93
+        y: 294
+      positionAbsolute:
+        x: -93
+        y: 294
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_team_authorization: true
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The IP address to lookup
+            ja_JP: The IP address to lookup
+            pt_BR: The IP address to lookup
+            zh_Hans: The IP address to lookup
+          label:
+            en_US: ip
+            ja_JP: ip
+            pt_BR: ip
+            zh_Hans: ip
+          llm_description: The IP address to lookup
+          max: null
+          min: null
+          name: ip
+          options: []
+          placeholder:
+            en_US: The IP address to lookup
+            ja_JP: The IP address to lookup
+            pt_BR: The IP address to lookup
+            zh_Hans: The IP address to lookup
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        params:
+          ip: ''
+        provider_id: 4dd48333-2d36-4498-aa66-48cfedafa8b6
+        provider_name: 查询ip归属地
+        provider_type: api
+        selected: false
+        title: getIpLocation
+        tool_configurations: {}
+        tool_label: getIpLocation
+        tool_name: getIpLocation
+        tool_parameters:
+          ip:
+            type: mixed
+            value: '{{#1742971513638.ip#}}'
+        type: tool
+      height: 53
+      id: '1742971521243'
+      position:
+        x: 455
+        y: 214.851301645003
+      positionAbsolute:
+        x: 455
+        y: 214.851301645003
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1742975844503'
+          - output
+          variable: result
+        selected: false
+        title: 结束
+        type: end
+      height: 89
+      id: '1742971566530'
+      position:
+        x: 2161
+        y: 363
+      positionAbsolute:
+        x: 2161
+        y: 363
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        instruction: 从{{#1742982988677.output#}}中获取不同属性的值
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: DeepSeek-V3
+          provider: langgenius/volcengine_maas/volcengine_maas
+        parameters:
+        - description: 获取addr属性的值
+          name: addr
+          required: false
+          type: string
+        - description: 获取country属性的值
+          name: country
+          required: false
+          type: string
+        - description: 获取area属性的值
+          name: area
+          required: false
+          type: string
+        - description: 获取provider属性的值
+          name: provider
+          required: false
+          type: string
+        query:
+        - '1742982988677'
+        - output
+        reasoning_mode: prompt
+        selected: false
+        title: 参数提取器
+        type: parameter-extractor
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: '1742971637089'
+      position:
+        x: 1028
+        y: 311
+      positionAbsolute:
+        x: 1028
+        y: 311
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(addr: str, area: str, country: str, provider: str) -> dict:\n\
+          \    page_content = f\"\"\"<div style=\"max-width: 800px; margin: 20px auto;\
+          \ padding: 20px; background-color: white; border-radius: 8px; box-shadow:\
+          \ 0 2px 10px rgba(0,0,0,0.1);\">\n        <h1 style=\"color: #2c3e50; border-bottom:\
+          \ 2px solid #3498db; padding-bottom: 10px;\">IP查询结果</h1>\n        <p>下面展示查询信息</p>\n\
+          \        <div style=\"background-color: #f9f9f9; border-left: 4px solid\
+          \ #3498db; padding: 15px; margin: 15px 0; border-radius: 0 4px 4px 0;\"\
+          >\n            <h2>IP: {addr}</h2>\n            <p>归属地: {country}{area}</p>\n\
+          \            <p>运营商: {provider}</p>\n        </div>\n    </div>\n    \"\"\
+          \"\n    return {'result': page_content}"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 代码执行
+        type: code
+        variables:
+        - value_selector:
+          - '1742971637089'
+          - addr
+          variable: addr
+        - value_selector:
+          - '1742971637089'
+          - area
+          variable: area
+        - value_selector:
+          - '1742971637089'
+          - country
+          variable: country
+        - value_selector:
+          - '1742971637089'
+          - provider
+          variable: provider
+      height: 53
+      id: '1742971951636'
+      position:
+        x: 1591
+        y: 224.9739670999407
+      positionAbsolute:
+        x: 1591
+        y: 224.9739670999407
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        selected: false
+        template: "<div style=\"max-width: 800px; margin: 20px auto; padding: 20px;\
+          \ background-color: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);\"\
+          >\r\n        <h1 style=\"color: #2c3e50; border-bottom: 2px solid #3498db;\
+          \ padding-bottom: 10px;\">IP查询结果</h1>\r\n        <p>下面展示查询信息</p>\r\n   \
+          \     <div style=\"background-color: #f9f9f9; border-left: 4px solid #3498db;\
+          \ padding: 15px; margin: 15px 0; border-radius: 0 4px 4px 0;\">\r\n    \
+          \        <h2>IP: {{ addr }}</h2>\r\n            <p>归属地: {{ country }}{{\
+          \ area }}</p>\r\n            <p>运营商: {{ provider }}</p>\r\n        </div>\r\
+          \n    </div>"
+        title: 模板转换
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1742971637089'
+          - addr
+          variable: addr
+        - value_selector:
+          - '1742971637089'
+          - country
+          variable: country
+        - value_selector:
+          - '1742971637089'
+          - area
+          variable: area
+        - value_selector:
+          - '1742971637089'
+          - provider
+          variable: provider
+      height: 53
+      id: '1742973316000'
+      position:
+        x: 1591
+        y: 525.9851444150801
+      positionAbsolute:
+        x: 1591
+        y: 525.9851444150801
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is not
+            id: c25b24cf-07d2-4672-88b3-cb63d5d72774
+            value: 本机地址
+            varType: string
+            variable_selector:
+            - '1742971637089'
+            - country
+          - comparison_operator: is not
+            id: 36567884-80fe-422b-ad4f-5cb6ed1f70d8
+            value: 局域网
+            varType: string
+            variable_selector:
+            - '1742971637089'
+            - country
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支(判断位置)
+        type: if-else
+      height: 151
+      id: '1742975488354'
+      position:
+        x: 1310
+        y: 311
+      positionAbsolute:
+        x: 1310
+        y: 311
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        output_type: string
+        selected: false
+        title: 显示结果变量聚合器
+        type: variable-aggregator
+        variables:
+        - - '1742971951636'
+          - result
+        - - '1742973316000'
+          - output
+      height: 130
+      id: '1742975844503'
+      position:
+        x: 1859
+        y: 363
+      positionAbsolute:
+        x: 1859
+        y: 363
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: wal
+        desc: ''
+        height: 141
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"开始节点添加一个必填参数ip，用于后续节点的一个入参使用","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"为查询ip多途径，这里加一个type参数，用于条件分支节点判断","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 141
+      id: '1742976152791'
+      position:
+        x: -93
+        y: 627.5
+      positionAbsolute:
+        x: -93
+        y: 627.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        author: wal
+        desc: ''
+        height: 119
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"此处是自定义的一个工具，由群友@daniel提供的一个查询ip的工具，此处也可以更换为http请求节点，为了演示我在开始节点做了个下拉选项，通过次参数进行切换","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 360
+      height: 119
+      id: '1742976254048'
+      position:
+        x: 252.70260329000598
+        y: 627.5
+      positionAbsolute:
+        x: 252.70260329000598
+        y: 627.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 360
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: []
+          type: none
+        desc: ''
+        headers: ''
+        method: get
+        params: ip:{{#1742971513638.ip#}}
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP 请求
+        type: http-request
+        url: https://ip-moe.zerodream.net
+        variables: []
+      height: 119
+      id: '1742976403171'
+      position:
+        x: 455
+        y: 445.5
+      positionAbsolute:
+        x: 455
+        y: 445.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: c22b6065-f7d5-494e-a644-b2829ff55789
+            value: 工具
+            varType: string
+            variable_selector:
+            - '1742971513638'
+            - type
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支(判断查询途径)
+        type: if-else
+      height: 125
+      id: '1742976553035'
+      position:
+        x: 180
+        y: 294
+      positionAbsolute:
+        x: 180
+        y: 294
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: wal
+        desc: ''
+        height: 114
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"查询ip的返回结果结构结构一致，可以直接用一个参数提取器提取对应的参数","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 114
+      id: '1742976801289'
+      position:
+        x: 753.7565082250148
+        y: 627.5
+      positionAbsolute:
+        x: 753.7565082250148
+        y: 627.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        author: wal
+        desc: ''
+        height: 112
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"条件分支对127.0.0.1这个本机地址及192.168.1.1这样的局域网地址和网络ip地址进行拆分，实际上是为了后续的代码执行节点和模板转换节点的一个展示，这两种方案实际上效果是一致的，只是可以用两种方式来做这件事","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 425
+      height: 112
+      id: '1742976849815'
+      position:
+        x: 1113.4872135618223
+        y: 627.5
+      positionAbsolute:
+        x: 1113.4872135618223
+        y: 627.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 425
+    - data:
+        author: wal
+        desc: ''
+        height: 141
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"通过变量聚合，来统一接受前置节点的内容，因为有分支判断，肯定只会出现一个节点的数据输出，所以用变量聚合器可以使用，如果是并行节点的话，这里用变量聚合器就不合适，会导致第二个到达的参数被弃用，只会接收第一个到达的数据","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 536
+      height: 141
+      id: '1742976974480'
+      position:
+        x: 1576.7686900958468
+        y: 627.5
+      positionAbsolute:
+        x: 1576.7686900958468
+        y: 627.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 536
+    - data:
+        desc: ''
+        output_type: string
+        selected: false
+        title: 查询结果变量聚合器
+        type: variable-aggregator
+        variables:
+        - - '1742971521243'
+          - text
+        - - '1742976403171'
+          - body
+      height: 130
+      id: '1742982988677'
+      position:
+        x: 747.8921901299823
+        y: 311
+      positionAbsolute:
+        x: 747.8921901299823
+        y: 311
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 99.67836934156406
+      y: 31.691100823045247
+      zoom: 0.4018775720164608

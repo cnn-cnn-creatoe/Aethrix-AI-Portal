@@ -1,0 +1,2340 @@
+<!DOCTYPE html>
+<html lang="zh-CN" translate="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aethrix | 以太夜 - 登录/注册">
+    <!-- 禁止翻译扩展翻译此页面，避免干扰 OAuth 登录流程 -->
+    <meta name="google" content="notranslate">
+    <meta name="translate" content="no">
+    <meta http-equiv="Content-Language" content="zh-CN">
+    <title>登录 / 注册 - Aethrix | 以太夜</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+    <style>
+        .auth-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+        }
+
+        .auth-header {
+            padding: 20px 40px;
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .auth-header .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #000;
+        }
+
+        .auth-header .logo-text {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .auth-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .auth-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 420px;
+            overflow: hidden;
+        }
+
+        .auth-tabs {
+            display: flex;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 16px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+            color: #666;
+            background: #f9f9f9;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .auth-tab.active {
+            background: #fff;
+            color: #000;
+            border-bottom: 2px solid #000;
+        }
+
+        .auth-tab:hover:not(.active) {
+            background: #f0f0f0;
+        }
+
+        .auth-form-container {
+            padding: 32px;
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-input-wrapper {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #000;
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-input.error {
+            border-color: #e53935;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            padding: 4px;
+        }
+
+        .password-toggle:hover {
+            color: #000;
+        }
+
+        .form-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .form-checkbox input {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            background: #000;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .auth-btn:hover {
+            background: #333;
+        }
+
+        .auth-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            margin: 24px 0;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e0e0e0;
+        }
+
+        .auth-divider span {
+            padding: 0 16px;
+        }
+
+        .social-login-btn {
+            width: 100%;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.2s ease;
+            margin-bottom: 12px;
+        }
+
+        .social-login-btn:hover {
+            background: #f5f5f5;
+            border-color: #ccc;
+        }
+
+        .social-login-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .github-btn {
+            background: #24292e;
+            color: #fff;
+            border-color: #24292e;
+        }
+
+        .github-btn:hover {
+            background: #1b1f23;
+        }
+
+        .auth-switch {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .auth-switch a {
+            color: #000;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .auth-switch a:hover {
+            text-decoration: underline;
+        }
+
+        .auth-footer {
+            text-align: center;
+            padding: 16px 32px 24px;
+            font-size: 12px;
+            color: #999;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .auth-footer a {
+            color: #666;
+            text-decoration: none;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .password-strength {
+            margin-top: 8px;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            width: 0;
+            transition: all 0.3s ease;
+        }
+
+        .password-strength-bar.weak {
+            width: 33%;
+            background: #e53935;
+        }
+
+        .password-strength-bar.medium {
+            width: 66%;
+            background: #fb8c00;
+        }
+
+        .password-strength-bar.strong {
+            width: 100%;
+            background: #43a047;
+        }
+
+        .password-strength-text {
+            font-size: 12px;
+            margin-top: 4px;
+            color: #666;
+        }
+
+        .form-error {
+            color: #e53935;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .alert-success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+
+        .alert-error {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: -12px;
+            margin-bottom: 20px;
+        }
+
+        .forgot-password a {
+            font-size: 13px;
+            color: #666;
+            text-decoration: none;
+        }
+
+        .forgot-password a:hover {
+            color: #000;
+            text-decoration: underline;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .auth-header {
+                padding: 16px 20px;
+            }
+
+            .auth-form-container {
+                padding: 24px 20px;
+            }
+        }
+
+        /* 邮箱验证相关样式 */
+        .email-verify-wrapper {
+            display: flex;
+            gap: 10px;
+        }
+
+        .email-verify-wrapper .form-input {
+            flex: 1;
+        }
+
+        .verify-code-btn {
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
+            color: #fff;
+            background: #000;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .verify-code-btn:hover:not(:disabled) {
+            background: #333;
+        }
+
+        .verify-code-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .verify-code-btn.counting {
+            background: #666;
+        }
+
+        .email-verify-status {
+            font-size: 12px;
+            margin-top: 6px;
+            display: none;
+        }
+
+        .email-verify-status.show {
+            display: block;
+        }
+
+        .email-verify-status.success {
+            color: #43a047;
+        }
+
+        .email-verify-status.pending {
+            color: #fb8c00;
+        }
+
+        .email-verify-status.error {
+            color: #e53935;
+        }
+
+        /* 验证码弹窗样式 */
+        .verification-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10001;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .verification-modal.show {
+            display: flex;
+        }
+
+        .verification-modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+        }
+
+        .verification-modal-content {
+            position: relative;
+            background: #fff;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        .verification-modal-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            color: #666;
+            cursor: pointer;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .verification-modal-close:hover {
+            background: #f0f0f0;
+            color: #000;
+        }
+
+        .verification-modal-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .verification-modal-header h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+        }
+
+        .verification-modal-header p {
+            font-size: 14px;
+            color: #666;
+            margin: 0;
+        }
+
+        .verification-modal-header .email-display {
+            color: #000;
+            font-weight: 500;
+        }
+
+        .code-input-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .code-input {
+            width: 45px;
+            height: 55px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 600;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .code-input:focus {
+            outline: none;
+            border-color: #000;
+        }
+
+        .code-input.filled {
+            border-color: #43a047;
+            background: #f1f8e9;
+        }
+
+        .verification-modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .verification-modal-actions button {
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .resend-btn {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            color: #333;
+        }
+
+        .resend-btn:hover:not(:disabled) {
+            background: #eee;
+        }
+
+        .resend-btn:disabled {
+            color: #999;
+            cursor: not-allowed;
+        }
+
+        .verify-btn {
+            background: #000;
+            border: none;
+            color: #fff;
+        }
+
+        .verify-btn:hover:not(:disabled) {
+            background: #333;
+        }
+
+        .verify-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .verification-hint {
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            margin-top: 16px;
+        }
+
+        .verification-error {
+            text-align: center;
+            font-size: 13px;
+            color: #e53935;
+            margin-top: 12px;
+            display: none;
+        }
+
+        .verification-error.show {
+            display: block;
+        }
+    </style>
+</head>
+
+<body class="auth-page">
+    <header class="auth-header">
+        <a href="/" class="logo-link">
+            <span class="logo-text">Aethrix | 以太夜</span>
+        </a>
+    </header>
+
+    <main class="auth-container">
+        <div class="auth-card">
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">登录</button>
+                <button class="auth-tab" data-tab="register">注册</button>
+            </div>
+
+            <div class="auth-form-container">
+                <div id="auth-alert"></div>
+
+                <!-- Login Form -->
+                <form class="auth-form active" id="login-form" onsubmit="return false;">
+                    <div class="form-group">
+                        <label class="form-label" for="login-email">邮箱</label>
+                        <input type="email" class="form-input" id="login-email" name="email" placeholder="请输入邮箱"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="login-password">密码</label>
+                        <div class="form-input-wrapper">
+                            <input type="password" class="form-input" id="login-password" name="password"
+                                placeholder="请输入密码" required>
+                            <button type="button" class="password-toggle" data-target="login-password"
+                                aria-label="显示/隐藏密码">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="forgot-password">
+                        <a href="#" id="forgot-password-link">忘记密码？</a>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-checkbox">
+                            <input type="checkbox" name="remember" id="remember-me">
+                            <span>记住我</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="auth-btn" id="login-btn">登录</button>
+
+                    <div class="auth-divider"><span>或</span></div>
+
+                    <button type="button" class="social-login-btn github-btn" id="github-login-btn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                        </svg>
+                        使用 GitHub 登录
+                    </button>
+
+                    <p class="auth-switch">
+                        还没有账号？<a href="#" data-switch="register">立即注册</a>
+                    </p>
+                </form>
+
+                <!-- Register Form -->
+                <form class="auth-form" id="register-form" onsubmit="return false;">
+                    <div class="form-group">
+                        <label class="form-label" for="register-nickname">昵称 <span
+                                style="color: #e53935;">*</span></label>
+                        <input type="text" class="form-input" id="register-nickname" name="nickname"
+                            placeholder="请输入昵称（2-20个字符）" required minlength="2" maxlength="20">
+                        <div class="form-error" id="nickname-error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="register-email">邮箱 <span style="color: #e53935;">*</span></label>
+                        <div class="email-verify-wrapper">
+                            <input type="email" class="form-input" id="register-email" name="email" placeholder="请输入邮箱"
+                                required>
+                            <button type="button" class="verify-code-btn" id="send-code-btn" disabled>获取验证码</button>
+                        </div>
+                        <div class="email-verify-status" id="email-verify-status"></div>
+                        <div class="form-error" id="email-error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="register-password">密码 <span
+                                style="color: #e53935;">*</span></label>
+                        <div class="form-input-wrapper">
+                            <input type="password" class="form-input" id="register-password" name="password"
+                                placeholder="请输入密码（至少6位）" required minlength="6">
+                            <button type="button" class="password-toggle" data-target="register-password"
+                                aria-label="显示/隐藏密码">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="password-strength">
+                            <div class="password-strength-bar" id="password-strength-bar"></div>
+                        </div>
+                        <div class="password-strength-text" id="password-strength-text"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="register-confirm">确认密码 <span
+                                style="color: #e53935;">*</span></label>
+                        <div class="form-input-wrapper">
+                            <input type="password" class="form-input" id="register-confirm" name="confirm"
+                                placeholder="请再次输入密码" required>
+                            <button type="button" class="password-toggle" data-target="register-confirm"
+                                aria-label="显示/隐藏密码">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="form-error" id="confirm-error"></div>
+                    </div>
+
+                    <button type="submit" class="auth-btn" id="register-btn">注册</button>
+
+                    <p class="auth-switch">
+                        已有账号？<a href="#" data-switch="login">立即登录</a>
+                    </p>
+                </form>
+            </div>
+
+            <div class="auth-footer">
+                继续即表示同意 <a href="#">《用户协议》</a> 和 <a href="#">《隐私政策》</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Firebase Modules (SDK already loaded in head) -->
+    <script src="js/firebase/firebaseConfig.js"></script>
+    <script src="js/firebase/emailAuth.js"></script>
+    <script src="js/firebase/githubAuth.js"></script>
+    <script src="js/firebase/authStateManager.js"></script>
+    <script src="js/firebase/githubOAuthDirect.js"></script>
+
+    <script>
+        // 🌐 全局变量和函数（在 DOMContentLoaded 之前定义，确保 githubOAuthDirect.js 可以访问）
+        let githubOAuthPolling = null;
+
+        // 启动 localStorage 轮询（用于 GitHub OAuth 弹窗通信）
+        window.startGitHubOAuthPolling = function () {
+            // 如果已经在轮询，先停止
+            if (githubOAuthPolling) {
+                clearInterval(githubOAuthPolling);
+            }
+
+            console.log('开始轮询 GitHub OAuth 结果...');
+            let pollCount = 0;
+            const maxPolls = 100; // 20 秒超时（每 200ms 一次）
+
+            githubOAuthPolling = setInterval(() => {
+                pollCount++;
+
+                // 检查超时
+                if (pollCount > maxPolls) {
+                    console.log('GitHub OAuth 轮询超时');
+                    clearInterval(githubOAuthPolling);
+                    githubOAuthPolling = null;
+                    return;
+                }
+
+                // 检查 localStorage
+                const resultStr = localStorage.getItem('github_oauth_result');
+                if (!resultStr) {
+                    return; // 还没有结果，继续轮询
+                }
+
+                console.log('检测到 GitHub OAuth 结果');
+
+                // 停止轮询
+                clearInterval(githubOAuthPolling);
+                githubOAuthPolling = null;
+
+                // 清除结果（避免重复处理）
+                localStorage.removeItem('github_oauth_result');
+
+                try {
+                    const result = JSON.parse(resultStr);
+                    console.log('GitHub OAuth 结果:', result);
+
+                    if (result.type === 'github_oauth_success') {
+                        // 登录成功
+                        console.log('GitHub 登录成功');
+
+                        // 保存认证状态
+                        if (result.userData) {
+                            localStorage.setItem('github_auth_state', JSON.stringify(result.userData));
+                        }
+
+                        // ✅ 所有用户（包括管理员）都直接跳转到主页
+                        console.log('登录成功，跳转到主页');
+                        const alertDiv = document.getElementById('auth-alert');
+                        if (alertDiv) {
+                            alertDiv.innerHTML = '<div class="alert alert-success">登录成功！正在跳转...</div>';
+                        }
+                        setTimeout(() => {
+                            window.location.href = '/tools.html';  // GitHub登录成功跳转到工具页
+                        }, 500);
+                    } else if (result.type === 'github_oauth_error') {
+                        // 登录失败
+                        console.error('GitHub 登录失败:', result.error, result.message);
+                        const alertDiv = document.getElementById('auth-alert');
+                        if (alertDiv) {
+                            alertDiv.innerHTML = `<div class="alert alert-error">${result.message || 'GitHub 登录失败'}</div>`;
+                        }
+                    }
+                } catch (e) {
+                    console.error('解析 GitHub OAuth 结果失败:', e);
+                    const alertDiv = document.getElementById('auth-alert');
+                    if (alertDiv) {
+                        alertDiv.innerHTML = '<div class="alert alert-error">登录处理失败</div>';
+                    }
+                }
+            }, 200);
+        };
+
+        // 停止 GitHub OAuth 轮询
+        window.stopGitHubOAuthPolling = function () {
+            if (githubOAuthPolling) {
+                clearInterval(githubOAuthPolling);
+                githubOAuthPolling = null;
+                console.log('已停止 GitHub OAuth 轮询');
+            }
+        };
+
+        console.log('✅ GitHub OAuth 轮询函数已定义为全局函数');
+
+        // 🌐 全局函数：静默处理管理员登录（不显示模态框）
+        window.showAdminChoiceModal = function () {
+            console.log('管理员登录成功，静默跳转到管理后台（不显示模态框）');
+            // ✅ 不显示模态框，直接跳转
+            // 保留此函数以兼容现有代码调用，但不执行显示操作
+            window.location.href = '/admin.html';
+        };
+
+        // 🌐 全局函数：处理 GitHub 登录成功（在 DOMContentLoaded 之前定义）
+        window.handleGitHubLoginSuccess = function (result) {
+            console.log('✅ handleGitHubLoginSuccess 被调用:', result);
+
+            // ✅ 兼容旧的调用方式（只传 userData）和新的调用方式（传 loginResult）
+            const userData = result.userData || result;
+            const returnUrl = result.returnUrl || '/';  // ✅ 改为跳转到主页
+            const isAdmin = result.isAdmin || userData.isAdmin || false;
+
+            // 保存认证状态
+            if (userData) {
+                localStorage.setItem('github_auth_state', JSON.stringify(userData));
+            }
+
+            // ✅ 无论管理员还是普通用户，都直接跳转到主页
+            console.log('登录成功，跳转到主页:', returnUrl);
+
+            const alertDiv = document.getElementById('auth-alert');
+            if (alertDiv) {
+                alertDiv.innerHTML = '<div class="alert alert-success">登录成功！正在跳转...</div>';
+            }
+
+            // 🔥 减少延迟到 500ms，与邮箱登录保持一致
+            setTimeout(() => {
+                window.location.href = returnUrl;
+            }, 500);
+        };
+
+        console.log('✅ GitHub 登录处理函数已定义为全局函数');
+
+        // 🌐 添加 postMessage 监听器（作为 window.opener 直接调用的备用方案）
+        window.addEventListener('message', function (event) {
+            // 验证来源（只接受同源消息）
+            if (event.origin !== window.location.origin) {
+                console.log('⚠️ 忽略非同源消息:', event.origin);
+                return;
+            }
+
+            console.log('📨 收到 postMessage:', event.data);
+
+            // 检查消息类型
+            if (event.data && event.data.type === 'github_oauth_success') {
+                console.log('✅ 收到 GitHub OAuth 成功消息');
+                window.handleGitHubLoginSuccess(event.data);
+            } else if (event.data && event.data.type === 'github_oauth_error') {
+                console.error('❌ 收到 GitHub OAuth 错误消息:', event.data);
+                const alertDiv = document.getElementById('auth-alert');
+                if (alertDiv) {
+                    alertDiv.innerHTML = `<div class="alert alert-error">${event.data.message || 'GitHub 登录失败'}</div>`;
+                }
+            }
+        });
+
+        console.log('✅ postMessage 监听器已添加');
+
+        document.addEventListener('DOMContentLoaded', async function () {
+            console.log('Auth page loaded');
+
+            // 🧪 自动测试模式检查
+            const autoTest = sessionStorage.getItem('auto_test_modal');
+            if (autoTest === 'true') {
+                console.log('🧪 [自动测试] 检测到自动测试标记');
+                sessionStorage.removeItem('auto_test_modal');
+
+                // 延迟一点，确保页面完全加载
+                setTimeout(() => {
+                    console.log('🧪 [自动测试] 检查 localStorage 中的测试数据');
+                    const testResult = localStorage.getItem('github_oauth_result');
+
+                    if (testResult) {
+                        console.log('🧪 [自动测试] 找到测试数据，启动轮询');
+
+                        // 启动轮询
+                        if (typeof window.startGitHubOAuthPolling === 'function') {
+                            window.startGitHubOAuthPolling();
+                            console.log('🧪 [自动测试] 轮询已启动');
+                        } else {
+                            console.error('🧪 [自动测试] 轮询函数不存在！');
+
+                            // 手动触发
+                            try {
+                                const data = JSON.parse(testResult);
+                                console.log('🧪 [自动测试] 手动解析数据:', data);
+
+                                if (data.isAdmin) {
+                                    console.log('🧪 [自动测试] 检测到管理员，显示模态框');
+
+                                    // 查找 showAdminChoiceModal 函数
+                                    if (typeof showAdminChoiceModal === 'function') {
+                                        showAdminChoiceModal();
+                                        console.log('🧪 [自动测试] ✅ 模态框应该已显示');
+                                    } else {
+                                        console.error('🧪 [自动测试] ❌ showAdminChoiceModal 函数不存在');
+                                    }
+                                }
+                            } catch (e) {
+                                console.error('🧪 [自动测试] 解析失败:', e);
+                            }
+                        }
+                    } else {
+                        console.error('🧪 [自动测试] 未找到测试数据');
+                    }
+                }, 1000);
+            }
+
+            // 全局标志：是否正在显示管理员选择界面
+            window.isShowingAdminChoice = false;
+
+            // 初始化 Firebase
+            let firebaseApp = null;
+            let useFirebase = false;
+
+            try {
+                firebaseApp = window.FirebaseConfig.initializeFirebase();
+                useFirebase = firebaseApp && window.FirebaseConfig.isConfigured();
+                console.log('Firebase configured:', useFirebase);
+            } catch (e) {
+                console.log('Firebase 初始化失败:', e);
+            }
+
+            // 检查 URL 参数
+            const urlParams = new URLSearchParams(window.location.search);
+            const returnUrl = urlParams.get('returnUrl');
+            const switchAccount = urlParams.get('switch');
+            const showAdminChoice = urlParams.get('showAdminChoice');
+
+            // 全局函数：进入管理员后台
+            window.goToAdmin = async function () {
+                console.log('用户选择：管理员后台');
+
+                // 确保后端 session 已创建
+                try {
+                    const auth = window.FirebaseConfig.getAuth();
+                    const user = auth.currentUser;
+
+                    if (user) {
+                        console.log('同步后端 session...');
+                        const syncRes = await fetch('/api/auth/firebase-sync', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            credentials: 'include',
+                            body: JSON.stringify({
+                                uid: user.uid,
+                                email: user.email,
+                                displayName: user.displayName,
+                                photoURL: user.photoURL,
+                                provider: user.providerData[0]?.providerId || 'unknown'
+                            })
+                        });
+
+                        if (syncRes.ok) {
+                            console.log('后端 session 同步成功');
+                        } else {
+                            console.warn('后端 session 同步失败');
+                        }
+                    }
+                } catch (error) {
+                    console.error('同步 session 失败:', error);
+                }
+
+                // 清除 showAdminChoice 标记,避免循环
+                localStorage.removeItem('showAdminChoice');
+                sessionStorage.removeItem('showAdminChoice');
+
+                // 延迟跳转,确保 cookie 已设置
+                setTimeout(() => {
+                    window.location.href = '/admin.html';
+                }, 300);
+            };
+
+            // 全局函数：进入用户界面
+            window.goToUser = function () {
+                console.log('用户选择：用户界面');
+                // 清除 showAdminChoice 标记
+                localStorage.removeItem('showAdminChoice');
+                sessionStorage.removeItem('showAdminChoice');
+                const urlParams = new URLSearchParams(window.location.search);
+                const returnUrl = urlParams.get('returnUrl') || '/tools.html';
+                window.location.href = returnUrl;
+            };
+
+            // 全局函数：关闭管理员选择模态框
+            window.closeAdminChoiceModal = function () {
+                console.log('关闭管理员选择模态框');
+                const modal = document.getElementById('admin-choice-modal');
+                if (modal) {
+                    modal.style.display = 'none';
+                    window.isShowingAdminChoice = false;
+                }
+                // 清除标记
+                localStorage.removeItem('showAdminChoice');
+                sessionStorage.removeItem('showAdminChoice');
+                // 关闭后留在当前页面(auth.html),不跳转
+                // 用户可以重新选择登录方式
+                console.log('模态框已关闭,留在登录页面');
+            };
+
+            // 如果需要显示管理员选择界面
+            if (showAdminChoice === 'true') {
+                console.log('显示管理员选择界面');
+                // 移除参数避免刷新时重复显示
+                window.history.replaceState({}, '', '/auth.html' + (returnUrl ? '?returnUrl=' + returnUrl : ''));
+                // 显示选择界面
+                setTimeout(() => {
+                    showAdminChoiceModal();
+                }, 500);
+            }
+
+            // 如果是切换账号，先登出
+            if (switchAccount === 'true') {
+                console.log('切换账号模式，先登出...');
+                try {
+                    // 先登出 Firebase
+                    if (useFirebase) {
+                        const auth = window.FirebaseConfig.getAuth();
+                        await auth.signOut();
+                    }
+                    await fetch('/api/user/logout', { method: 'POST' });
+                    // 清除 localStorage（Firebase 和 GitHub OAuth）
+                    localStorage.removeItem('firebase_auth_state');
+                    localStorage.removeItem('github_auth_state');
+                } catch (e) {
+                    console.log('登出失败:', e);
+                }
+                // 移除 switch 参数，避免刷新时重复登出
+                window.history.replaceState({}, '', '/auth.html' + (returnUrl ? '?returnUrl=' + returnUrl : ''));
+            }
+
+            // 设置 Firebase Auth 状态监听器（用于检测 OAuth 登录成功）
+            if (useFirebase) {
+                const auth = window.FirebaseConfig.getAuth();
+                let authHandled = false;
+
+                auth.onAuthStateChanged(async (user) => {
+                    console.log('Firebase Auth 状态变化:', user ? user.email : '未登录');
+
+                    // 如果用户已登录且不是切换账号模式
+                    if (user && !switchAccount && !authHandled) {
+                        authHandled = true;
+                        console.log('检测到已登录用户:', user.email);
+
+                        // 保存认证状态
+                        if (window.AuthStateManager && window.AuthStateManager.persistAuthState) {
+                            await window.AuthStateManager.persistAuthState(user);
+                        }
+
+                        // 如果 URL 参数中有 showAdminChoice 或正在显示管理员选择界面，不要自动跳转
+                        if (showAdminChoice === 'true' || window.isShowingAdminChoice) {
+                            console.log('管理员选择模式，不自动跳转');
+                            return;
+                        }
+
+                        // 检查是否是管理员（在跳转前）
+                        try {
+                            const adminResponse = await fetch('/api/admin/status');
+                            const adminData = await adminResponse.json();
+
+                            if (adminData.isAdmin) {
+                                console.log('检测到管理员，显示选择界面');
+                                window.isShowingAdminChoice = true;
+                                showAdminChoiceModal();
+                                return;
+                            }
+                        } catch (error) {
+                            console.error('检查管理员状态失败:', error);
+                        }
+
+                        // 普通用户：显示成功消息并跳转
+                        const alertDiv = document.getElementById('auth-alert');
+                        if (alertDiv) {
+                            alertDiv.innerHTML = '<div class="alert alert-success">登录成功！正在跳转...</div>';
+                        }
+
+                        setTimeout(() => {
+                            window.location.href = returnUrl || '/tools.html';
+                        }, 800);
+                    }
+                });
+            }
+
+            // 只有在有 returnUrl 时才检查登录状态并自动跳转
+            // 直接访问 auth.html 时不自动跳转，让用户可以切换账号
+            // 如果有 showAdminChoice 参数，也不要自动跳转
+            if (returnUrl && !switchAccount && showAdminChoice !== 'true') {
+                // 首先检查 localStorage 中是否有有效的认证状态
+                // 支持 Firebase 和 GitHub OAuth 两种登录方式
+                const storedAuth = localStorage.getItem('firebase_auth_state');
+                const githubAuth = localStorage.getItem('github_auth_state');
+                let hasValidLocalAuth = false;
+
+                // 检查 Firebase 认证
+                if (storedAuth) {
+                    try {
+                        const authState = JSON.parse(storedAuth);
+                        const tokenAge = Date.now() - (authState.timestamp || 0);
+                        if (authState && authState.uid && authState.email && tokenAge < 60 * 60 * 1000) {
+                            hasValidLocalAuth = true;
+                        }
+                    } catch (e) {
+                        console.log('解析存储的 Firebase 认证状态失败:', e);
+                    }
+                }
+
+                // 检查 GitHub OAuth 认证
+                if (!hasValidLocalAuth && githubAuth) {
+                    try {
+                        const authState = JSON.parse(githubAuth);
+                        const tokenAge = Date.now() - (authState.timestamp || 0);
+                        if (authState && authState.uid && tokenAge < 60 * 60 * 1000) {
+                            hasValidLocalAuth = true;
+                        }
+                    } catch (e) {
+                        console.log('解析存储的 GitHub 认证状态失败:', e);
+                    }
+                }
+
+                // 只有在 localStorage 有有效认证状态时才跳转
+                if (hasValidLocalAuth) {
+                    console.log('用户已登录（localStorage），跳转到:', returnUrl);
+                    window.location.replace(returnUrl);
+                    return;
+                }
+                // 没有有效的本地认证状态，留在登录页
+                console.log('没有有效的本地认证状态，显示登录页');
+            }
+
+            // Tab switching
+            const tabs = document.querySelectorAll('.auth-tab');
+            const forms = document.querySelectorAll('.auth-form');
+            const switchLinks = document.querySelectorAll('[data-switch]');
+
+            function switchTab(tabName) {
+                tabs.forEach(tab => {
+                    tab.classList.toggle('active', tab.dataset.tab === tabName);
+                });
+                forms.forEach(form => {
+                    form.classList.toggle('active', form.id === tabName + '-form');
+                });
+                document.getElementById('auth-alert').innerHTML = '';
+            }
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+            });
+
+            switchLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    switchTab(link.dataset.switch);
+                });
+            });
+
+            // Check URL params for initial tab
+            if (urlParams.get('tab') === 'register') {
+                switchTab('register');
+            }
+
+            // Password toggle
+            document.querySelectorAll('.password-toggle').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const input = document.getElementById(this.dataset.target);
+                    const type = input.type === 'password' ? 'text' : 'password';
+                    input.type = type;
+
+                    const svg = this.querySelector('svg');
+                    if (type === 'text') {
+                        svg.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>';
+                    } else {
+                        svg.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+                    }
+                });
+            });
+
+            // Password strength
+            const passwordInput = document.getElementById('register-password');
+            const strengthBar = document.getElementById('password-strength-bar');
+            const strengthText = document.getElementById('password-strength-text');
+
+            passwordInput.addEventListener('input', function () {
+                const password = this.value;
+                let strength = 0;
+                let text = '';
+
+                if (password.length >= 6) strength++;
+                if (password.length >= 10) strength++;
+                if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+                if (/\d/.test(password)) strength++;
+                if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) strength++;
+
+                strengthBar.className = 'password-strength-bar';
+                if (password.length === 0) {
+                    text = '';
+                } else if (strength <= 2) {
+                    strengthBar.classList.add('weak');
+                    text = '弱 - 建议使用更复杂的密码';
+                } else if (strength <= 3) {
+                    strengthBar.classList.add('medium');
+                    text = '中 - 可以更强';
+                } else {
+                    strengthBar.classList.add('strong');
+                    text = '强 - 很好！';
+                }
+
+                strengthText.textContent = text;
+            });
+
+            // Confirm password validation
+            const confirmInput = document.getElementById('register-confirm');
+            const confirmError = document.getElementById('confirm-error');
+
+            confirmInput.addEventListener('input', function () {
+                if (this.value && this.value !== passwordInput.value) {
+                    confirmError.textContent = '两次输入的密码不一致';
+                    this.classList.add('error');
+                } else {
+                    confirmError.textContent = '';
+                    this.classList.remove('error');
+                }
+            });
+
+            // Show alert
+            function showAlert(message, type) {
+                const alertDiv = document.getElementById('auth-alert');
+                alertDiv.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+            }
+
+            // Set button loading state
+            function setButtonLoading(btn, loading) {
+                if (loading) {
+                    btn.disabled = true;
+                    btn.dataset.originalText = btn.textContent;
+                    btn.innerHTML = '<span class="loading-spinner"></span>处理中...';
+                } else {
+                    btn.disabled = false;
+                    btn.textContent = btn.dataset.originalText || btn.textContent;
+                }
+            }
+
+            // Redirect after login
+            async function redirectAfterLogin() {
+                // ✅ 所有用户（包括管理员）都直接跳转到工具页
+                console.log('登录成功，跳转到工具页');
+                window.location.href = '/tools.html';
+            }
+
+            // Login form submit
+            document.getElementById('login-form').addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                const loginBtn = document.getElementById('login-btn');
+
+                setButtonLoading(loginBtn, true);
+
+                try {
+                    if (useFirebase) {
+                        console.log('使用 Firebase 登录...');
+
+                        // 直接使用 Firebase Auth API 登录，避免模块调用问题
+                        const auth = window.FirebaseConfig.getAuth();
+
+                        try {
+                            const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                            console.log('Firebase 登录成功:', userCredential.user.email);
+
+                            // 立即保存认证状态到 localStorage（防止跳转后闪烁）
+                            if (window.AuthStateManager && window.AuthStateManager.persistAuthState) {
+                                await window.AuthStateManager.persistAuthState(userCredential.user);
+                                console.log('认证状态已保存到 localStorage');
+                            }
+
+                            // 同步到后端（必须等待完成）
+                            if (window.EmailAuth && window.EmailAuth.syncUserToBackend) {
+                                try {
+                                    await window.EmailAuth.syncUserToBackend(userCredential.user);
+                                    console.log('后端同步成功');
+                                } catch (err) {
+                                    console.error('后端同步失败:', err);
+                                }
+                            }
+
+                            // 立即检查管理员状态（但不显示选择界面，只是为了同步后端）
+                            try {
+                                const adminResponse = await fetch('/api/admin/status');
+                                if (adminResponse.ok) {
+                                    const adminData = await adminResponse.json();
+                                    console.log('管理员状态:', adminData.isAdmin);
+                                } else {
+                                    console.warn('检查管理员状态失败: HTTP', adminResponse.status);
+                                }
+                            } catch (err) {
+                                console.error('检查管理员状态失败:', err);
+                                // 不要抛出错误，继续登录流程
+                            }
+
+                            // ✅ 所有用户（包括管理员）都显示成功消息并跳转到主页
+                            showAlert('登录成功！正在跳转...', 'success');
+                            setTimeout(() => {
+                                window.location.href = '/tools.html';  // 跳转到工具页
+                            }, 500);
+                        } catch (firebaseError) {
+                            console.error('Firebase 登录失败:', firebaseError.code, firebaseError.message);
+
+                            let message = '登录失败，请检查邮箱和密码';
+                            switch (firebaseError.code) {
+                                case 'auth/user-not-found':
+                                    message = '用户不存在';
+                                    break;
+                                case 'auth/wrong-password':
+                                    message = '密码错误';
+                                    break;
+                                case 'auth/invalid-email':
+                                    message = '邮箱格式不正确';
+                                    break;
+                                case 'auth/user-disabled':
+                                    message = '该账号已被禁用';
+                                    break;
+                                case 'auth/too-many-requests':
+                                    message = '登录尝试次数过多，请稍后再试';
+                                    break;
+                                case 'auth/invalid-credential':
+                                case 'auth/invalid-login-credentials':
+                                    message = '邮箱或密码错误';
+                                    break;
+                                case 'auth/network-request-failed':
+                                    message = '网络错误，请检查网络连接';
+                                    break;
+                            }
+
+                            showAlert(message, 'error');
+                            setButtonLoading(loginBtn, false);
+                            return; // 🔥 添加return，防止外层catch再次处理
+                        }
+                    } else {
+                        // 使用后端 API 登录
+                        const response = await fetch('/api/user/login', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ nickname: email, password: password })
+                        });
+
+                        const data = await response.json();
+
+                        if (data.success) {
+                            showAlert('登录成功！正在跳转...', 'success');
+                            setTimeout(redirectAfterLogin, 1000);
+                        } else {
+                            showAlert(data.message || data.error || '登录失败，请检查邮箱和密码', 'error');
+                            setButtonLoading(loginBtn, false);
+                        }
+                    }
+                } catch (error) {
+                    console.error('登录错误:', error);
+                    showAlert('登录失败: ' + (error.message || '请稍后重试'), 'error');
+                    setButtonLoading(loginBtn, false);
+                }
+            });
+
+            // Register form submit
+            document.getElementById('register-form').addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const nickname = document.getElementById('register-nickname').value.trim();
+                const email = document.getElementById('register-email').value;
+                const password = document.getElementById('register-password').value;
+                const confirm = document.getElementById('register-confirm').value;
+                const registerBtn = document.getElementById('register-btn');
+
+                // Validation
+                if (!nickname || nickname.length < 2 || nickname.length > 20) {
+                    showAlert('昵称长度需要在2-20个字符之间', 'error');
+                    return;
+                }
+
+                if (password !== confirm) {
+                    showAlert('两次输入的密码不一致', 'error');
+                    return;
+                }
+
+                if (password.length < 6) {
+                    showAlert('密码长度至少6位', 'error');
+                    return;
+                }
+
+                setButtonLoading(registerBtn, true);
+
+                try {
+                    if (useFirebase) {
+                        // 使用 Firebase 注册
+                        console.log('尝试 Firebase 注册...');
+
+                        // 添加超时机制
+                        const timeoutPromise = new Promise((_, reject) => {
+                            setTimeout(() => reject(new Error('注册超时，请检查网络连接')), 30000);
+                        });
+
+                        const result = await Promise.race([
+                            window.EmailAuth.registerWithEmail(email, password),
+                            timeoutPromise
+                        ]);
+                        console.log('Firebase 注册结果:', result);
+
+                        if (result.success) {
+                            // 设置 Firebase displayName 为昵称
+                            try {
+                                await result.user.updateProfile({ displayName: nickname });
+                            } catch (e) {
+                                console.log('设置 displayName 失败:', e);
+                            }
+
+                            // 立即保存认证状态到 localStorage（防止跳转后闪烁）
+                            if (window.AuthStateManager && window.AuthStateManager.persistAuthState) {
+                                await window.AuthStateManager.persistAuthState(result.user);
+                                console.log('认证状态已保存到 localStorage');
+                            }
+
+                            // 同步到后端（包含昵称）
+                            fetch('/api/auth/firebase-sync', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    uid: result.user.uid,
+                                    email: result.user.email,
+                                    displayName: nickname,
+                                    provider: 'password'
+                                })
+                            }).catch(err => {
+                                console.log('同步到后端失败（不影响登录）:', err);
+                            });
+                            showAlert('注册成功！正在跳转...', 'success');
+                            setTimeout(redirectAfterLogin, 1000);
+                        } else {
+                            showAlert(result.message || '注册失败，请稍后重试', 'error');
+                            setButtonLoading(registerBtn, false);
+                        }
+                    } else {
+                        // 使用后端 API 注册
+                        console.log('尝试后端 API 注册...');
+                        const response = await fetch('/api/user/register', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ email: email, nickname: nickname, password: password })
+                        });
+
+                        const data = await response.json();
+                        console.log('后端注册结果:', data);
+
+                        if (data.success) {
+                            // 自动登录
+                            await fetch('/api/user/login', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ nickname: email, password: password })
+                            });
+                            showAlert('注册成功！正在跳转...', 'success');
+                            setTimeout(redirectAfterLogin, 1000);
+                        } else {
+                            showAlert(data.message || data.error || '注册失败，请稍后重试', 'error');
+                            setButtonLoading(registerBtn, false);
+                        }
+                    }
+                } catch (error) {
+                    console.error('注册错误:', error);
+                    showAlert('注册失败: ' + (error.message || '请稍后重试'), 'error');
+                    setButtonLoading(registerBtn, false);
+                }
+            });
+
+            // 检查是否有 GitHub 重定向登录结果
+            if (useFirebase) {
+                const auth = window.FirebaseConfig.getAuth();
+                auth.getRedirectResult().then(async (result) => {
+                    if (result.user) {
+                        console.log('=== GitHub 重定向登录成功 ===');
+                        console.log('用户:', result.user.email);
+
+                        // 保存认证状态
+                        if (window.AuthStateManager && window.AuthStateManager.persistAuthState) {
+                            await window.AuthStateManager.persistAuthState(result.user);
+                        }
+
+                        // 同步到后端
+                        const credential = result.credential;
+                        const githubToken = credential ? credential.accessToken : null;
+
+                        fetch('/api/auth/firebase-sync', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                uid: result.user.uid,
+                                email: result.user.email,
+                                displayName: result.user.displayName,
+                                photoURL: result.user.photoURL,
+                                provider: 'github.com',
+                                githubToken: githubToken
+                            })
+                        }).catch(err => console.log('后端同步失败（不影响登录）:', err));
+
+                        // 检查是否是管理员
+                        try {
+                            const adminResponse = await fetch('/api/admin/status');
+                            const adminData = await adminResponse.json();
+
+                            if (adminData.isAdmin) {
+                                console.log('检测到管理员，显示选择界面');
+                                window.isShowingAdminChoice = true;
+                                showAdminChoiceModal();
+                                return;
+                            }
+                        } catch (error) {
+                            console.error('检查管理员状态失败:', error);
+                        }
+
+                        // 普通用户：显示成功消息并跳转
+                        showAlert('登录成功！正在跳转...', 'success');
+
+                        // 获取保存的返回 URL
+                        const savedReturnUrl = sessionStorage.getItem('github_return_url');
+                        sessionStorage.removeItem('github_return_url');
+                        const finalReturnUrl = savedReturnUrl || returnUrl || '/tools.html';
+
+                        setTimeout(() => {
+                            window.location.href = finalReturnUrl;
+                        }, 800);
+                    }
+                }).catch((error) => {
+                    if (error.code && error.code !== 'auth/popup-closed-by-user') {
+                        console.error('GitHub 重定向结果错误:', error.code, error.message);
+                        let message = 'GitHub 登录失败: ' + (error.message || error.code);
+                        showAlert(message, 'error');
+                    }
+                });
+            }
+
+            // GitHub login - 使用重定向方式（不使用弹窗）
+            document.getElementById('github-login-btn').addEventListener('click', async function () {
+                console.log('=== GitHub 登录按钮点击 ===');
+
+                // 检查是否有直接 OAuth 模块
+                if (window.GitHubOAuthDirect && window.GitHubOAuthDirect.startGitHubLogin) {
+                    console.log('使用直接 GitHub OAuth 登录...');
+                    console.log('Redirect URI:', window.GitHubOAuthDirect.config.redirectUri);
+
+                    // 保存返回 URL
+                    const returnUrl = new URLSearchParams(window.location.search).get('returnUrl') || '/tools.html';
+                    sessionStorage.setItem('github_oauth_return_url', returnUrl);
+
+                    // 开始 OAuth 流程（会重定向到 GitHub）
+                    window.GitHubOAuthDirect.startGitHubLogin();
+                    return;
+                }
+
+                // 使用 Firebase 重定向方式（不使用弹窗）
+                if (!useFirebase) {
+                    showAlert('GitHub 登录暂不可用', 'error');
+                    return;
+                }
+
+                setButtonLoading(this, true);
+
+                try {
+                    const auth = window.FirebaseConfig.getAuth();
+
+                    console.log('创建 GithubAuthProvider...');
+                    const provider = new firebase.auth.GithubAuthProvider();
+                    provider.addScope('user:email');
+                    provider.addScope('read:user');
+
+                    // 保存返回 URL 到 sessionStorage
+                    const returnUrl = new URLSearchParams(window.location.search).get('returnUrl') || '/tools.html';
+                    sessionStorage.setItem('github_return_url', returnUrl);
+
+                    console.log('使用重定向方式登录（不使用弹窗）...');
+                    // 使用重定向方式而不是弹窗
+                    await auth.signInWithRedirect(provider);
+                    // 注意：这里会重定向到 GitHub，然后返回到当前页面
+                    // 返回后会在 getRedirectResult() 中处理结果
+
+                } catch (error) {
+                    console.error('GitHub 登录错误:', error.code, error.message);
+
+                    let message = 'GitHub 登录失败';
+                    switch (error.code) {
+                        case 'auth/operation-not-allowed':
+                            message = 'GitHub 登录未启用';
+                            break;
+                        case 'auth/unauthorized-domain':
+                            message = '当前域名未授权';
+                            break;
+                        default:
+                            message = 'GitHub 登录失败: ' + (error.message || error.code);
+                    }
+                    showAlert(message, 'error');
+                    setButtonLoading(this, false);
+                }
+            })
+
+            // Forgot password
+            document.getElementById('forgot-password-link').addEventListener('click', async function (e) {
+                e.preventDefault();
+
+                const email = document.getElementById('login-email').value;
+
+                if (!email) {
+                    showAlert('请先输入邮箱地址', 'error');
+                    return;
+                }
+
+                if (!useFirebase) {
+                    showAlert('密码重置功能需要配置 Firebase，请联系管理员', 'error');
+                    return;
+                }
+
+                try {
+                    const result = await window.EmailAuth.sendPasswordReset(email);
+
+                    if (result.success) {
+                        showAlert(result.message, 'success');
+                    } else {
+                        showAlert(result.message, 'error');
+                    }
+                } catch (error) {
+                    console.error('密码重置错误:', error);
+                    showAlert('发送重置邮件失败，请稍后重试', 'error');
+                }
+            });
+
+            // 🔄 页面加载时自动检查 localStorage 中是否有 GitHub OAuth 结果
+            // 这是为了处理弹窗关闭后，主页面检测登录结果的情况
+            setTimeout(() => {
+                const oauthResult = localStorage.getItem('github_oauth_result');
+                if (oauthResult) {
+                    console.log('🔄 [自动检查] 检测到 localStorage 中有 OAuth 结果，启动轮询');
+                    // 启动轮询来处理这个结果
+                    if (typeof startGitHubOAuthPolling === 'function') {
+                        startGitHubOAuthPolling();
+                    }
+                }
+            }, 500); // 延迟 500ms，确保所有函数都已定义
+
+            // ========================================
+            // 📧 邮箱验证码功能
+            // ========================================
+
+            // 验证码状态管理
+            let emailVerified = false;  // 邮箱是否已验证
+            let verifiedEmail = '';     // 已验证的邮箱地址
+            let countdownTimer = null;  // 倒计时定时器
+            let modalCountdownTimer = null;  // 弹窗倒计时
+
+            const registerEmailInput = document.getElementById('register-email');
+            const sendCodeBtn = document.getElementById('send-code-btn');
+            const emailVerifyStatus = document.getElementById('email-verify-status');
+
+            // 验证码弹窗元素
+            const verificationModal = document.getElementById('verification-modal');
+            const modalEmailDisplay = document.getElementById('modal-email-display');
+            const modalResendBtn = document.getElementById('modal-resend-btn');
+            const modalVerifyBtn = document.getElementById('modal-verify-btn');
+            const verificationError = document.getElementById('verification-error');
+            const codeInputs = document.querySelectorAll('.code-input');
+
+            // 监听邮箱输入 - 启用/禁用获取验证码按钮
+            registerEmailInput.addEventListener('input', function () {
+                const email = this.value.trim();
+                const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+                // 如果邮箱改变，重置验证状态
+                if (email !== verifiedEmail) {
+                    emailVerified = false;
+                    updateEmailVerifyStatus('', '');
+                }
+
+                sendCodeBtn.disabled = !isValidEmail || emailVerified;
+
+                // 如果已验证，显示状态
+                if (emailVerified && email === verifiedEmail) {
+                    updateEmailVerifyStatus('✓ 邮箱已验证', 'success');
+                    sendCodeBtn.textContent = '已验证';
+                    sendCodeBtn.disabled = true;
+                }
+            });
+
+            // 更新邮箱验证状态显示
+            function updateEmailVerifyStatus(message, type) {
+                emailVerifyStatus.textContent = message;
+                emailVerifyStatus.className = 'email-verify-status';
+                if (message) {
+                    emailVerifyStatus.classList.add('show', type);
+                }
+            }
+
+            // 发送验证码按钮点击
+            sendCodeBtn.addEventListener('click', async function () {
+                const email = registerEmailInput.value.trim();
+
+                if (!email) {
+                    showAlert('请输入邮箱地址', 'error');
+                    return;
+                }
+
+                // 发送验证码
+                await sendVerificationCode(email);
+            });
+
+            // 发送验证码函数
+            async function sendVerificationCode(email) {
+                try {
+                    sendCodeBtn.disabled = true;
+                    sendCodeBtn.textContent = '发送中...';
+
+                    // 🚀 立即显示弹窗，带 Loading 状态
+                    openVerificationModal(email, true); // true = loading
+
+                    const response = await fetch('/api/auth/send-verification-code', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: email })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        console.log('验证码发送成功');
+                        updateEmailVerifyStatus('验证码已发送，请查收邮件', 'pending');
+
+                        // 🔄 更新弹窗为输入状态
+                        updateVerificationModalState('ready');
+
+                        // 启动倒计时
+                        startCountdown(60);
+                    } else {
+                        showAlert(data.message || '发送验证码失败', 'error');
+                        closeVerificationModal();
+                        sendCodeBtn.disabled = false;
+                        sendCodeBtn.textContent = '获取验证码';
+                    }
+                } catch (error) {
+                    console.error('发送验证码失败:', error);
+                    showAlert('发送验证码失败，请稍后重试', 'error');
+                    closeVerificationModal();
+                    sendCodeBtn.disabled = false;
+                    sendCodeBtn.textContent = '获取验证码';
+                }
+            }
+
+            // 启动倒计时
+            function startCountdown(seconds) {
+                let remaining = seconds;
+
+                sendCodeBtn.classList.add('counting');
+                sendCodeBtn.textContent = `重新发送(${remaining}s)`;
+                sendCodeBtn.disabled = true;
+
+                modalResendBtn.textContent = `重新发送(${remaining}s)`;
+                modalResendBtn.disabled = true;
+
+                countdownTimer = setInterval(() => {
+                    remaining--;
+                    sendCodeBtn.textContent = `重新发送(${remaining}s)`;
+                    modalResendBtn.textContent = `重新发送(${remaining}s)`;
+
+                    if (remaining <= 0) {
+                        clearInterval(countdownTimer);
+                        countdownTimer = null;
+
+                        sendCodeBtn.classList.remove('counting');
+                        sendCodeBtn.textContent = '获取验证码';
+                        sendCodeBtn.disabled = emailVerified;
+
+                        modalResendBtn.textContent = '重新发送';
+                        modalResendBtn.disabled = false;
+                    }
+                }, 1000);
+            }
+
+            // 打开验证码弹窗
+            window.openVerificationModal = function (email, isLoading = false) {
+                modalEmailDisplay.textContent = email;
+                verificationModal.classList.add('show');
+                verificationError.classList.remove('show');
+
+                // 清空输入框
+                codeInputs.forEach(input => {
+                    input.value = '';
+                    input.classList.remove('filled');
+                });
+
+                // 根据 isLoading 显示不同内容
+                const inputWrapper = document.querySelector('.code-input-wrapper');
+                const modalActions = document.querySelector('.verification-modal-actions');
+                const hint = document.querySelector('.verification-hint');
+                const loadingEl = document.getElementById('verification-loading');
+
+                if (isLoading) {
+                    // Loading 状态：隐藏输入框和按钮，显示加载指示器
+                    if (inputWrapper) inputWrapper.style.display = 'none';
+                    if (modalActions) modalActions.style.display = 'none';
+                    if (hint) hint.style.display = 'none';
+
+                    if (loadingEl) {
+                        loadingEl.style.display = 'flex';
+                    } else {
+                        // 动态创建 loading 元素
+                        const loader = document.createElement('div');
+                        loader.id = 'verification-loading';
+                        loader.innerHTML = `
+                            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px 0;">
+                                <div style="width: 30px; height: 30px; border: 2px solid #f3f3f3; border-top: 2px solid #000; border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
+                                <p style="margin-top: 16px; color: #666; font-size: 14px;">正在发送验证码...</p>
+                                <p style="margin-top: 4px; color: #999; font-size: 12px;">请稍等......</p>
+                            </div>
+                        `;
+                        const modalContent = verificationModal.querySelector('.verification-modal-content');
+                        if (modalContent) {
+                            // 插入到 inputWrapper 之前或 append
+                            if (inputWrapper) {
+                                modalContent.insertBefore(loader, inputWrapper);
+                            } else {
+                                modalContent.appendChild(loader);
+                            }
+                        }
+                    }
+                } else {
+                    // Ready 状态：显示输入框
+                    if (inputWrapper) inputWrapper.style.display = 'flex';
+                    if (modalActions) modalActions.style.display = 'flex';
+                    if (hint) hint.style.display = 'block';
+                    if (loadingEl) loadingEl.style.display = 'none';
+                    // 聚焦第一个输入框
+                    codeInputs[0].focus();
+                }
+            };
+
+            // 更新弹窗状态
+            window.updateVerificationModalState = function (state) {
+                const inputWrapper = document.querySelector('.code-input-wrapper');
+                const modalActions = document.querySelector('.verification-modal-actions');
+                const hint = document.querySelector('.verification-hint');
+                const loadingEl = document.getElementById('verification-loading');
+
+                if (state === 'ready') {
+                    if (inputWrapper) inputWrapper.style.display = 'flex';
+                    if (modalActions) modalActions.style.display = 'flex';
+                    if (hint) hint.style.display = 'block';
+                    if (loadingEl) loadingEl.style.display = 'none';
+                    // 聚焦第一个输入框
+                    codeInputs[0].focus();
+                }
+            };
+
+            // 关闭验证码弹窗
+            window.closeVerificationModal = function () {
+                verificationModal.classList.remove('show');
+                // 清理 loading 元素
+                const loadingEl = document.getElementById('verification-loading');
+                if (loadingEl) loadingEl.remove();
+
+                // 恢复默认显示状态（以防下次打开时状态不对）
+                const inputWrapper = document.querySelector('.code-input-wrapper');
+                const modalActions = document.querySelector('.verification-modal-actions');
+                const hint = document.querySelector('.verification-hint');
+                if (inputWrapper) inputWrapper.style.display = 'flex';
+                if (modalActions) modalActions.style.display = 'flex';
+                if (hint) hint.style.display = 'block';
+            };
+
+            // 验证码输入框逻辑
+            codeInputs.forEach((input, index) => {
+                // 输入时自动跳转到下一个
+                input.addEventListener('input', function (e) {
+                    const value = e.target.value;
+
+                    // 只允许数字
+                    if (!/^\d*$/.test(value)) {
+                        e.target.value = '';
+                        return;
+                    }
+
+                    if (value.length === 1) {
+                        e.target.classList.add('filled');
+                        // 自动跳转到下一个
+                        if (index < codeInputs.length - 1) {
+                            codeInputs[index + 1].focus();
+                        }
+                    } else {
+                        e.target.classList.remove('filled');
+                    }
+
+                    // 检查是否全部填写
+                    checkCodeComplete();
+                });
+
+                // 键盘事件 - 退格删除
+                input.addEventListener('keydown', function (e) {
+                    if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                        codeInputs[index - 1].focus();
+                        codeInputs[index - 1].value = '';
+                        codeInputs[index - 1].classList.remove('filled');
+                    }
+                });
+
+                // 粘贴事件
+                input.addEventListener('paste', function (e) {
+                    e.preventDefault();
+                    const pastedData = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
+
+                    pastedData.split('').forEach((char, i) => {
+                        if (codeInputs[i]) {
+                            codeInputs[i].value = char;
+                            codeInputs[i].classList.add('filled');
+                        }
+                    });
+
+                    // 聚焦到最后一个填写的位置或验证按钮
+                    if (pastedData.length === 6) {
+                        modalVerifyBtn.focus();
+                    } else if (codeInputs[pastedData.length]) {
+                        codeInputs[pastedData.length].focus();
+                    }
+
+                    checkCodeComplete();
+                });
+            });
+
+            // 检查验证码是否填写完整
+            function checkCodeComplete() {
+                const code = getCodeValue();
+                modalVerifyBtn.disabled = code.length !== 6;
+            }
+
+            // 获取验证码值
+            function getCodeValue() {
+                return Array.from(codeInputs).map(input => input.value).join('');
+            }
+
+            // 重新发送验证码
+            modalResendBtn.addEventListener('click', async function () {
+                const email = modalEmailDisplay.textContent;
+                await sendVerificationCode(email);
+            });
+
+            // 验证验证码
+            modalVerifyBtn.addEventListener('click', async function () {
+                const email = modalEmailDisplay.textContent;
+                const code = getCodeValue();
+
+                if (code.length !== 6) {
+                    showVerificationError('请输入完整的6位验证码');
+                    return;
+                }
+
+                try {
+                    modalVerifyBtn.disabled = true;
+                    modalVerifyBtn.textContent = '验证中...';
+
+                    const response = await fetch('/api/auth/verify-code', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: email, code: code })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success && data.verified) {
+                        console.log('邮箱验证成功');
+                        emailVerified = true;
+                        verifiedEmail = email;
+
+                        // 更新界面状态
+                        updateEmailVerifyStatus('✓ 邮箱验证成功', 'success');
+                        sendCodeBtn.textContent = '已验证';
+                        sendCodeBtn.disabled = true;
+                        sendCodeBtn.classList.remove('counting');
+
+                        // 清除倒计时
+                        if (countdownTimer) {
+                            clearInterval(countdownTimer);
+                            countdownTimer = null;
+                        }
+
+                        // 关闭弹窗
+                        closeVerificationModal();
+
+                        // 聚焦到密码输入框
+                        document.getElementById('register-password').focus();
+                    } else {
+                        showVerificationError(data.message || '验证码错误');
+                        modalVerifyBtn.disabled = false;
+                        modalVerifyBtn.textContent = '确认验证';
+                    }
+                } catch (error) {
+                    console.error('验证失败:', error);
+                    showVerificationError('验证失败，请稍后重试');
+                    modalVerifyBtn.disabled = false;
+                    modalVerifyBtn.textContent = '确认验证';
+                }
+            });
+
+            // 显示验证错误
+            function showVerificationError(message) {
+                verificationError.textContent = message;
+                verificationError.classList.add('show');
+            }
+
+            // 修改注册表单验证 - 必须验证邮箱
+            const originalRegisterFormSubmit = document.getElementById('register-form').onsubmit;
+            document.getElementById('register-form').addEventListener('submit', function (e) {
+                // 检查邮箱是否已验证
+                const email = registerEmailInput.value.trim();
+
+                if (!emailVerified || email !== verifiedEmail) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    showAlert('请先验证邮箱后再注册', 'error');
+                    return false;
+                }
+            }, true);  // 使用捕获阶段，优先执行
+
+        });
+    </script>
+
+    <!-- 管理员角色选择模态框 -->
+    <div id="admin-choice-modal" class="role-modal" style="display: none;">
+        <div class="role-modal-overlay"></div>
+        <div class="role-modal-content">
+            <!-- 关闭按钮 -->
+            <button class="role-modal-close" onclick="closeAdminChoiceModal()" aria-label="关闭">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+
+            <div class="role-modal-header">
+                <h2>选择访问方式</h2>
+                <p>您是管理员，请选择要访问的界面</p>
+            </div>
+            <div class="role-modal-body">
+                <button class="role-choice-btn admin-btn" onclick="goToAdmin()">
+                    <div class="role-info">
+                        <h3>管理员后台</h3>
+                        <p>管理工具、用户和系统设置</p>
+                    </div>
+                </button>
+                <button class="role-choice-btn user-btn" onclick="goToUser()">
+                    <div class="role-info">
+                        <h3>用户界面</h3>
+                        <p>浏览和使用 AI 工具</p>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* 角色选择模态框样式 */
+        .role-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .role-modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+        }
+
+        .role-modal-content {
+            position: relative;
+            background: #fff;
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        /* 关闭按钮样式 */
+        .role-modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: transparent;
+            color: #666;
+            cursor: pointer;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            padding: 0;
+        }
+
+        .role-modal-close:hover {
+            background: #f0f0f0;
+            color: #000;
+        }
+
+        .role-modal-close:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .role-modal-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .role-modal-header h2 {
+            font-size: 28px;
+            font-weight: 800;
+            color: #000;
+            margin: 0 0 10px 0;
+            letter-spacing: -0.02em;
+        }
+
+        .role-modal-header p {
+            font-size: 14px;
+            color: #666;
+            margin: 0;
+        }
+
+        .role-modal-body {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .role-choice-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            background: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .role-choice-btn:hover {
+            border-color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .role-choice-btn.admin-btn:hover {
+            background: linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%);
+        }
+
+        .role-choice-btn.user-btn:hover {
+            background: linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%);
+        }
+
+        .role-info {
+            width: 100%;
+        }
+
+        .role-info h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #000;
+            margin: 0 0 8px 0;
+        }
+
+        .role-info p {
+            font-size: 14px;
+            color: #666;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 600px) {
+            .role-modal-content {
+                padding: 30px 20px;
+            }
+
+            .role-modal-header h2 {
+                font-size: 24px;
+            }
+
+            .role-choice-btn {
+                padding: 20px 15px;
+            }
+
+            .role-info h3 {
+                font-size: 16px;
+            }
+
+            .role-info p {
+                font-size: 13px;
+            }
+        }
+    </style>
+
+    <!-- 邮箱验证码弹窗 -->
+    <div id="verification-modal" class="verification-modal">
+        <div class="verification-modal-overlay" onclick="closeVerificationModal()"></div>
+        <div class="verification-modal-content">
+            <button class="verification-modal-close" onclick="closeVerificationModal()" aria-label="关闭">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+
+            <div class="verification-modal-header">
+                <h3>邮箱验证</h3>
+                <p>验证码已发送至: <span class="email-display" id="modal-email-display"></span></p>
+            </div>
+
+            <div class="code-input-wrapper">
+                <input type="text" class="code-input" maxlength="1" data-index="0" inputmode="numeric">
+                <input type="text" class="code-input" maxlength="1" data-index="1" inputmode="numeric">
+                <input type="text" class="code-input" maxlength="1" data-index="2" inputmode="numeric">
+                <input type="text" class="code-input" maxlength="1" data-index="3" inputmode="numeric">
+                <input type="text" class="code-input" maxlength="1" data-index="4" inputmode="numeric">
+                <input type="text" class="code-input" maxlength="1" data-index="5" inputmode="numeric">
+            </div>
+
+            <div class="verification-error" id="verification-error"></div>
+
+            <div class="verification-modal-actions">
+                <button type="button" class="resend-btn" id="modal-resend-btn" disabled>重新发送(60s)</button>
+                <button type="button" class="verify-btn" id="modal-verify-btn">确认验证</button>
+            </div>
+
+            <p class="verification-hint">没有收到邮件？请检查垃圾邮件文件夹</p>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,253 @@
+{
+  "name": "webhook常见3种应用场景测试工作流",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=根据主题：{{ $json.body.topic }} 随机生成一个相关的四字成语 ",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -272,
+        -48
+      ],
+      "id": "c09fcca4-580d-486f-b748-b8ed4062d67f",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -320,
+        160
+      ],
+      "id": "c2534532-88d8-4b97-acae-fc654fa379fe",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "KcHzWF39O8ZtiGQr",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"result\": {{ $json.output.toJsonString() }}\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        80,
+        -48
+      ],
+      "id": "dbbcca20-efee-4d60-81a6-b20ee4c2745d",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "d8022efe-82ef-4f09-9510-20aced98ad60",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -528,
+        -48
+      ],
+      "id": "35f09ffa-a0da-4548-a3ec-25c717576ba6",
+      "name": "接收POST请求",
+      "webhookId": "d8022efe-82ef-4f09-9510-20aced98ad60"
+    },
+    {
+      "parameters": {
+        "path": "d8022efe-82ef-4f09-9510-20aced98ad60",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -544,
+        464
+      ],
+      "id": "4896d12d-6b1b-4061-bcdc-3f3c5ebe4fb4",
+      "name": "接收GET请求",
+      "webhookId": "d8022efe-82ef-4f09-9510-20aced98ad60"
+    },
+    {
+      "parameters": {
+        "content": "## 应用场景\n**工作流处理数据后，将处理结果封装在json中返回**",
+        "height": 480,
+        "width": 896
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -592,
+        -176
+      ],
+      "typeVersion": 1,
+      "id": "2b32441f-afc4-4f82-8fe3-3493094a91c8",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "<!DOCTYPE html>\n<html lang=\"zh-CN\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>南哥AGI研习社</title>\n    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">\n    <style>\n        * {\n            margin: 0;\n            padding: 0;\n            box-sizing: border-box;\n            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;\n        }\n        \n        body {\n            background: #0a0a16;\n            color: #fff;\n            min-height: 100vh;\n            overflow: hidden;\n            display: flex;\n            justify-content: center;\n            align-items: center;\n        }\n        \n        #particles-js {\n            position: absolute;\n            width: 100%;\n            height: 100%;\n            z-index: -1;\n        }\n        \n        .container {\n            text-align: center;\n            z-index: 1;\n            max-width: 800px;\n            padding: 2rem;\n        }\n        \n        .logo {\n            width: 120px;\n            height: 120px;\n            margin: 0 auto 2rem;\n            background: linear-gradient(135deg, #00f7ff, #00d4ff);\n            border-radius: 50%;\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            box-shadow: 0 0 30px rgba(0, 247, 255, 0.6);\n            animation: pulse 4s infinite alternate;\n        }\n        \n        .logo i {\n            font-size: 3.5rem;\n            color: #0a0a16;\n        }\n        \n        h1 {\n            font-size: 3.5rem;\n            margin-bottom: 1.5rem;\n            background: linear-gradient(90deg, #00f7ff, #00d4ff, #00a2ff);\n            -webkit-background-clip: text;\n            background-clip: text;\n            color: transparent;\n            text-shadow: 0 0 10px rgba(0, 247, 255, 0.5);\n            letter-spacing: 2px;\n        }\n        \n        .subtitle {\n            font-size: 1.5rem;\n            margin-bottom: 3rem;\n            color: #b3f0ff;\n            letter-spacing: 1px;\n        }\n        \n        .social-links {\n            display: flex;\n            justify-content: center;\n            gap: 2rem;\n            margin-top: 3rem;\n        }\n        \n        .social-link {\n            display: flex;\n            flex-direction: column;\n            align-items: center;\n            text-decoration: none;\n            color: #b3f0ff;\n            transition: all 0.3s ease;\n            padding: 1rem;\n            border-radius: 10px;\n            width: 140px;\n        }\n        \n        .social-link:hover {\n            transform: translateY(-10px);\n            color: #00f7ff;\n            box-shadow: 0 10px 20px rgba(0, 247, 255, 0.2);\n            background: rgba(0, 247, 255, 0.1);\n        }\n        \n        .social-icon {\n            font-size: 2.5rem;\n            margin-bottom: 0.5rem;\n        }\n        \n        .social-text {\n            font-size: 1rem;\n            font-weight: 500;\n        }\n        \n        .bilibili {\n            color: #fb7299;\n        }\n        \n        .youtube {\n            color: #ff0000;\n        }\n        \n        .floating-text {\n            position: absolute;\n            bottom: 2rem;\n            width: 100%;\n            text-align: center;\n            color: rgba(179, 240, 255, 0.6);\n            font-size: 0.9rem;\n            letter-spacing: 1px;\n        }\n        \n        @keyframes pulse {\n            0% {\n                box-shadow: 0 0 20px rgba(0, 247, 255, 0.6);\n                transform: scale(1);\n            }\n            100% {\n                box-shadow: 0 0 40px rgba(0, 247, 255, 0.8);\n                transform: scale(1.05);\n            }\n        }\n        \n        @media (max-width: 768px) {\n            h1 {\n                font-size: 2.5rem;\n            }\n            \n            .subtitle {\n                font-size: 1.2rem;\n            }\n            \n            .social-links {\n                flex-direction: column;\n                align-items: center;\n                gap: 1rem;\n            }\n        }\n    </style>\n</head>\n<body>\n    <div id=\"particles-js\"></div>\n    \n    <div class=\"container\">\n        <div class=\"logo\">\n            <i class=\"fas fa-robot\"></i>\n        </div>\n        \n        <h1>南哥AGI研习社</h1>\n        \n        <p class=\"subtitle\">分享AGI(通用人工智能)相关硬核知识</p>\n        \n        <div class=\"social-links\">\n            <a href=\"https://space.bilibili.com/509246474\" class=\"social-link bilibili\">\n                <i class=\"fab fa-bilibili social-icon\"></i>\n                <span class=\"social-text\">B站关注我</span>\n            </a>\n            \n            <a href=\"https://www.youtube.com/@南哥AGI研习社\" class=\"social-link youtube\">\n                <i class=\"fab fa-youtube social-icon\"></i>\n                <span class=\"social-text\">YouTube关注我</span>\n            </a>\n        </div>\n    </div>\n    \n    <div class=\"floating-text\">\n        分享AGI(通用人工智能)相关硬核知识\n    </div>\n\n    <script src=\"https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js\"></script>\n    <script>\n        particlesJS(\"particles-js\", {\n            particles: {\n                number: { value: 80, density: { enable: true, value_area: 800 } },\n                color: { value: \"#00f7ff\" },\n                shape: { type: \"circle\" },\n                opacity: { value: 0.5, random: true },\n                size: { value: 3, random: true },\n                line_linked: {\n                    enable: true,\n                    distance: 150,\n                    color: \"#00d4ff\",\n                    opacity: 0.4,\n                    width: 1\n                },\n                move: {\n                    enable: true,\n                    speed: 2,\n                    direction: \"none\",\n                    random: true,\n                    straight: false,\n                    out_mode: \"out\",\n                    bounce: false\n                }\n            },\n            interactivity: {\n                detect_on: \"canvas\",\n                events: {\n                    onhover: { enable: true, mode: \"repulse\" },\n                    onclick: { enable: true, mode: \"push\" },\n                    resize: true\n                }\n            },\n            retina_detect: true\n        });\n    </script>\n</body>\n</html>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        32,
+        464
+      ],
+      "id": "35ce779e-9385-4b69-8567-477509f99a9e",
+      "name": "Respond to Webhook1"
+    },
+    {
+      "parameters": {
+        "content": "## 应用场景\n**小型服务器，生成一个完整网页并服务于请求者**",
+        "height": 304,
+        "width": 896
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -592,
+        336
+      ],
+      "typeVersion": 1,
+      "id": "580c7731-6454-40e9-87f2-ab93974075e2",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "respondWith": "redirect",
+        "redirectURL": "https://nangeai.top",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        32,
+        800
+      ],
+      "id": "24cd1be5-14c7-455d-8928-040fbcfe1e3d",
+      "name": "Respond to Webhook2"
+    },
+    {
+      "parameters": {
+        "path": "d8022efe-82ef-4f09-9510-20aced98ad60",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -544,
+        800
+      ],
+      "id": "4a227d63-c619-452b-b799-5f5f34a033c3",
+      "name": "接收GET请求1",
+      "webhookId": "d8022efe-82ef-4f09-9510-20aced98ad60"
+    },
+    {
+      "parameters": {
+        "content": "## 应用场景\n**重定向 (Redirect):Webhook 捕获请求后，执行工作流，然后将请求转发到另一个 URL**",
+        "height": 304,
+        "width": 896
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -592,
+        672
+      ],
+      "typeVersion": 1,
+      "id": "4209d40e-a2d2-4d76-85ce-a51e6c31254c",
+      "name": "Sticky Note2"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "接收POST请求": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "接收GET请求": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "接收GET请求1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "efee4df2-b39f-45ee-8cad-0eca2f7684f3",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "830bfffc51ff88cd51b86a768f6a50a5b290896243e17b0bdf0f08551c38ba51"
+  },
+  "id": "EUQwVLHEz2Qb395s",
+  "tags": []
+}

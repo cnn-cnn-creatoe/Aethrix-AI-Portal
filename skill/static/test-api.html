@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API 测试 - AI Skill</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #0A0C1E;
+            color: #F5F5F5;
+        }
+        h1 {
+            color: #FF69B4;
+        }
+        .test-section {
+            background: #0F1228;
+            border: 2px solid #FF69B4;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .test-section h2 {
+            color: #00FFFF;
+            margin-top: 0;
+        }
+        button {
+            background: #FF69B4;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        button:hover {
+            background: #00FFFF;
+        }
+        pre {
+            background: #050614;
+            border: 1px solid #00FFFF;
+            border-radius: 5px;
+            padding: 15px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+        .skill-card {
+            background: linear-gradient(135deg, #0A0C1E, #0F1228);
+            border: 2px solid #FF69B4;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .skill-card h3 {
+            color: #FF69B4;
+            margin-top: 0;
+        }
+        .skill-card p {
+            color: #EAEAEA;
+        }
+        .badge {
+            display: inline-block;
+            background: #9400D3;
+            color: #FFF;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            margin-right: 5px;
+        }
+        .status {
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-block;
+            font-weight: bold;
+        }
+        .status.success {
+            background: #39FF14;
+            color: #000;
+        }
+        .status.error {
+            background: #FF0000;
+            color: #FFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 AI Skill API 测试页面</h1>
+    
+    <div class="test-section">
+        <h2>1. 健康检查</h2>
+        <button onclick="testHealth()">测试 /api/health</button>
+        <div id="health-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. 获取分类</h2>
+        <button onclick="testCategories()">测试 /api/categories</button>
+        <div id="categories-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>3. 获取平台</h2>
+        <button onclick="testPlatforms()">测试 /api/platforms</button>
+        <div id="platforms-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>4. 获取 Skills 列表</h2>
+        <button onclick="testSkills()">测试 /api/skills (前5个)</button>
+        <button onclick="testSkillsAll()">获取所有 Skills</button>
+        <div id="skills-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>5. Skills 卡片预览</h2>
+        <div id="skills-preview"></div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:4005/api';
+
+        async function testHealth() {
+            const resultDiv = document.getElementById('health-result');
+            resultDiv.innerHTML = '<p>⏳ 加载中...</p>';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/health`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <p><span class="status success">✅ 成功</span></p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<p><span class="status error">❌ 失败</span></p>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <p><span class="status error">❌ 错误</span></p>
+                    <pre>${error.message}</pre>
+                `;
+            }
+        }
+
+        async function testCategories() {
+            const resultDiv = document.getElementById('categories-result');
+            resultDiv.innerHTML = '<p>⏳ 加载中...</p>';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/categories`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <p><span class="status success">✅ 成功</span> - 共 ${data.data.categories.length} 个分类</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<p><span class="status error">❌ 失败</span></p>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <p><span class="status error">❌ 错误</span></p>
+                    <pre>${error.message}</pre>
+                `;
+            }
+        }
+
+        async function testPlatforms() {
+            const resultDiv = document.getElementById('platforms-result');
+            resultDiv.innerHTML = '<p>⏳ 加载中...</p>';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/platforms`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <p><span class="status success">✅ 成功</span> - 共 ${data.data.platforms.length} 个平台</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<p><span class="status error">❌ 失败</span></p>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <p><span class="status error">❌ 错误</span></p>
+                    <pre>${error.message}</pre>
+                `;
+            }
+        }
+
+        async function testSkills() {
+            const resultDiv = document.getElementById('skills-result');
+            resultDiv.innerHTML = '<p>⏳ 加载中...</p>';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/skills?page=1&per_page=5`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <p><span class="status success">✅ 成功</span> - 共 ${data.data.pagination.total} 个 Skills，显示前 5 个</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                    
+                    // 显示卡片预览
+                    renderSkillCards(data.data.skills);
+                } else {
+                    resultDiv.innerHTML = `<p><span class="status error">❌ 失败</span></p>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <p><span class="status error">❌ 错误</span></p>
+                    <pre>${error.message}</pre>
+                `;
+            }
+        }
+
+        async function testSkillsAll() {
+            const resultDiv = document.getElementById('skills-result');
+            resultDiv.innerHTML = '<p>⏳ 加载中...</p>';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/skills?page=1&per_page=100`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <p><span class="status success">✅ 成功</span> - 共 ${data.data.pagination.total} 个 Skills</p>
+                        <p>Skills 列表：</p>
+                        <ul>
+                            ${data.data.skills.map(s => `<li>${s.name} (${s.category})</li>`).join('')}
+                        </ul>
+                    `;
+                    
+                    // 显示卡片预览
+                    renderSkillCards(data.data.skills.slice(0, 10));
+                } else {
+                    resultDiv.innerHTML = `<p><span class="status error">❌ 失败</span></p>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <p><span class="status error">❌ 错误</span></p>
+                    <pre>${error.message}</pre>
+                `;
+            }
+        }
+
+        function renderSkillCards(skills) {
+            const previewDiv = document.getElementById('skills-preview');
+            
+            if (!skills || skills.length === 0) {
+                previewDiv.innerHTML = '<p>没有 Skills 数据</p>';
+                return;
+            }
+            
+            previewDiv.innerHTML = `
+                <h3>📦 Skills 卡片预览（前 ${skills.length} 个）</h3>
+                ${skills.map(skill => `
+                    <div class="skill-card">
+                        <h3>${skill.icon || '📦'} ${skill.name}</h3>
+                        <p>${skill.description}</p>
+                        <div>
+                            <span class="badge">${skill.category}</span>
+                            ${skill.featured ? '<span class="badge">⭐ Featured</span>' : ''}
+                            ${skill.popular ? '<span class="badge">🔥 Popular</span>' : ''}
+                        </div>
+                        <p style="margin-top: 10px; font-size: 12px; color: #B0B0B0;">
+                            💻 平台: ${skill.platforms.join(', ')}<br>
+                            🏷️ 标签: ${skill.tags.join(', ')}<br>
+                            ⭐ Stars: ${skill.stats.stars} | 📥 Downloads: ${skill.stats.downloads}
+                        </p>
+                    </div>
+                `).join('')}
+            `;
+        }
+
+        // 页面加载时自动测试
+        window.addEventListener('load', () => {
+            console.log('🧪 API 测试页面已加载');
+            testHealth();
+        });
+    </script>
+</body>
+</html>

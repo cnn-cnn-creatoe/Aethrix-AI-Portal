@@ -1,0 +1,15 @@
+{
+  "trends": [
+    {
+      "id": "1876bd08-a38f-4cce-90e1-3ec8de7fe256",
+      "title": "ai最新新闻",
+      "description": "实时更新",
+      "url": "http://localhost:3006/admin.html",
+      "tags": [
+        "ai"
+      ],
+      "createdAt": 1766382627097,
+      "updatedAt": 1766567456902
+    }
+  ]
+}

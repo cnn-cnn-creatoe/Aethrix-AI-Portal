@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>清除缓存</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 20px;
+            text-align: center;
+            background: #f5f5f5;
+        }
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .btn {
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+            font-weight: 600;
+        }
+        .btn-primary {
+            background: #000;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #333;
+        }
+        .btn-secondary {
+            background: #666;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #888;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+        .status.show {
+            display: block;
+        }
+        .status-success {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        .info {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            text-align: left;
+        }
+        .info h3 {
+            margin-top: 0;
+            color: #444;
+        }
+        .info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .info li {
+            margin: 8px 0;
+            color: #666;
+        }
+        .keyboard-shortcut {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 14px;
+            margin: 0 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🗑️ 清除浏览器缓存</h1>
+        <p>如果登录修复不生效，可能是浏览器缓存了旧版本的文件</p>
+        
+        <button class="btn btn-primary" onclick="clearAllCache()">清除所有缓存</button>
+        <button class="btn btn-secondary" onclick="hardReload()">强制刷新页面</button>
+        
+        <div id="status" class="status"></div>
+        
+        <div class="info">
+            <h3>📋 手动清除缓存方法</h3>
+            <ul>
+                <li>
+                    <strong>Windows:</strong> 
+                    <span class="keyboard-shortcut">Ctrl + Shift + R</span> 或 
+                    <span class="keyboard-shortcut">Ctrl + F5</span>
+                </li>
+                <li>
+                    <strong>Mac:</strong> 
+                    <span class="keyboard-shortcut">Cmd + Shift + R</span>
+                </li>
+                <li>
+                    <strong>开发者工具:</strong> 
+                    打开开发者工具（F12），右键点击刷新按钮，选择"清空缓存并硬性重新加载"
+                </li>
+                <li>
+                    <strong>隐身模式:</strong> 
+                    使用浏览器的隐身/无痕模式测试
+                </li>
+            </ul>
+        </div>
+        
+        <div class="info">
+            <h3>🔍 验证修复是否生效</h3>
+            <ul>
+                <li>打开开发者工具（F12）</li>
+                <li>访问登录页面并点击 GitHub 登录</li>
+                <li>查看 Console 日志</li>
+                <li>应该看到 "GitHub OAuth 登录开始（重定向模式）"</li>
+                <li>如果看到 "弹窗模式"，说明缓存没有清除</li>
+            </ul>
+        </div>
+        
+        <div style="margin-top: 30px;">
+            <a href="/auth.html" class="btn btn-primary">返回登录页面</a>
+            <a href="/test-login-fix.html" class="btn btn-secondary">打开测试页面</a>
+        </div>
+    </div>
+
+    <script>
+        function showStatus(message, type = 'success') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = `status status-${type} show`;
+            statusDiv.textContent = message;
+        }
+
+        function clearAllCache() {
+            // 清除 localStorage
+            localStorage.clear();
+            console.log('✓ localStorage 已清除');
+            
+            // 清除 sessionStorage
+            sessionStorage.clear();
+            console.log('✓ sessionStorage 已清除');
+            
+            // 清除 IndexedDB（如果有）
+            if (window.indexedDB) {
+                indexedDB.databases().then(databases => {
+                    databases.forEach(db => {
+                        indexedDB.deleteDatabase(db.name);
+                        console.log('✓ IndexedDB 已清除:', db.name);
+                    });
+                }).catch(err => {
+                    console.log('IndexedDB 清除失败:', err);
+                });
+            }
+            
+            showStatus('✓ 缓存已清除！请刷新页面或使用 Ctrl+Shift+R 强制刷新', 'success');
+            
+            // 3秒后自动刷新
+            setTimeout(() => {
+                location.reload(true);
+            }, 3000);
+        }
+
+        function hardReload() {
+            // 强制刷新页面
+            location.reload(true);
+        }
+
+        // 页面加载时显示当前缓存状态
+        window.addEventListener('load', () => {
+            console.log('=== 当前缓存状态 ===');
+            console.log('localStorage 项数:', localStorage.length);
+            console.log('sessionStorage 项数:', sessionStorage.length);
+            
+            // 显示 localStorage 内容
+            if (localStorage.length > 0) {
+                console.log('localStorage 内容:');
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    console.log(`  ${key}:`, localStorage.getItem(key).substring(0, 100));
+                }
+            }
+            
+            // 显示 sessionStorage 内容
+            if (sessionStorage.length > 0) {
+                console.log('sessionStorage 内容:');
+                for (let i = 0; i < sessionStorage.length; i++) {
+                    const key = sessionStorage.key(i);
+                    console.log(`  ${key}:`, sessionStorage.getItem(key).substring(0, 100));
+                }
+            }
+        });
+    </script>
+</body>
+</html>

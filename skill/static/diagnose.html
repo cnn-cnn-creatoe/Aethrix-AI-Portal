@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>诊断页面 - Skill 组件库</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0e27;
+            color: #00ff88;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #ff69b4;
+            text-align: center;
+        }
+        #console-output {
+            background: #000;
+            border: 2px solid #00ff88;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .log-line {
+            margin: 2px 0;
+        }
+        .log-error {
+            color: #ff4444;
+        }
+        .log-success {
+            color: #00ff88;
+        }
+        .log-info {
+            color: #00d4ff;
+        }
+        .log-warn {
+            color: #ffaa00;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Skill 组件库诊断工具</h1>
+    <p style="text-align: center; color: #ccc;">打开浏览器控制台 (F12) 查看详细日志</p>
+    
+    <div id="console-output">正在运行诊断...</div>
+
+    <!-- 加载原始的 app.js -->
+    <script src="app.js"></script>
+    
+    <!-- 加载诊断脚本 -->
+    <script>
+        const outputDiv = document.getElementById('console-output');
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        
+        let logs = [];
+        
+        function addLog(message, type = 'info') {
+            logs.push({ message, type, time: new Date().toLocaleTimeString() });
+            updateOutput();
+        }
+        
+        function updateOutput() {
+            outputDiv.innerHTML = logs.map(log => {
+                const className = `log-${log.type}`;
+                return `<div class="log-line ${className}">[${log.time}] ${log.message}</div>`;
+            }).join('');
+            outputDiv.scrollTop = outputDiv.scrollHeight;
+        }
+        
+        // 拦截 console.log
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            addLog(args.join(' '), 'info');
+        };
+        
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            addLog('❌ ' + args.join(' '), 'error');
+        };
+        
+        console.warn = function(...args) {
+            originalWarn.apply(console, args);
+            addLog('⚠️ ' + args.join(' '), 'warn');
+        };
+    </script>
+    
+    <!-- 运行诊断 -->
+    <script src="diagnose.js"></script>
+</body>
+</html>

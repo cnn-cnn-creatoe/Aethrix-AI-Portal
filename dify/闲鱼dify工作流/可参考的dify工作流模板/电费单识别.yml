@@ -1,0 +1,1048 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 电费单识别
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/tongyi:0.0.11@5077dd5c6ff5bc5dc1b2772e460325ae2cc2619a7c0fd151d69bc5841edba5bd
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/siliconflow:0.0.7@8b9d2f57d314120744c245b6fe4f8701e1a7490a500d9fb74e9e9dceeaea5f70
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: if-else
+      id: 1741051454636-source-1741051457893-target
+      selected: false
+      source: '1741051454636'
+      sourceHandle: source
+      target: '1741051457893'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1741051457893-true-1741051559532-target
+      selected: false
+      source: '1741051457893'
+      sourceHandle: 'true'
+      target: '1741051559532'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: document-extractor
+      id: 1741051457893-false-1741247875227-target
+      selected: false
+      source: '1741051457893'
+      sourceHandle: 'false'
+      target: '1741247875227'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: if-else
+      id: 1741662885830-source-1741660579933-target
+      selected: false
+      source: '1741662885830'
+      sourceHandle: source
+      target: '1741660579933'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1741660579933-a1a9e88c-8f8e-4473-a8d2-6cecc88b9b1b-17416737913850-target
+      selected: false
+      source: '1741660579933'
+      sourceHandle: a1a9e88c-8f8e-4473-a8d2-6cecc88b9b1b
+      target: '17416737913850'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: variable-aggregator
+        targetType: code
+      id: 1741763153946-source-1741662885830-target
+      selected: false
+      source: '1741763153946'
+      sourceHandle: source
+      target: '1741662885830'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: variable-aggregator
+      id: 1741051559532-source-1741763153946-target
+      selected: false
+      source: '1741051559532'
+      sourceHandle: source
+      target: '1741763153946'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: document-extractor
+        targetType: template-transform
+      id: 1741247875227-source-1741763450516-target
+      selected: false
+      source: '1741247875227'
+      sourceHandle: source
+      target: '1741763450516'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: variable-aggregator
+      id: 1741763450516-source-1741763153946-target
+      selected: false
+      source: '1741763450516'
+      sourceHandle: source
+      target: '1741763153946'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1741660579933-true-17415730053870-target
+      source: '1741660579933'
+      sourceHandle: 'true'
+      target: '17415730053870'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1741660579933-7d05ee0d-fc89-49cb-a74d-98e542f1712a-17421260850840-target
+      source: '1741660579933'
+      sourceHandle: 7d05ee0d-fc89-49cb-a74d-98e542f1712a
+      target: '17421260850840'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: http-request
+        targetType: end
+      id: 1742126144055-source-17416625693020-target
+      source: '1742126144055'
+      sourceHandle: source
+      target: '17416625693020'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 17421260850840-source-1742126281476-target
+      source: '17421260850840'
+      sourceHandle: source
+      target: '1742126281476'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: http-request
+      id: 1742126281476-source-1742126144055-target
+      source: '1742126281476'
+      sourceHandle: source
+      target: '1742126144055'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 17415730053870-source-1742126281476-target
+      source: '17415730053870'
+      sourceHandle: source
+      target: '1742126281476'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 17416737913850-source-1742126281476-target
+      source: '17416737913850'
+      sourceHandle: source
+      target: '1742126281476'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - image
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          label: doc
+          max_length: 10
+          options: []
+          required: true
+          type: file-list
+          variable: doc
+      height: 88
+      id: '1741051454636'
+      position:
+        x: 30
+        y: 287
+      positionAbsolute:
+        x: 30
+        y: 287
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: e42815ee-33b3-4c03-87bb-d74ae332b1ae
+            sub_variable_condition:
+              case_id: c7e43395-e9d8-4cdd-b341-2f4553b6f1a6
+              conditions:
+              - comparison_operator: in
+                id: 17994788-a207-4f0f-b080-134afea55a96
+                key: type
+                value:
+                - image
+                varType: string
+              logical_operator: and
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - '1741051454636'
+            - doc
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支
+        type: if-else
+      height: 148
+      id: '1741051457893'
+      position:
+        x: 334
+        y: 287
+      positionAbsolute:
+        x: 334
+        y: 287
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            frequency_penalty: 0.5
+            max_tokens: 512
+            temperature: 0.7
+            top_p: 0.7
+          mode: chat
+          name: qwen2.5-vl-72b-instruct
+          provider: langgenius/tongyi/tongyi
+        prompt_template:
+        - id: 5e85986a-b6fc-4b1b-85e3-7a5e5aa523ef
+          role: system
+          text: "#角色：\n电费账单识别助手，按规范格式提取图片信息。\n#图片特征\n顶部：国家电网标识+电力公司名称+「电费账单」标题\n企业信息区：含账单周期、户号、用电地址等字段\n\
+            居中显示本期电量（千瓦时）和电费金额\n左侧表格区含多层子表结构：\n实线分隔主表，虚线分隔行项目\n按电能表编号分表头，含示数类型、抄见电量等9列数据\n\
+            #数据格式规范\n需提取以下结构化数据：\n企业基础信息\n本期总电量/总电费\n分电能表号的明细表：\nmarkdown\n复制电能表编号：[编号]\
+            \ \n电价：[价格]\n示数类型 | 上期示数 | 本期示数 | 倍率 | 抄见电量 | 变损 | 线损 | 扣除分表 | 计费电量\n\
+            ---------------------------------------------\n正向有功（总） | ... | ... | ...\
+            \ | ... | ... | ... | ... | ... \n正向有功（尖峰） | ... | ... | ... | ... | ...\
+            \ | ... | ... | ...\n\n#输出要求\n完整提取账单所有字段信息\n按电能表编号分组呈现明细表\n保留原始计量单位（千瓦时/千瓦）\n\
+            异常数据项需标红备注"
+        selected: false
+        title: 图片识别
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - '1741051454636'
+            - doc
+          enabled: true
+      height: 88
+      id: '1741051559532'
+      position:
+        x: 942
+        y: 287
+      positionAbsolute:
+        x: 942
+        y: 287
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        is_array_file: true
+        selected: false
+        title: 文档提取器
+        type: document-extractor
+        variable_selector:
+        - '1741051454636'
+        - doc
+      height: 90
+      id: '1741247875227'
+      position:
+        x: 638
+        y: 399
+      positionAbsolute:
+        x: 638
+        y: 399
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1741662885830'
+          - result
+        desc: ''
+        model:
+          completion_params:
+            max_tokens: 11501
+            temperature: 0.7
+          mode: chat
+          name: deepseek-ai/DeepSeek-R1
+          provider: langgenius/siliconflow/siliconflow
+        prompt_template:
+        - id: e88407dd-1d83-477e-913c-b94c9f730a52
+          role: system
+          text: "角色定位\n资深电力专家，具备电费单据深度解析与企业用电报告生成能力\n分析框架\n计费模式判定\n单一制/两部制判别：输配容（需）量电费为零值判定\n\
+            基本电费计算方式溯源：容量计费/需量计费模式识别\n交叉计费模式模拟\n当前模式对比模式估算方法关键参数来源\n容量计费\n需量计费\n方法1：最大需量直接累加\n\
+            方法2：峰谷平极值推算\n电费单数据\n冀北电网价表\n需量计费\n容量计费\n方法1：合同容量取值\n方法2：需量/千伏安比推算\n表头参数\n\
+            行业基准值\n数据建模体系\n核心维度：\n时序解构：峰谷平时段三维矩阵（时间×电量×电价）\n费用拆解：容量费、需量费、力调费、基金费等独立占比\n\
+            特征工程：\nmarkdown\n复制\n1. 负荷特征向量\n   - 峰电波动率 = Δ(峰电占比)/Δt\n   - 谷电偏离度 =\
+            \ 实际谷电量/行业基准值\n   - 需量离散系数 = σ(需量)/μ(需量)\n\n2. 成本敏感模型\n   - 峰谷价差弹性比 =\
+            \ (谷段节费潜力/峰段超支成本)×时段利用率\n智能分析模块\n分析类型技术路径验证标准\n尖峰溯源\n傅里叶变换时序分析\n周期性频次≥3次/月\n\
+            需量关联\n非线性回归模型\nR²>0.6强相关\n异常检测\nIsolation Forest算法\n超行业均值2σ\n行业知识库\nmarkdown\n\
+            复制\n- 效率曲面：功率因数=f(生产时长,非连续负载)\n- 对标模型：NAICS行业代码→负荷包络线匹配\n优化推演系统\nmarkdown\n\
+            复制\n1. 蒙特卡罗仿真\n   - 置信度：99%\n   - 变量：移峰幅度10%-20%\n   - 输出：电价成本概率分布\n\n\
+            2. 决策树模型\n   - 节点：历史需量波动范围\n   - 输出：计费模式转换临界阈值\n输出规范\nmarkdown\n复制\n###\
+            \ 企业用能分析报告（客户版）\n#### 一、基础信息\n[表格]企业名称/地址/周期 | 电费参数清单\n\n#### 二、用能现状分析\n\
+            [嵌套表格]用电特征矩阵 | 计费模式对比表 | 数据验证清单\n\n#### 三、能源成本解构\n[组合图表]电费组成环形图 | 力调电费敏感度曲线\n\
+            \n#### 四、负荷特性诊断\n[时序矩阵]日负荷曲线表 | 需量频次统计表\n\n#### 五、节能潜力评估\n[对比表格]技术节能收益测算\
+            \ | 管理优化空间矩阵\n\n#### 六、优化建议体系\n[决策树]计费策略路径图 | 设备升级路线表"
+        - id: 6ac7eb42-fd5c-4b06-ab26-1799d479cd3f
+          role: user
+          text: '{{#context#}}'
+        selected: false
+        title: 江苏电网分析
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 88
+      id: '17415730053870'
+      position:
+        x: 2192.8866552476966
+        y: 300.80798670584915
+      positionAbsolute:
+        x: 2192.8866552476966
+        y: 300.80798670584915
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: 86c15b03-c7b3-44e4-9c0a-f3bb53dee81a
+            value: 江苏电网
+            varType: string
+            variable_selector:
+            - '1741662885830'
+            - result
+          id: 'true'
+          logical_operator: and
+        - case_id: a1a9e88c-8f8e-4473-a8d2-6cecc88b9b1b
+          conditions:
+          - comparison_operator: contains
+            id: 771fef0a-6062-4b03-b468-ac35edabbb2d
+            value: 北京电网
+            varType: string
+            variable_selector:
+            - '1741662885830'
+            - result
+          id: a1a9e88c-8f8e-4473-a8d2-6cecc88b9b1b
+          logical_operator: and
+        - case_id: 7d05ee0d-fc89-49cb-a74d-98e542f1712a
+          conditions:
+          - comparison_operator: contains
+            id: b3aa6bf2-c158-4185-a7a0-1b81daa26a93
+            value: 天津电网
+            varType: string
+            variable_selector:
+            - '1741662885830'
+            - result
+          id: 7d05ee0d-fc89-49cb-a74d-98e542f1712a
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 判断地域归属
+        type: if-else
+      height: 220
+      id: '1741660579933'
+      position:
+        x: 1854
+        y: 287
+      positionAbsolute:
+        x: 1854
+        y: 287
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '17415730053870'
+          - text
+          variable: text
+        - value_selector:
+          - '17416737913850'
+          - text
+          variable: text
+        - value_selector:
+          - '17421260850840'
+          - text
+          variable: text
+        - value_selector:
+          - '1742126144055'
+          - body
+          variable: body
+        selected: false
+        title: 输出分析结果
+        type: end
+      height: 166
+      id: '17416625693020'
+      position:
+        x: 3195.9374710467364
+        y: 408.5102830114726
+      positionAbsolute:
+        x: 3195.9374710467364
+        y: 408.5102830114726
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        code: "def main(arg1: str) -> dict:\n    # 兼容处理：无论输入是字符串还是列表，统一转换为字符串后再处理\n\
+          \    processed_arg1 = \"\".join(map(str, arg1)) if isinstance(arg1, list)\
+          \ else arg1\n    return {\n        \"result\": processed_arg1.replace(\"\
+          \ \", \"\")\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 代码执行
+        type: code
+        variables:
+        - value_selector:
+          - '1741763153946'
+          - output
+          variable: arg1
+      height: 52
+      id: '1741662885830'
+      position:
+        x: 1550
+        y: 287
+      positionAbsolute:
+        x: 1550
+        y: 287
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1741662885830'
+          - result
+        desc: ''
+        model:
+          completion_params:
+            max_tokens: 9201
+            temperature: 0.7
+          mode: chat
+          name: deepseek-ai/DeepSeek-R1
+          provider: langgenius/siliconflow/siliconflow
+        prompt_template:
+        - id: e88407dd-1d83-477e-913c-b94c9f730a52
+          role: system
+          text: "角色定位\n资深电力专家，具备电费单据深度解析与企业用电报告生成能力\n分析框架\n计费模式判定\n单一制/两部制判别：输配容（需）量电费为零值判定\n\
+            基本电费计算方式溯源：容量计费/需量计费模式识别\n交叉计费模式模拟\n当前模式对比模式估算方法关键参数来源\n容量计费\n需量计费\n方法1：最大需量直接累加\n\
+            方法2：峰谷平极值推算\n电费单数据\n冀北电网价表\n需量计费\n容量计费\n方法1：合同容量取值\n方法2：需量/千伏安比推算\n表头参数\n\
+            行业基准值\n数据建模体系\n核心维度：\n时序解构：峰谷平时段三维矩阵（时间×电量×电价）\n费用拆解：容量费、需量费、力调费、基金费等独立占比\n\
+            特征工程：\nmarkdown\n复制\n1. 负荷特征向量\n   - 峰电波动率 = Δ(峰电占比)/Δt\n   - 谷电偏离度 =\
+            \ 实际谷电量/行业基准值\n   - 需量离散系数 = σ(需量)/μ(需量)\n\n2. 成本敏感模型\n   - 峰谷价差弹性比 =\
+            \ (谷段节费潜力/峰段超支成本)×时段利用率\n智能分析模块\n分析类型技术路径验证标准\n尖峰溯源\n傅里叶变换时序分析\n周期性频次≥3次/月\n\
+            需量关联\n非线性回归模型\nR²>0.6强相关\n异常检测\nIsolation Forest算法\n超行业均值2σ\n行业知识库\nmarkdown\n\
+            复制\n- 效率曲面：功率因数=f(生产时长,非连续负载)\n- 对标模型：NAICS行业代码→负荷包络线匹配\n优化推演系统\nmarkdown\n\
+            复制\n1. 蒙特卡罗仿真\n   - 置信度：99%\n   - 变量：移峰幅度10%-20%\n   - 输出：电价成本概率分布\n\n\
+            2. 决策树模型\n   - 节点：历史需量波动范围\n   - 输出：计费模式转换临界阈值\n输出规范\nmarkdown\n复制\n###\
+            \ 企业用能分析报告（客户版）\n#### 一、基础信息\n[表格]企业名称/地址/周期 | 电费参数清单\n\n#### 二、用能现状分析\n\
+            [嵌套表格]用电特征矩阵 | 计费模式对比表 | 数据验证清单\n\n#### 三、能源成本解构\n[组合图表]电费组成环形图 | 力调电费敏感度曲线\n\
+            \n#### 四、负荷特性诊断\n[时序矩阵]日负荷曲线表 | 需量频次统计表\n\n#### 五、节能潜力评估\n[对比表格]技术节能收益测算\
+            \ | 管理优化空间矩阵\n\n#### 六、优化建议体系\n[决策树]计费策略路径图 | 设备升级路线表"
+        - id: 6ac7eb42-fd5c-4b06-ab26-1799d479cd3f
+          role: user
+          text: '{{#context#}}'
+        selected: false
+        title: 北京电网分析
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 88
+      id: '17416737913850'
+      position:
+        x: 2192.8866552476966
+        y: 441.8543760705285
+      positionAbsolute:
+        x: 2192.8866552476966
+        y: 441.8543760705285
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        advanced_settings:
+          group_enabled: false
+          groups:
+          - groupId: ab89808c-5485-4c21-b01b-48be9761d1d4
+            group_name: Group1
+            output_type: string
+            variables:
+            - - '1741051559532'
+              - text
+          - groupId: c8ce1bef-0162-48fd-9593-3108185fdc51
+            group_name: Group2
+            output_type: array[string]
+            variables:
+            - - '1741247875227'
+              - text
+        desc: ''
+        output_type: string
+        selected: false
+        title: 变量聚合器
+        type: variable-aggregator
+        variables:
+        - - '1741763450516'
+          - output
+        - - '1741051559532'
+          - text
+      height: 129
+      id: '1741763153946'
+      position:
+        x: 1246
+        y: 287
+      positionAbsolute:
+        x: 1246
+        y: 287
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        selected: false
+        template: '{{ arg1 }}'
+        title: 模板转换
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1741247875227'
+          - text
+          variable: arg1
+      height: 52
+      id: '1741763450516'
+      position:
+        x: 942
+        y: 417
+      positionAbsolute:
+        x: 942
+        y: 417
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        author: 超人阿亚
+        desc: ''
+        height: 198
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"使用条件分支来判断文件类型","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"内容来自
+          微信公众号 ","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"","text":"dify实验室","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"https://mp.weixin.qq.com/s/AISBEr1KfgD2w1jmENya7A","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 198
+      id: '1742124328911'
+      position:
+        x: 345.04638936467927
+        y: 44.21748479900546
+      positionAbsolute:
+        x: 345.04638936467927
+        y: 44.21748479900546
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        author: 超人阿亚
+        desc: ''
+        height: 198
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"使用文档提取器解析文档","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"内容来自
+          微信公众号 ","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"","text":"dify实验室","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"https://mp.weixin.qq.com/s/AISBEr1KfgD2w1jmENya7A","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ' (1)'
+        type: ''
+        width: 240
+      height: 198
+      id: '17421252612240'
+      position:
+        x: 647.6655906940945
+        y: 38.694290116665684
+      positionAbsolute:
+        x: 647.6655906940945
+        y: 38.694290116665684
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        author: 超人阿亚
+        desc: ''
+        height: 198
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"使用模板节点，将array转换为
+          string","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"内容来自
+          微信公众号 ","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"","text":"dify实验室","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"https://mp.weixin.qq.com/s/AISBEr1KfgD2w1jmENya7A","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ' (1)'
+        type: ''
+        width: 240
+      height: 198
+      id: '17421253284830'
+      position:
+        x: 983.4239601175475
+        y: 21.916941067208484
+      positionAbsolute:
+        x: 983.4239601175475
+        y: 21.916941067208484
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        author: 超人阿亚
+        desc: ''
+        height: 198
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"使用变量聚合器，将下游路径统一","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"内容来自
+          微信公众号 ","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"","text":"dify实验室","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"https://mp.weixin.qq.com/s/AISBEr1KfgD2w1jmENya7A","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ' (1)'
+        type: ''
+        width: 240
+      height: 198
+      id: '17421253832030'
+      position:
+        x: 1295.708752141057
+        y: 70.24489453768052
+      positionAbsolute:
+        x: 1295.708752141057
+        y: 70.24489453768052
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        author: 超人阿亚
+        desc: ''
+        height: 198
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"去除空格","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"内容来自
+          微信公众号 ","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"","text":"dify实验室","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"https://mp.weixin.qq.com/s/AISBEr1KfgD2w1jmENya7A","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ' (1)'
+        type: ''
+        width: 240
+      height: 198
+      id: '17421254677070'
+      position:
+        x: 1573.4453812614845
+        y: 70.24489453768052
+      positionAbsolute:
+        x: 1573.4453812614845
+        y: 70.24489453768052
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        author: 超人阿亚
+        desc: ''
+        height: 198
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"判断地域归属","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"内容来自
+          微信公众号 ","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"","text":"dify实验室","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"https://mp.weixin.qq.com/s/AISBEr1KfgD2w1jmENya7A","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ' (1)'
+        type: ''
+        width: 240
+      height: 198
+      id: '17421254789080'
+      position:
+        x: 1854
+        y: 70.24489453768052
+      positionAbsolute:
+        x: 1854
+        y: 70.24489453768052
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        author: 超人阿亚
+        desc: ''
+        height: 198
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"根据地域归属形成分析报告","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"内容来自
+          微信公众号 ","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"","text":"dify实验室","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"https://mp.weixin.qq.com/s/AISBEr1KfgD2w1jmENya7A","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ' (1)'
+        type: ''
+        width: 240
+      height: 198
+      id: '17421255866150'
+      position:
+        x: 2150.619225565979
+        y: 70.24489453768052
+      positionAbsolute:
+        x: 2150.619225565979
+        y: 70.24489453768052
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1741662885830'
+          - result
+        desc: ''
+        model:
+          completion_params:
+            max_tokens: 9201
+            temperature: 0.7
+          mode: chat
+          name: deepseek-ai/DeepSeek-R1
+          provider: langgenius/siliconflow/siliconflow
+        prompt_template:
+        - id: e88407dd-1d83-477e-913c-b94c9f730a52
+          role: system
+          text: "角色定位\n资深电力专家，具备电费单据深度解析与企业用电报告生成能力\n分析框架\n计费模式判定\n单一制/两部制判别：输配容（需）量电费为零值判定\n\
+            基本电费计算方式溯源：容量计费/需量计费模式识别\n交叉计费模式模拟\n当前模式对比模式估算方法关键参数来源\n容量计费\n需量计费\n方法1：最大需量直接累加\n\
+            方法2：峰谷平极值推算\n电费单数据\n冀北电网价表\n需量计费\n容量计费\n方法1：合同容量取值\n方法2：需量/千伏安比推算\n表头参数\n\
+            行业基准值\n数据建模体系\n核心维度：\n时序解构：峰谷平时段三维矩阵（时间×电量×电价）\n费用拆解：容量费、需量费、力调费、基金费等独立占比\n\
+            特征工程：\nmarkdown\n复制\n1. 负荷特征向量\n   - 峰电波动率 = Δ(峰电占比)/Δt\n   - 谷电偏离度 =\
+            \ 实际谷电量/行业基准值\n   - 需量离散系数 = σ(需量)/μ(需量)\n\n2. 成本敏感模型\n   - 峰谷价差弹性比 =\
+            \ (谷段节费潜力/峰段超支成本)×时段利用率\n智能分析模块\n分析类型技术路径验证标准\n尖峰溯源\n傅里叶变换时序分析\n周期性频次≥3次/月\n\
+            需量关联\n非线性回归模型\nR²>0.6强相关\n异常检测\nIsolation Forest算法\n超行业均值2σ\n行业知识库\nmarkdown\n\
+            复制\n- 效率曲面：功率因数=f(生产时长,非连续负载)\n- 对标模型：NAICS行业代码→负荷包络线匹配\n优化推演系统\nmarkdown\n\
+            复制\n1. 蒙特卡罗仿真\n   - 置信度：99%\n   - 变量：移峰幅度10%-20%\n   - 输出：电价成本概率分布\n\n\
+            2. 决策树模型\n   - 节点：历史需量波动范围\n   - 输出：计费模式转换临界阈值\n输出规范\nmarkdown\n复制\n###\
+            \ 企业用能分析报告（客户版）\n#### 一、基础信息\n[表格]企业名称/地址/周期 | 电费参数清单\n\n#### 二、用能现状分析\n\
+            [嵌套表格]用电特征矩阵 | 计费模式对比表 | 数据验证清单\n\n#### 三、能源成本解构\n[组合图表]电费组成环形图 | 力调电费敏感度曲线\n\
+            \n#### 四、负荷特性诊断\n[时序矩阵]日负荷曲线表 | 需量频次统计表\n\n#### 五、节能潜力评估\n[对比表格]技术节能收益测算\
+            \ | 管理优化空间矩阵\n\n#### 六、优化建议体系\n[决策树]计费策略路径图 | 设备升级路线表"
+        - id: 6ac7eb42-fd5c-4b06-ab26-1799d479cd3f
+          role: user
+          text: '{{#context#}}'
+        selected: true
+        title: 天津电网分析
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 88
+      id: '17421260850840'
+      position:
+        x: 2192.8866552476966
+        y: 590.2536738799598
+      positionAbsolute:
+        x: 2192.8866552476966
+        y: 590.2536738799598
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - id: key-value-1549
+            key: ''
+            type: text
+            value: ''
+          type: raw-text
+        desc: ''
+        headers: ''
+        method: post
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP 请求
+        type: http-request
+        url: http://host.docker.internal/Markdown2document
+        variables: []
+      height: 133
+      id: '1742126144055'
+      position:
+        x: 2838.623652000339
+        y: 424.2386695111102
+      positionAbsolute:
+        x: 2838.623652000339
+        y: 424.2386695111102
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        author: 超人阿亚
+        desc: ''
+        height: 198
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"请求接口，将结果转化为word文档","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"内容来自
+          微信公众号 ","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"","text":"dify实验室","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"https://mp.weixin.qq.com/s/AISBEr1KfgD2w1jmENya7A","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: '  (2)'
+        type: ''
+        width: 240
+      height: 198
+      id: '17421262323270'
+      position:
+        x: 2838.623652000339
+        y: 38.694290116665684
+      positionAbsolute:
+        x: 2838.623652000339
+        y: 38.694290116665684
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-r1-distill-qwen-14b
+          provider: langgenius/tongyi/tongyi
+        prompt_template:
+        - id: 35f90150-278e-46d5-9991-fbd9051ee1f4
+          role: system
+          text: 将上述内容转换为Markdown格式
+        - id: 0bb2d251-5a24-47f2-8c97-8c9e5e612acd
+          role: user
+          text: '{{#17421260850840.text#}}{{#17416737913850.text#}}{{#17415730053870.text#}}'
+        selected: false
+        title: 转换为Markdown格式
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 88
+      id: '1742126281476'
+      position:
+        x: 2555.193236047358
+        y: 417
+      positionAbsolute:
+        x: 2555.193236047358
+        y: 417
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        author: 超人阿亚
+        desc: ''
+        height: 198
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"转换为Markdown格式，","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"内容来自
+          微信公众号 ","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"","text":"dify实验室","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"https://mp.weixin.qq.com/s/AISBEr1KfgD2w1jmENya7A","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: '  (2)'
+        type: ''
+        width: 240
+      height: 198
+      id: '17421263137360'
+      position:
+        x: 2555.193236047358
+        y: 44.21748479900546
+      positionAbsolute:
+        x: 2555.193236047358
+        y: 44.21748479900546
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    viewport:
+      x: -1338.805732713141
+      y: 13.33384551843642
+      zoom: 0.8129078380227738

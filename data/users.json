@@ -1,0 +1,64 @@
+[
+  {
+    "id": "6cdfdabb-a3b2-4087-9350-9ef2b4fec1c4",
+    "nickname": "nan",
+    "email": "nan323660@gmail.com",
+    "password": "123456",
+    "createdAt": 1766313472876,
+    "lastLogin": 1768737691394,
+    "loginCount": 962,
+    "isAdmin": true,
+    "firebaseUid": "wUrb1s9sXGeSmh2jN6ygAGivagI2",
+    "provider": "password",
+    "updatedAt": 1766934521737
+  },
+  {
+    "id": "7f6fc490-6d6d-456d-8245-e294d3f7e07c",
+    "nickname": "323",
+    "email": "3236606446@qq.com",
+    "password": "Cnn3236606446@",
+    "createdAt": 1766381899855,
+    "lastLogin": 1768277485993,
+    "loginCount": 111,
+    "isAdmin": false,
+    "githubId": 186579426,
+    "photoURL": "https://avatars.githubusercontent.com/u/186579426?v=4",
+    "provider": "github",
+    "updatedAt": 1766934550875
+  },
+  {
+    "id": "8c4bae83-9535-4848-a5c0-590ad2af87a9",
+    "githubId": 252179468,
+    "email": "cnnmwnchennanann@gmail.com",
+    "nickname": "cnnmwnchennanann-crypto",
+    "photoURL": "https://avatars.githubusercontent.com/u/252179468?v=4",
+    "provider": "github",
+    "createdAt": 1767268088071,
+    "lastLogin": 1767268088071,
+    "loginCount": 1,
+    "isAdmin": false
+  },
+  {
+    "id": "bdd8ed80-fb24-4a32-8a6f-f7bd4abf26c8",
+    "githubId": 140689574,
+    "email": "fccyqs@gmail.com",
+    "nickname": "fccyqs",
+    "photoURL": "https://avatars.githubusercontent.com/u/140689574?v=4",
+    "provider": "github",
+    "createdAt": 1767433419383,
+    "lastLogin": 1767433419383,
+    "loginCount": 1,
+    "isAdmin": false
+  },
+  {
+    "id": "ef11e128-aa4e-4597-8330-0c6c4e0bd69c",
+    "firebaseUid": "tMkUfJbrGTfHgDhILiTlBimKJEK2",
+    "email": "kacem12kacem34@gmail.com",
+    "nickname": "k1",
+    "provider": "password",
+    "createdAt": 1768384961290,
+    "lastLogin": 1768397047936,
+    "loginCount": 61,
+    "isAdmin": false
+  }
+]

@@ -1,0 +1,1068 @@
+app:
+  description: 自动生成各个科目的题目
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 教学-生成题目
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.5@fd6efd37c2a931911de8ab9ca3ba2da303bef146d45ee87ad896b04b36d09403
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 50
+        file_size_limit: 1024
+        image_file_size_limit: 1000
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: if-else
+      id: 1739934248028--1740035745161-target
+      selected: false
+      source: '1739934248028'
+      sourceHandle: source
+      target: '1740035745161'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1740035745161-true-1739934350000-target
+      selected: false
+      source: '1740035745161'
+      sourceHandle: 'true'
+      target: '1739934350000'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1740035745161-ff24f701-82cd-4f6b-a61c-d48dcd4aea31-17400359158000-target
+      selected: false
+      source: '1740035745161'
+      sourceHandle: ff24f701-82cd-4f6b-a61c-d48dcd4aea31
+      target: '17400359158000'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1740035745161-false-17400362075990-target
+      selected: false
+      source: '1740035745161'
+      sourceHandle: 'false'
+      target: '17400362075990'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1740035745161-46406432-aec3-4679-9b54-e94425800edf-17400384250420-target
+      selected: false
+      source: '1740035745161'
+      sourceHandle: 46406432-aec3-4679-9b54-e94425800edf
+      target: '17400384250420'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1740035745161-a6ec157d-08c8-4d18-b119-f676e1d68f67-17400384358620-target
+      selected: false
+      source: '1740035745161'
+      sourceHandle: a6ec157d-08c8-4d18-b119-f676e1d68f67
+      target: '17400384358620'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: end
+      id: 1739934350000--1740039638246-target
+      source: '1739934350000'
+      sourceHandle: source
+      target: '1740039638246'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: end
+      id: 17400359158000--1740039647542-target
+      source: '17400359158000'
+      sourceHandle: source
+      target: '1740039647542'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: end
+      id: 17400384250420--1740039656542-target
+      source: '17400384250420'
+      sourceHandle: source
+      target: '1740039656542'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: end
+      id: 17400384358620--1740039664910-target
+      source: '17400384358620'
+      sourceHandle: source
+      target: '1740039664910'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: end
+      id: 17400362075990--1740039673558-target
+      source: '17400362075990'
+      sourceHandle: source
+      target: '1740039673558'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1740035745161-996aaf4d-7204-42d0-87e5-bfa237b9fe6a-17403651742300-target
+      source: '1740035745161'
+      sourceHandle: 996aaf4d-7204-42d0-87e5-bfa237b9fe6a
+      target: '17403651742300'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: end
+      id: 17403651742300-source-17403651985540-target
+      source: '17403651742300'
+      sourceHandle: source
+      target: '17403651985540'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1740035745161-28150218-ef03-4d33-8f18-5c453852940a-17403662845110-target
+      source: '1740035745161'
+      sourceHandle: 28150218-ef03-4d33-8f18-5c453852940a
+      target: '17403662845110'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: end
+      id: 17403662845110--1740366325475-target
+      source: '17403662845110'
+      sourceHandle: source
+      target: '1740366325475'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: 题型
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: questionType
+        - label: 科目
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: subject
+        - label: 课题内容
+          max_length: 1000
+          options: []
+          required: true
+          type: paragraph
+          variable: topicContent
+        - label: 应用场景
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: questionPlace
+        - label: 题目细节
+          max_length: 1000
+          options: []
+          required: true
+          type: paragraph
+          variable: questionDetail
+        - label: 描述
+          max_length: 2000
+          options: []
+          required: false
+          type: paragraph
+          variable: detailContent
+      height: 220
+      id: '1739934248028'
+      position:
+        x: -356.69662055368616
+        y: -84.1686800131371
+      positionAbsolute:
+        x: -356.69662055368616
+        y: -84.1686800131371
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            max_tokens: 8192
+            response_format: json_object
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_config:
+          jinja2_variables:
+          - value_selector:
+            - '1739934248028'
+            - questionType
+            variable: questionType
+          - value_selector:
+            - '1739934248028'
+            - subject
+            variable: subject
+          - value_selector:
+            - '1739934248028'
+            - topicContent
+            variable: topicContent
+          - value_selector:
+            - '1739934248028'
+            - questionPlace
+            variable: questionPlace
+          - value_selector:
+            - '1739934248028'
+            - questionDetail
+            variable: questionDetail
+          - value_selector:
+            - '1739934248028'
+            - detailContent
+            variable: detailContent
+        prompt_template:
+        - edition_type: jinja2
+          id: dc300075-c512-48f8-9747-74ff4d40ee78
+          jinja2_text: "课题：{{ topicContent }}{% if detailContent != none and detailContent\
+            \ != '' %}\r\n描述：{{ detailContent }}\r\n{% endif %}"
+          role: system
+          text: ''
+        - edition_type: basic
+          id: 476b09e1-eff3-4c53-8dce-6ab3b594b1c3
+          jinja2_text: '我是一名高中{{ questionSubject }}老师，需要生成{{ questionPlace }}，请基于课题：{{
+            topicContent }}，帮我生成{{ questionType }}题，具体要求如下：{{ questionDetail }}；请以如下json格式返回数据：{"questions":
+            [{"question": "","answer": "","analysis": "","options": []}]}，options表示选项，需要以大写英文字母标识，answer只需要正确的选项字母即可。'
+          role: user
+          text: '我是一名高中{{#1739934248028.subject#}}老师，需要生成{{#1739934248028.questionPlace#}}，请基于上述内容，帮我生成{{#1739934248028.questionType#}}题，具体要求如下：{{#1739934248028.questionDetail#}}；请以如下json格式返回数据：{"questions":
+            [{"question": "","answer": "","analysis": "","options": []}]}，options表示选项，需要以大写英文字母标识，answer只需要正确的选项字母即可。'
+        selected: false
+        title: 单选LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1739934350000'
+      position:
+        x: 491.8490474083212
+        y: -147.58919042577557
+      positionAbsolute:
+        x: 491.8490474083212
+        y: -147.58919042577557
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: c5707bfe-b64e-4790-975e-897a9b7b8926
+            value: 单选
+            varType: string
+            variable_selector:
+            - '1739934248028'
+            - questionType
+          id: 'true'
+          logical_operator: or
+        - case_id: ff24f701-82cd-4f6b-a61c-d48dcd4aea31
+          conditions:
+          - comparison_operator: is
+            id: e759c903-39b4-4da5-af39-01d40ac56695
+            value: 判断
+            varType: string
+            variable_selector:
+            - '1739934248028'
+            - questionType
+          - comparison_operator: is
+            id: aaab39fd-0b3e-4649-bc8b-810efe78be8b
+            value: 简答
+            varType: string
+            variable_selector:
+            - '1739934248028'
+            - questionType
+          - comparison_operator: is
+            id: df529c3e-7ae0-463e-9443-93dfdb5d22a8
+            value: 作文
+            varType: string
+            variable_selector:
+            - '1739934248028'
+            - questionType
+          - comparison_operator: is
+            id: e8423950-ef96-4add-9e38-0d66d032f58e
+            value: 汉译英
+            varType: string
+            variable_selector:
+            - '1739934248028'
+            - questionType
+          - comparison_operator: is
+            id: c6b862e7-16fd-4778-8f9e-8ede0288de1e
+            value: 英译汉
+            varType: string
+            variable_selector:
+            - '1739934248028'
+            - questionType
+          - comparison_operator: is
+            id: 80b3c797-b9e1-4697-b59c-a51b6def90bc
+            value: 改错
+            varType: string
+            variable_selector:
+            - '1739934248028'
+            - questionType
+          id: ff24f701-82cd-4f6b-a61c-d48dcd4aea31
+          logical_operator: or
+        - case_id: 46406432-aec3-4679-9b54-e94425800edf
+          conditions:
+          - comparison_operator: is
+            id: f6272ac5-524a-417d-84f6-0a3e9bacc75d
+            value: 填空
+            varType: string
+            variable_selector:
+            - '1739934248028'
+            - questionType
+          id: 46406432-aec3-4679-9b54-e94425800edf
+          logical_operator: and
+        - case_id: a6ec157d-08c8-4d18-b119-f676e1d68f67
+          conditions:
+          - comparison_operator: is
+            id: c660d437-ae4d-41c1-a823-3f9367bb8621
+            value: 阅读理解
+            varType: string
+            variable_selector:
+            - '1739934248028'
+            - questionType
+          - comparison_operator: is
+            id: 38df326a-7b72-4987-88b8-9fbe3d6846a6
+            value: 综合
+            varType: string
+            variable_selector:
+            - '1739934248028'
+            - questionType
+          id: a6ec157d-08c8-4d18-b119-f676e1d68f67
+          logical_operator: or
+        - case_id: 996aaf4d-7204-42d0-87e5-bfa237b9fe6a
+          conditions:
+          - comparison_operator: is
+            id: 4339dd55-094b-43b0-b017-4b0ead48fdb8
+            value: 多选
+            varType: string
+            variable_selector:
+            - '1739934248028'
+            - questionType
+          id: 996aaf4d-7204-42d0-87e5-bfa237b9fe6a
+          logical_operator: or
+        - case_id: 28150218-ef03-4d33-8f18-5c453852940a
+          conditions:
+          - comparison_operator: is
+            id: 392df1ee-ee0e-4513-92cd-14abc6d8a0c4
+            value: 完型填空
+            varType: string
+            variable_selector:
+            - '1739934248028'
+            - questionType
+          id: 28150218-ef03-4d33-8f18-5c453852940a
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支
+        type: if-else
+      height: 522
+      id: '1740035745161'
+      position:
+        x: 6.18106841486258
+        y: -159.98277144294127
+      positionAbsolute:
+        x: 6.18106841486258
+        y: -159.98277144294127
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            max_tokens: 8192
+            response_format: json_object
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_config:
+          jinja2_variables:
+          - value_selector:
+            - '1739934248028'
+            - questionType
+            variable: questionType
+          - value_selector:
+            - '1739934248028'
+            - subject
+            variable: subject
+          - value_selector:
+            - '1739934248028'
+            - topicContent
+            variable: topicContent
+          - value_selector:
+            - '1739934248028'
+            - questionPlace
+            variable: questionPlace
+          - value_selector:
+            - '1739934248028'
+            - questionDetail
+            variable: questionDetail
+          - value_selector:
+            - '1739934248028'
+            - detailContent
+            variable: detailContent
+        prompt_template:
+        - edition_type: jinja2
+          id: dc300075-c512-48f8-9747-74ff4d40ee78
+          jinja2_text: "课题：{{ topicContent }}{% if detailContent != none and detailContent\
+            \ != '' %}\r\n描述：{{ detailContent }}\r\n{% endif %}"
+          role: system
+          text: '{{#1739934248028.topicContent#}}/'
+        - id: 476b09e1-eff3-4c53-8dce-6ab3b594b1c3
+          role: user
+          text: '我是一名高中{{#1739934248028.subject#}}老师，需要生成{{#1739934248028.questionPlace#}}，请基于上述内容，帮我生成{{#1739934248028.questionType#}}题，具体要求如下：{{#1739934248028.questionDetail#}}；请以如下json格式返回数据：{"questions":
+            [{"question": "","answer": "","analysis": ""}]}；如果是判断题，则答案以0和1返回，0表示错误，1表示正确。'
+        selected: false
+        title: '不带选项不带小题LLM '
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '17400359158000'
+      position:
+        x: 498.7412375383035
+        y: -31.328555683273606
+      positionAbsolute:
+        x: 498.7412375383035
+        y: -31.328555683273606
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            max_tokens: 8192
+            response_format: json_object
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_config:
+          jinja2_variables:
+          - value_selector:
+            - '1739934248028'
+            - questionType
+            variable: questionType
+          - value_selector:
+            - '1739934248028'
+            - subject
+            variable: subject
+          - value_selector:
+            - '1739934248028'
+            - topicContent
+            variable: topicContent
+          - value_selector:
+            - '1739934248028'
+            - questionPlace
+            variable: questionPlace
+          - value_selector:
+            - '1739934248028'
+            - questionDetail
+            variable: questionDetail
+          - value_selector:
+            - '1739934248028'
+            - detailContent
+            variable: detailContent
+        prompt_template:
+        - edition_type: jinja2
+          id: dc300075-c512-48f8-9747-74ff4d40ee78
+          jinja2_text: "课题：{{ topicContent }}{% if detailContent != none and detailContent\
+            \ != '' %}\r\n描述：{{ detailContent }}\r\n{% endif %}"
+          role: system
+          text: '{{#1739934248028.topicContent#}}'
+        - id: 476b09e1-eff3-4c53-8dce-6ab3b594b1c3
+          role: user
+          text: '我是一名高中{{#1739934248028.subject#}}老师，需要生成{{#1739934248028.questionPlace#}}，请基于上述内容，帮我生成{{#1739934248028.questionType#}}题，具体要求如下：{{#1739934248028.questionDetail#}}；请以如下json格式返回数据：{"questions":
+            [{"question": "","answer": "","analysis": ""}]}。'
+        selected: true
+        title: 其他题型LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '17400362075990'
+      position:
+        x: 498.7412375383035
+        y: 537.2771300402582
+      positionAbsolute:
+        x: 498.7412375383035
+        y: 537.2771300402582
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            max_tokens: 8192
+            response_format: json_object
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_config:
+          jinja2_variables:
+          - value_selector:
+            - '1739934248028'
+            - questionType
+            variable: questionType
+          - value_selector:
+            - '1739934248028'
+            - subject
+            variable: subject
+          - value_selector:
+            - '1739934248028'
+            - topicContent
+            variable: topicContent
+          - value_selector:
+            - '1739934248028'
+            - questionPlace
+            variable: questionPlace
+          - value_selector:
+            - '1739934248028'
+            - questionDetail
+            variable: questionDetail
+          - value_selector:
+            - '1739934248028'
+            - detailContent
+            variable: detailContent
+        prompt_template:
+        - edition_type: jinja2
+          id: dc300075-c512-48f8-9747-74ff4d40ee78
+          jinja2_text: "课题：{{ topicContent }}{% if detailContent != none and detailContent\
+            \ != '' %}\r\n描述：{{ detailContent }}\r\n{% endif %}"
+          role: system
+          text: '{{#1739934248028.topicContent#}}'
+        - id: 476b09e1-eff3-4c53-8dce-6ab3b594b1c3
+          role: user
+          text: '我是一名高中{{#1739934248028.subject#}}老师，需要生成{{#1739934248028.questionPlace#}}，请基于上述内容，帮我生成{{#1739934248028.questionType#}}题，具体要求如下：{{#1739934248028.questionDetail#}}；请以如下json格式返回数据：{"questions":
+            [{"question": "","answer": "","analysis": ""}]}，如果答案有多个的话，每个答案中间以英文分号隔开。'
+        selected: false
+        title: 填空LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '17400384250420'
+      position:
+        x: 515.971712863259
+        y: 77.56804837044518
+      positionAbsolute:
+        x: 515.971712863259
+        y: 77.56804837044518
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            max_tokens: 8192
+            response_format: json_object
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_config:
+          jinja2_variables:
+          - value_selector:
+            - '1739934248028'
+            - questionType
+            variable: questionType
+          - value_selector:
+            - '1739934248028'
+            - subject
+            variable: subject
+          - value_selector:
+            - '1739934248028'
+            - topicContent
+            variable: topicContent
+          - value_selector:
+            - '1739934248028'
+            - questionPlace
+            variable: questionPlace
+          - value_selector:
+            - '1739934248028'
+            - questionDetail
+            variable: questionDetail
+          - value_selector:
+            - '1739934248028'
+            - detailContent
+            variable: detailContent
+        prompt_template:
+        - edition_type: jinja2
+          id: dc300075-c512-48f8-9747-74ff4d40ee78
+          jinja2_text: "课题：{{ topicContent }}{% if detailContent != none and detailContent\
+            \ != '' %}\r\n描述：{{ detailContent }}\r\n{% endif %}"
+          role: system
+          text: '{{#1739934248028.topicContent#}}'
+        - id: 476b09e1-eff3-4c53-8dce-6ab3b594b1c3
+          role: user
+          text: 我是一名高中{{#1739934248028.subject#}}老师，需要生成{{#1739934248028.questionPlace#}}，请基于上述内容，帮我生成{{#1739934248028.questionType#}}题，具体要求如下：{{#1739934248028.questionDetail#}}；请以如下json格式返回数据：
+            [{"article":"","questions":[{"question":"","answer":"","analysis":"","options":[],"questionType":""}]}]，其中article是短文或者材料，questions是短文对应的若干题目；如果是选择题，选项放在options里面，选项需要以大写英文字母标识，正确答案给出对应的英文字母即可，questionType表示题型，以中文返回，指定格式为单选题或者简答题。
+        selected: false
+        title: 阅读理解LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '17400384358620'
+      position:
+        x: 515.971712863259
+        y: 207.54177204088586
+      positionAbsolute:
+        x: 515.971712863259
+        y: 207.54177204088586
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1739934350000'
+          - text
+          variable: text
+        selected: false
+        title: 结束
+        type: end
+      height: 90
+      id: '1740039638246'
+      position:
+        x: 806.1873326032944
+        y: -152.1839838457637
+      positionAbsolute:
+        x: 806.1873326032944
+        y: -152.1839838457637
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '17400359158000'
+          - text
+          variable: text
+        selected: false
+        title: 结束 2
+        type: end
+      height: 90
+      id: '1740039647542'
+      position:
+        x: 801.5925391833064
+        y: -31.328555683273606
+      positionAbsolute:
+        x: 801.5925391833064
+        y: -31.328555683273606
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '17400384250420'
+          - text
+          variable: text
+        selected: false
+        title: 结束 3
+        type: end
+      height: 90
+      id: '1740039656542'
+      position:
+        x: 795.8490474083212
+        y: 82.16284179043328
+      positionAbsolute:
+        x: 795.8490474083212
+        y: 82.16284179043328
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '17400384358620'
+          - text
+          variable: text
+        selected: false
+        title: 结束 4
+        type: end
+      height: 90
+      id: '1740039664910'
+      position:
+        x: 795.8490474083212
+        y: 213.1144542600951
+      positionAbsolute:
+        x: 795.8490474083212
+        y: 213.1144542600951
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '17400362075990'
+          - text
+          variable: text
+        selected: false
+        title: 结束 5
+        type: end
+      height: 90
+      id: '1740039673558'
+      position:
+        x: 806.1873326032944
+        y: 537.2771300402582
+      positionAbsolute:
+        x: 806.1873326032944
+        y: 537.2771300402582
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            max_tokens: 8192
+            response_format: json_object
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_config:
+          jinja2_variables:
+          - value_selector:
+            - '1739934248028'
+            - questionType
+            variable: questionType
+          - value_selector:
+            - '1739934248028'
+            - subject
+            variable: subject
+          - value_selector:
+            - '1739934248028'
+            - topicContent
+            variable: topicContent
+          - value_selector:
+            - '1739934248028'
+            - questionPlace
+            variable: questionPlace
+          - value_selector:
+            - '1739934248028'
+            - questionDetail
+            variable: questionDetail
+          - value_selector:
+            - '1739934248028'
+            - detailContent
+            variable: detailContent
+        prompt_template:
+        - edition_type: jinja2
+          id: dc300075-c512-48f8-9747-74ff4d40ee78
+          jinja2_text: "课题：{{ topicContent }}{% if detailContent != none and detailContent\
+            \ != '' %}\r\n描述：{{ detailContent }}\r\n{% endif %}"
+          role: system
+          text: '{{#1739934248028.topicContent#}}'
+        - id: 476b09e1-eff3-4c53-8dce-6ab3b594b1c3
+          role: user
+          text: '我是一名高中{{#1739934248028.subject#}}老师，需要生成{{#1739934248028.questionPlace#}}，请基于上述内容，帮我生成{{#1739934248028.questionType#}}题，具体要求如下：{{#1739934248028.questionDetail#}}；请以如下json格式返回数据：{"questions":
+            [{"question": "","answer": "","analysis": "","options": []}]}，options表示选项，需要以大写英文字母标识，answer只需要正确的选项字母，每个正确选项中间以逗号隔开。'
+        selected: false
+        title: 多选LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '17403651742300'
+      position:
+        x: 491.8490474083212
+        y: 321.1475864116637
+      positionAbsolute:
+        x: 491.8490474083212
+        y: 321.1475864116637
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '17403651742300'
+          - text
+          variable: text
+        selected: false
+        title: 结束 (1)
+        type: end
+      height: 90
+      id: '17403651985540'
+      position:
+        x: 787.8922022063117
+        y: 316.5527929916757
+      positionAbsolute:
+        x: 787.8922022063117
+        y: 316.5527929916757
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            max_tokens: 8192
+            response_format: json_object
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_config:
+          jinja2_variables:
+          - value_selector:
+            - '1739934248028'
+            - questionType
+            variable: questionType
+          - value_selector:
+            - '1739934248028'
+            - subject
+            variable: subject
+          - value_selector:
+            - '1739934248028'
+            - topicContent
+            variable: topicContent
+          - value_selector:
+            - '1739934248028'
+            - questionPlace
+            variable: questionPlace
+          - value_selector:
+            - '1739934248028'
+            - questionDetail
+            variable: questionDetail
+          - value_selector:
+            - '1739934248028'
+            - detailContent
+            variable: detailContent
+        prompt_template:
+        - edition_type: jinja2
+          id: dc300075-c512-48f8-9747-74ff4d40ee78
+          jinja2_text: "课题：{{ topicContent }}{% if detailContent != none and detailContent\
+            \ != '' %}\r\n描述：{{ detailContent }}\r\n{% endif %}"
+          role: system
+          text: '{{#1739934248028.topicContent#}}/'
+        - id: 476b09e1-eff3-4c53-8dce-6ab3b594b1c3
+          role: user
+          text: '我是一名高中{{#1739934248028.subject#}}老师，需要生成{{#1739934248028.questionPlace#}}，请基于上述内容，帮我生成{{#1739934248028.questionType#}}题，具体要求如下：{{#1739934248028.questionDetail#}}；请以如下json格式返回数据：
+            [{"article": "","options": [[]],"answers": [],"analysis": []}]，options表示每个小题的选项，需要以大写英文字母标识，answer只需要正确的选项字母即可。'
+        selected: false
+        title: 完型填空LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '17403662845110'
+      position:
+        x: 503.7412375383035
+        y: 425.6791367163938
+      positionAbsolute:
+        x: 503.7412375383035
+        y: 425.6791367163938
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '17403662845110'
+          - text
+          variable: text
+        selected: false
+        title: 结束 7
+        type: end
+      height: 90
+      id: '1740366325475'
+      position:
+        x: 802.7412375383035
+        y: 425.6791367163938
+      positionAbsolute:
+        x: 802.7412375383035
+        y: 425.6791367163938
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 325.0254555715163
+      y: 300.99852560472044
+      zoom: 0.659753955386447

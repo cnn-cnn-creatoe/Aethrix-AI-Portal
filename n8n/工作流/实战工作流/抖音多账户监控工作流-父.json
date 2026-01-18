@@ -1,0 +1,545 @@
+{
+  "name": "抖音自动化工作流",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "抖音实时监控工作流",
+        "formDescription": "新视频发布提醒、无水印视频自动下载、文案内容提取，以及数据统计（包括点赞、收藏、评论和转发数量）等功能",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "下载视频",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "是"
+                  },
+                  {
+                    "option": "否"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "提取视频文案",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "是"
+                  },
+                  {
+                    "option": "否"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -260,
+        500
+      ],
+      "id": "a2e7ac91-0f63-44dc-a2a8-582e91709087",
+      "name": "On form submission1",
+      "webhookId": "8464f6a6-b2ec-42c1-bcef-260af1328353"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "24093a23-8e45-4e97-a7b0-d295942700ea",
+              "name": "user_id",
+              "value": "[\"MS4wLjABAAAASAAEh9ArUn54fyQatF1kfx0eROovvP_Zq36oZBNbex2JEbRoiPJ9RAdf1Sam9cnJ\",\"MS4wLjABAAAA4W5VX_Uamm8KpIhzBgZsfEi8rxCqK0L5Ph1T_RuBiwm9UnH7NJkTRRlJ_9EaM0GK\"]",
+              "type": "array"
+            },
+            {
+              "id": "172d27de-7141-4386-a895-38d514cd5ae7",
+              "name": "name",
+              "value": "[\"舌尖上的味道\",\"GQ说电影\"]",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -40,
+        500
+      ],
+      "id": "c04fb7ac-6f2a-45bb-8336-10641a5e9621",
+      "name": "Edit Fields",
+      "notesInFlow": true,
+      "notes": "参数设置"
+    },
+    {
+      "parameters": {
+        "jsCode": "const array1 = $input.first().json.user_id;\nconst array2 = $input.first().json.name;\nconst combined = [];\n\nfor (let i = 0; i < array1.length; i++) {\n  combined.push({\n    id: array1[i],\n    name: array2[i]\n  });\n}\n\nreturn combined.map(item => ({ json: item }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        180,
+        500
+      ],
+      "id": "7259fe86-ddd5-4236-853c-c978205af662",
+      "name": "Code",
+      "notes": "合并数组"
+    },
+    {
+      "parameters": {
+        "maxItems": 2
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        400,
+        500
+      ],
+      "id": "034da265-4322-47ee-81b0-596ae6a716e2",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "url": "http://host.docker.internal:8080/api/douyin/web/fetch_user_post_videos",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "sec_user_id",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "max_cursor",
+              "value": "0"
+            },
+            {
+              "name": "count",
+              "value": "20"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        620,
+        500
+      ],
+      "id": "624e4cff-3044-44fe-82e5-6ae2e4f77efc",
+      "name": "HTTP Request4",
+      "notesInFlow": true,
+      "notes": "获取用户主页作品数据"
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        840,
+        500
+      ],
+      "id": "9e953064-11c0-4bc6-badf-d47a124b1361",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data.aweme_list",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        300
+      ],
+      "id": "ebaaaea5-c67c-4d36-9ba9-d65ec98b3f47",
+      "name": "Split Out",
+      "notesInFlow": true,
+      "notes": "获取到主页列表清单"
+    },
+    {
+      "parameters": {
+        "maxItems": 3
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        1720,
+        400
+      ],
+      "id": "d5d692c3-a7b7-4c4f-b48e-7066ca6838c2",
+      "name": "Limit1"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": {
+          "__rl": true,
+          "value": "226629a6-152d-80c7-8848-e702815d9d27",
+          "mode": "list",
+          "cachedResultName": "抖音视频",
+          "cachedResultUrl": "https://www.notion.so/226629a6152d80c78848e702815d9d27"
+        },
+        "simple": false,
+        "filterType": "manual",
+        "filters": {
+          "conditions": [
+            {
+              "key": "所属账号|rich_text",
+              "condition": "equals",
+              "richTextValue": "={{ $json.data.aweme_list[0].author.nickname }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        1080,
+        500
+      ],
+      "id": "9277c5d0-0f08-4bd9-8795-a91dbe11c99b",
+      "name": "Notion1",
+      "credentials": {
+        "notionApi": {
+          "id": "tHqNwAxXQ88MGWlm",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "aweme_id",
+        "joinMode": "keepNonMatches",
+        "outputDataFrom": "input1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1500,
+        400
+      ],
+      "id": "cabf8ac5-ba8d-4de8-88eb-03fd3079deb5",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d094edf9-ab3d-4602-9f90-39346bdb8e07",
+              "name": "aweme_id",
+              "value": "={{ $json.properties[\"网址\"].url.match(/\\/(\\d+)\\/?$/)[1] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1280,
+        500
+      ],
+      "id": "ed07dec9-7201-41e4-81f1-8ac6257b5f8e",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0ed692b9-d8e2-4bfd-99db-df8afa124676",
+              "name": "*",
+              "value": "={{ $json}}",
+              "type": "string"
+            },
+            {
+              "id": "833d8133-fc91-4a96-af9f-8c8b4c3ad9e1",
+              "name": "download",
+              "value": "={{ $('On form submission1').item.json[\"下载视频\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "419f3405-aa2a-48b3-a98d-9c737685ef9e",
+              "name": "zimu",
+              "value": "={{ $('On form submission1').item.json[\"提取视频文案\"] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1940,
+        400
+      ],
+      "id": "77363ac3-46ac-445c-aa44-99c7c966737c",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "14zXqqTprTlOWnDb",
+          "mode": "list",
+          "cachedResultName": "抖音自动化子流程"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [
+            ""
+          ],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        2200,
+        500
+      ],
+      "id": "c901d09f-cf37-4bc1-b694-db3066289a56",
+      "name": "Execute Workflow"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request4": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Notion1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notion1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Limit1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notion": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "2d5f6002-624b-4dd1-976e-cc3d5fa1749d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "667f8e49cea6f05a4f2d4764a2ef083b44c681d7bcf3709cc71f85be90eeca2e"
+  },
+  "id": "OSbF86SMLJF4tKLm",
+  "tags": []
+}

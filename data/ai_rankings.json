@@ -1,0 +1,1515 @@
+{
+  "boards": [
+    {
+      "id": "board-main",
+      "name": "总榜",
+      "description": "AI工具能力分级排行",
+      "order": 0,
+      "tiers": [
+        {
+          "id": "tier-s",
+          "name": "神级",
+          "color": "#8b5cf6",
+          "textColor": "#FFFFFF",
+          "order": 1,
+          "items": [
+            {
+              "id": "item-claude",
+              "name": "Claude Sonnet 4.5",
+              "description": "Anthropic最强模型，长文本处理无敌，逻辑推理清晰",
+              "link": "https://claude.ai"
+            },
+            {
+              "id": "item-perplexity-main",
+              "name": "Perplexity AI",
+              "description": "最强AI搜索引擎，实时联网，引用来源清晰",
+              "link": "https://perplexity.ai"
+            },
+            {
+              "id": "item-chatgpt",
+              "name": "ChatGPT-5o",
+              "description": "OpenAI最新旗舰模型，多模态能力顶级，推理速度快",
+              "link": "https://chat.openai.com"
+            },
+            {
+              "id": "item-cursor-main",
+              "name": "Cursor",
+              "description": "AI驱动的代码编辑器，集成GPT-4，智能代码补全和重构",
+              "link": "https://cursor.sh"
+            }
+          ]
+        },
+        {
+          "id": "tier-a",
+          "name": "顶级",
+          "color": "#3b82f6",
+          "textColor": "#FFFFFF",
+          "order": 2,
+          "items": [
+            {
+              "id": "item-gemini",
+              "name": "Gemini 3",
+              "description": "Google最新多模态模型，视频理解能力强",
+              "link": "https://gemini.google.com"
+            },
+            {
+              "id": "item-midjourney",
+              "name": "Midjourney",
+              "description": "顶级AI绘画工具，艺术风格多样，画质精美",
+              "link": "https://midjourney.com"
+            },
+            {
+              "id": "item-suno-main",
+              "name": "Suno AI",
+              "description": "最强AI音乐生成，文本生成完整歌曲，质量顶级",
+              "link": "https://suno.ai"
+            },
+            {
+              "id": "item-runway-main",
+              "name": "Runway Gen-3",
+              "description": "专业级AI视频生成，支持文生视频和图生视频",
+              "link": "https://runwayml.com"
+            }
+          ]
+        },
+        {
+          "id": "tier-b",
+          "name": "优秀",
+          "color": "#10b981",
+          "textColor": "#FFFFFF",
+          "order": 3,
+          "items": [
+            {
+              "id": "item-deepseek-main",
+              "name": "DeepSeek R1",
+              "description": "国产开源大模型，推理能力强，性价比高",
+              "link": "https://www.deepseek.com"
+            },
+            {
+              "id": "item-grok-main",
+              "name": "Grok 4",
+              "description": "xAI大模型，实时联网，幽默风格",
+              "link": "https://grok.x.ai"
+            }
+          ]
+        },
+        {
+          "id": "tier-c",
+          "name": "实用",
+          "color": "#64748b",
+          "textColor": "#FFFFFF",
+          "order": 4,
+          "items": []
+        },
+        {
+          "id": "tier-d",
+          "name": "入门",
+          "color": "#475569",
+          "textColor": "#FFFFFF",
+          "order": 5,
+          "items": []
+        }
+      ]
+    },
+    {
+      "id": "board-chat-llm",
+      "name": "AI聊天/大模型",
+      "description": "对话式AI和大语言模型排行",
+      "order": 1,
+      "tiers": [
+        {
+          "id": "tier-s",
+          "name": "神级",
+          "color": "#8b5cf6",
+          "textColor": "#FFFFFF",
+          "order": 1,
+          "items": [
+            {
+              "id": "item-chatgpt-5o",
+              "name": "ChatGPT-5o",
+              "description": "OpenAI最新旗舰模型，多模态能力顶级，推理速度快",
+              "link": "https://chat.openai.com"
+            },
+            {
+              "id": "item-claude-sonnet-45",
+              "name": "Claude Sonnet 4.5",
+              "description": "Anthropic最强模型，长文本处理无敌，逻辑推理清晰",
+              "link": "https://claude.ai"
+            }
+          ]
+        },
+        {
+          "id": "tier-a",
+          "name": "顶级",
+          "color": "#3b82f6",
+          "textColor": "#FFFFFF",
+          "order": 2,
+          "items": [
+            {
+              "id": "item-gemini-3",
+              "name": "Gemini 3",
+              "description": "Google最新多模态模型，视频理解能力强",
+              "link": "https://gemini.google.com"
+            },
+            {
+              "id": "item-grok-4",
+              "name": "Grok 4",
+              "description": "xAI大模型，实时联网，幽默风格，2025年大幅升级",
+              "link": "https://grok.x.ai"
+            }
+          ]
+        },
+        {
+          "id": "tier-b",
+          "name": "优秀",
+          "color": "#10b981",
+          "textColor": "#FFFFFF",
+          "order": 3,
+          "items": [
+            {
+              "id": "item-deepseek-r1",
+              "name": "DeepSeek R1",
+              "description": "国产开源大模型，推理能力强，性价比高",
+              "link": "https://www.deepseek.com"
+            },
+            {
+              "id": "item-doubao",
+              "name": "豆包",
+              "description": "字节跳动AI助手，中文理解优秀，免费使用",
+              "link": "https://www.doubao.com"
+            },
+            {
+              "id": "item-qwen",
+              "name": "通义千问",
+              "description": "阿里云大模型，中文能力强，多模态支持",
+              "link": "https://tongyi.aliyun.com"
+            },
+            {
+              "id": "item-ernie",
+              "name": "文心一言",
+              "description": "百度大模型，中文理解深入，知识丰富",
+              "link": "https://yiyan.baidu.com"
+            }
+          ]
+        },
+        {
+          "id": "tier-c",
+          "name": "实用",
+          "color": "#64748b",
+          "textColor": "#FFFFFF",
+          "order": 4,
+          "items": [
+            {
+              "id": "item-spark",
+              "name": "讯飞星火",
+              "description": "科大讯飞大模型，语音交互优秀",
+              "link": "https://xinghuo.xfyun.cn"
+            },
+            {
+              "id": "item-chatglm",
+              "name": "ChatGLM",
+              "description": "智谱AI开源模型，可本地部署",
+              "link": "https://chatglm.cn"
+            }
+          ]
+        },
+        {
+          "id": "tier-d",
+          "name": "入门",
+          "color": "#475569",
+          "textColor": "#FFFFFF",
+          "order": 5,
+          "items": [
+            {
+              "id": "item-tiangong",
+              "name": "天工AI",
+              "description": "昆仑万维大模型，免费使用",
+              "link": "https://www.tiangong.cn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "board-search",
+      "name": "AI搜索",
+      "description": "AI驱动的智能搜索引擎排行",
+      "order": 2,
+      "tiers": [
+        {
+          "id": "tier-s",
+          "name": "神级",
+          "color": "#8b5cf6",
+          "textColor": "#FFFFFF",
+          "order": 1,
+          "items": [
+            {
+              "id": "item-perplexity-search",
+              "name": "Perplexity AI",
+              "description": "最强AI搜索引擎，实时联网，引用来源清晰，2025年持续领先",
+              "link": "https://perplexity.ai"
+            }
+          ]
+        },
+        {
+          "id": "tier-a",
+          "name": "顶级",
+          "color": "#3b82f6",
+          "textColor": "#FFFFFF",
+          "order": 2,
+          "items": [
+            {
+              "id": "item-notebooklm",
+              "name": "NotebookLM",
+              "description": "Google AI笔记本，文档理解和总结能力强",
+              "link": "https://notebooklm.google.com"
+            },
+            {
+              "id": "item-kimi",
+              "name": "Kimi",
+              "description": "月之暗面AI搜索，长文本处理，中文优化",
+              "link": "https://kimi.moonshot.cn"
+            },
+            {
+              "id": "item-you-search",
+              "name": "You.com",
+              "description": "AI搜索引擎，隐私保护，多模态搜索",
+              "link": "https://you.com"
+            }
+          ]
+        },
+        {
+          "id": "tier-b",
+          "name": "优秀",
+          "color": "#10b981",
+          "textColor": "#FFFFFF",
+          "order": 3,
+          "items": [
+            {
+              "id": "item-bing-copilot",
+              "name": "Bing Copilot",
+              "description": "微软AI搜索，集成GPT-4，免费使用",
+              "link": "https://www.bing.com/chat"
+            },
+            {
+              "id": "item-phind-search",
+              "name": "Phind",
+              "description": "面向开发者的AI搜索，编程问题专家",
+              "link": "https://www.phind.com"
+            }
+          ]
+        },
+        {
+          "id": "tier-c",
+          "name": "实用",
+          "color": "#64748b",
+          "textColor": "#FFFFFF",
+          "order": 4,
+          "items": [
+            {
+              "id": "item-metaphor",
+              "name": "Metaphor",
+              "description": "AI语义搜索，理解自然语言查询",
+              "link": "https://metaphor.systems"
+            }
+          ]
+        },
+        {
+          "id": "tier-d",
+          "name": "入门",
+          "color": "#475569",
+          "textColor": "#FFFFFF",
+          "order": 5,
+          "items": []
+        }
+      ]
+    },
+    {
+      "id": "board-music",
+      "name": "AI音乐",
+      "description": "AI音乐生成工具排行",
+      "order": 3,
+      "tiers": [
+        {
+          "id": "tier-s",
+          "name": "神级",
+          "color": "#8b5cf6",
+          "textColor": "#FFFFFF",
+          "order": 1,
+          "items": []
+        },
+        {
+          "id": "tier-a",
+          "name": "顶级",
+          "color": "#3b82f6",
+          "textColor": "#FFFFFF",
+          "order": 2,
+          "items": [
+            {
+              "id": "item-suno",
+              "name": "Suno AI",
+              "description": "最强AI音乐生成，文本生成完整歌曲，质量顶级",
+              "link": "https://suno.ai"
+            },
+            {
+              "id": "item-udio",
+              "name": "Udio",
+              "description": "AI音乐生成平台，风格多样，音质优秀",
+              "link": "https://udio.com"
+            }
+          ]
+        },
+        {
+          "id": "tier-b",
+          "name": "优秀",
+          "color": "#10b981",
+          "textColor": "#FFFFFF",
+          "order": 3,
+          "items": [
+            {
+              "id": "item-stable-audio",
+              "name": "Stable Audio",
+              "description": "Stability AI音乐模型，开源可商用",
+              "link": "https://stability.ai/stable-audio"
+            },
+            {
+              "id": "item-mubert",
+              "name": "Mubert",
+              "description": "AI背景音乐生成，适合视频配乐",
+              "link": "https://mubert.com"
+            },
+            {
+              "id": "item-soundraw",
+              "name": "Soundraw",
+              "description": "AI音乐定制，可调节节奏和情绪",
+              "link": "https://soundraw.io"
+            }
+          ]
+        },
+        {
+          "id": "tier-c",
+          "name": "实用",
+          "color": "#64748b",
+          "textColor": "#FFFFFF",
+          "order": 4,
+          "items": [
+            {
+              "id": "item-boomy",
+              "name": "Boomy",
+              "description": "快速生成音乐，适合初学者",
+              "link": "https://boomy.com"
+            }
+          ]
+        },
+        {
+          "id": "tier-d",
+          "name": "入门",
+          "color": "#475569",
+          "textColor": "#FFFFFF",
+          "order": 5,
+          "items": []
+        }
+      ]
+    },
+    {
+      "id": "board-voice",
+      "name": "AI语音/配音",
+      "description": "AI语音合成和克隆工具排行",
+      "order": 4,
+      "tiers": [
+        {
+          "id": "tier-s",
+          "name": "神级",
+          "color": "#8b5cf6",
+          "textColor": "#FFFFFF",
+          "order": 1,
+          "items": [
+            {
+              "id": "item-elevenlabs",
+              "name": "ElevenLabs",
+              "description": "最强AI语音克隆，情感表达自然，多语言支持",
+              "link": "https://elevenlabs.io"
+            }
+          ]
+        },
+        {
+          "id": "tier-a",
+          "name": "顶级",
+          "color": "#3b82f6",
+          "textColor": "#FFFFFF",
+          "order": 2,
+          "items": [
+            {
+              "id": "item-play-ht",
+              "name": "Play.ht",
+              "description": "AI语音生成，超逼真，适合有声书",
+              "link": "https://play.ht"
+            },
+            {
+              "id": "item-murf-ai",
+              "name": "Murf AI",
+              "description": "专业AI配音，视频旁白首选",
+              "link": "https://murf.ai"
+            },
+            {
+              "id": "item-resemble-ai",
+              "name": "Resemble AI",
+              "description": "AI语音克隆，实时语音合成",
+              "link": "https://www.resemble.ai"
+            }
+          ]
+        },
+        {
+          "id": "tier-b",
+          "name": "优秀",
+          "color": "#10b981",
+          "textColor": "#FFFFFF",
+          "order": 3,
+          "items": [
+            {
+              "id": "item-wellsaid",
+              "name": "WellSaid Labs",
+              "description": "企业级AI配音，声音库丰富",
+              "link": "https://wellsaidlabs.com"
+            },
+            {
+              "id": "item-speechify",
+              "name": "Speechify",
+              "description": "文本转语音，阅读辅助工具",
+              "link": "https://speechify.com"
+            }
+          ]
+        },
+        {
+          "id": "tier-c",
+          "name": "实用",
+          "color": "#64748b",
+          "textColor": "#FFFFFF",
+          "order": 4,
+          "items": [
+            {
+              "id": "item-ttsmaker",
+              "name": "TTSMaker",
+              "description": "免费AI语音合成，多语言支持",
+              "link": "https://ttsmaker.com"
+            }
+          ]
+        },
+        {
+          "id": "tier-d",
+          "name": "入门",
+          "color": "#475569",
+          "textColor": "#FFFFFF",
+          "order": 5,
+          "items": []
+        }
+      ]
+    },
+    {
+      "id": "board-agent",
+      "name": "AI智能体/Agent",
+      "description": "AI自主任务执行和自动化工具排行",
+      "order": 5,
+      "tiers": [
+        {
+          "id": "tier-s",
+          "name": "神级",
+          "color": "#8b5cf6",
+          "textColor": "#FFFFFF",
+          "order": 1,
+          "items": [
+            {
+              "id": "item-openai-operator",
+              "name": "OpenAI Operator",
+              "description": "OpenAI智能体，自主执行复杂任务，浏览器操作",
+              "link": "https://openai.com/operator"
+            }
+          ]
+        },
+        {
+          "id": "tier-a",
+          "name": "顶级",
+          "color": "#3b82f6",
+          "textColor": "#FFFFFF",
+          "order": 2,
+          "items": [
+            {
+              "id": "item-manus",
+              "name": "Manus",
+              "description": "AI工作流自动化，企业级智能体，2025年3月发布",
+              "link": "https://manus.im"
+            },
+            {
+              "id": "item-coze",
+              "name": "Coze",
+              "description": "字节跳动AI智能体平台，无代码搭建",
+              "link": "https://www.coze.com"
+            }
+          ]
+        },
+        {
+          "id": "tier-b",
+          "name": "优秀",
+          "color": "#10b981",
+          "textColor": "#FFFFFF",
+          "order": 3,
+          "items": [
+            {
+              "id": "item-autogpt",
+              "name": "AutoGPT",
+              "description": "开源AI智能体，自主完成目标任务",
+              "link": "https://autogpt.net"
+            },
+            {
+              "id": "item-babyagi",
+              "name": "BabyAGI",
+              "description": "轻量级AI智能体，任务管理和执行",
+              "link": "https://github.com/yoheinakajima/babyagi"
+            },
+            {
+              "id": "item-langchain",
+              "name": "LangChain",
+              "description": "AI应用开发框架，构建智能体",
+              "link": "https://www.langchain.com"
+            }
+          ]
+        },
+        {
+          "id": "tier-c",
+          "name": "实用",
+          "color": "#64748b",
+          "textColor": "#FFFFFF",
+          "order": 4,
+          "items": [
+            {
+              "id": "item-superagent",
+              "name": "SuperAgent",
+              "description": "开源AI智能体框架，易于部署",
+              "link": "https://www.superagent.sh"
+            }
+          ]
+        },
+        {
+          "id": "tier-d",
+          "name": "入门",
+          "color": "#475569",
+          "textColor": "#FFFFFF",
+          "order": 5,
+          "items": []
+        }
+      ]
+    },
+    {
+      "id": "board-avatar",
+      "name": "AI数字人",
+      "description": "AI虚拟主播和数字人生成工具排行",
+      "order": 6,
+      "tiers": [
+        {
+          "id": "tier-s",
+          "name": "神级",
+          "color": "#8b5cf6",
+          "textColor": "#FFFFFF",
+          "order": 1,
+          "items": [
+            {
+              "id": "item-synthesia-avatar",
+              "name": "Synthesia",
+              "description": "最强AI数字人，多语言配音，企业级应用",
+              "link": "https://www.synthesia.io"
+            }
+          ]
+        },
+        {
+          "id": "tier-a",
+          "name": "顶级",
+          "color": "#3b82f6",
+          "textColor": "#FFFFFF",
+          "order": 2,
+          "items": [
+            {
+              "id": "item-heygen-avatar",
+              "name": "HeyGen",
+              "description": "AI数字人视频，换脸和语音克隆，操作简单",
+              "link": "https://www.heygen.com"
+            },
+            {
+              "id": "item-d-id",
+              "name": "D-ID",
+              "description": "AI数字人生成，照片变视频，表情自然",
+              "link": "https://www.d-id.com"
+            }
+          ]
+        },
+        {
+          "id": "tier-b",
+          "name": "优秀",
+          "color": "#10b981",
+          "textColor": "#FFFFFF",
+          "order": 3,
+          "items": [
+            {
+              "id": "item-vidu",
+              "name": "Vidu数字人",
+              "description": "国产AI数字人，中文优化，短视频制作",
+              "link": "https://www.vidu.ai"
+            },
+            {
+              "id": "item-colossyan",
+              "name": "Colossyan",
+              "description": "AI数字人培训视频，企业学习平台",
+              "link": "https://www.colossyan.com"
+            },
+            {
+              "id": "item-hour-one",
+              "name": "Hour One",
+              "description": "AI虚拟主播，新闻和营销视频",
+              "link": "https://hourone.ai"
+            }
+          ]
+        },
+        {
+          "id": "tier-c",
+          "name": "实用",
+          "color": "#64748b",
+          "textColor": "#FFFFFF",
+          "order": 4,
+          "items": [
+            {
+              "id": "item-elai",
+              "name": "Elai.io",
+              "description": "AI数字人视频生成，模板丰富",
+              "link": "https://elai.io"
+            }
+          ]
+        },
+        {
+          "id": "tier-d",
+          "name": "入门",
+          "color": "#475569",
+          "textColor": "#FFFFFF",
+          "order": 5,
+          "items": []
+        }
+      ]
+    },
+    {
+      "id": "board-productivity",
+      "name": "AI办公/生产力",
+      "description": "AI办公自动化和生产力工具排行",
+      "order": 7,
+      "tiers": [
+        {
+          "id": "tier-s",
+          "name": "神级",
+          "color": "#8b5cf6",
+          "textColor": "#FFFFFF",
+          "order": 1,
+          "items": []
+        },
+        {
+          "id": "tier-a",
+          "name": "顶级",
+          "color": "#3b82f6",
+          "textColor": "#FFFFFF",
+          "order": 2,
+          "items": [
+            {
+              "id": "item-gamma-ai",
+              "name": "Gamma AI",
+              "description": "AI PPT生成，设计精美，一键生成演示文稿",
+              "link": "https://gamma.app"
+            },
+            {
+              "id": "item-plus-ai",
+              "name": "Plus AI",
+              "description": "Google Slides AI插件，自动生成PPT",
+              "link": "https://www.plusdocs.com"
+            },
+            {
+              "id": "item-beautiful-ai",
+              "name": "Beautiful.ai",
+              "description": "AI演示文稿设计，智能排版",
+              "link": "https://www.beautiful.ai"
+            }
+          ]
+        },
+        {
+          "id": "tier-b",
+          "name": "优秀",
+          "color": "#10b981",
+          "textColor": "#FFFFFF",
+          "order": 3,
+          "items": [
+            {
+              "id": "item-notion-ai-prod",
+              "name": "Notion AI",
+              "description": "Notion内置AI，文档写作和知识管理",
+              "link": "https://www.notion.so/product/ai"
+            },
+            {
+              "id": "item-aippt",
+              "name": "AiPPT",
+              "description": "国产AI PPT生成，中文优化，模板丰富",
+              "link": "https://www.aippt.cn"
+            },
+            {
+              "id": "item-tome",
+              "name": "Tome",
+              "description": "AI故事演示，交互式PPT生成",
+              "link": "https://tome.app"
+            }
+          ]
+        },
+        {
+          "id": "tier-c",
+          "name": "实用",
+          "color": "#64748b",
+          "textColor": "#FFFFFF",
+          "order": 4,
+          "items": [
+            {
+              "id": "item-slidesai",
+              "name": "SlidesAI",
+              "description": "文本转PPT，Google Slides插件",
+              "link": "https://www.slidesai.io"
+            },
+            {
+              "id": "item-decktopus",
+              "name": "Decktopus",
+              "description": "AI演示文稿生成，快速制作",
+              "link": "https://www.decktopus.com"
+            }
+          ]
+        },
+        {
+          "id": "tier-d",
+          "name": "入门",
+          "color": "#475569",
+          "textColor": "#FFFFFF",
+          "order": 5,
+          "items": []
+        }
+      ]
+    },
+    {
+      "id": "board-design-ui",
+      "name": "AI设计/UI",
+      "description": "AI设计和UI原型生成工具排行",
+      "order": 8,
+      "tiers": [
+        {
+          "id": "tier-s",
+          "name": "神级",
+          "color": "#8b5cf6",
+          "textColor": "#FFFFFF",
+          "order": 1,
+          "items": [
+            {
+              "id": "item-v0-vercel",
+              "name": "v0 by Vercel",
+              "description": "最强AI UI生成，文本生成React组件，代码质量高",
+              "link": "https://v0.dev"
+            }
+          ]
+        },
+        {
+          "id": "tier-a",
+          "name": "顶级",
+          "color": "#3b82f6",
+          "textColor": "#FFFFFF",
+          "order": 2,
+          "items": [
+            {
+              "id": "item-uizard",
+              "name": "Uizard",
+              "description": "AI UI设计，草图转原型，快速迭代",
+              "link": "https://uizard.io"
+            },
+            {
+              "id": "item-galileo-ai",
+              "name": "Galileo AI",
+              "description": "AI UI生成，文本描述转设计稿",
+              "link": "https://www.usegalileo.ai"
+            },
+            {
+              "id": "item-figma-ai",
+              "name": "Figma AI",
+              "description": "Figma内置AI，设计辅助和自动化",
+              "link": "https://www.figma.com"
+            }
+          ]
+        },
+        {
+          "id": "tier-b",
+          "name": "优秀",
+          "color": "#10b981",
+          "textColor": "#FFFFFF",
+          "order": 3,
+          "items": [
+            {
+              "id": "item-locofy",
+              "name": "Locofy",
+              "description": "设计稿转代码，Figma/Adobe XD插件",
+              "link": "https://www.locofy.ai"
+            },
+            {
+              "id": "item-builder-io",
+              "name": "Builder.io",
+              "description": "可视化开发平台，AI辅助设计",
+              "link": "https://www.builder.io"
+            },
+            {
+              "id": "item-framer-ai",
+              "name": "Framer AI",
+              "description": "AI网站生成，无代码设计工具",
+              "link": "https://www.framer.com"
+            }
+          ]
+        },
+        {
+          "id": "tier-c",
+          "name": "实用",
+          "color": "#64748b",
+          "textColor": "#FFFFFF",
+          "order": 4,
+          "items": [
+            {
+              "id": "item-dora-ai",
+              "name": "Dora AI",
+              "description": "AI 3D网站生成，交互式设计",
+              "link": "https://www.dora.run"
+            }
+          ]
+        },
+        {
+          "id": "tier-d",
+          "name": "入门",
+          "color": "#475569",
+          "textColor": "#FFFFFF",
+          "order": 5,
+          "items": []
+        }
+      ]
+    },
+    {
+      "id": "board-translation",
+      "name": "AI翻译",
+      "description": "AI翻译和多语言处理工具排行",
+      "order": 9,
+      "tiers": [
+        {
+          "id": "tier-s",
+          "name": "神级",
+          "color": "#8b5cf6",
+          "textColor": "#FFFFFF",
+          "order": 1,
+          "items": []
+        },
+        {
+          "id": "tier-a",
+          "name": "顶级",
+          "color": "#3b82f6",
+          "textColor": "#FFFFFF",
+          "order": 2,
+          "items": [
+            {
+              "id": "item-deepl",
+              "name": "DeepL",
+              "description": "最强AI翻译，准确度高，语境理解好",
+              "link": "https://www.deepl.com"
+            },
+            {
+              "id": "item-google-translate-ai",
+              "name": "Google Translate AI",
+              "description": "Google翻译AI增强版，支持100+语言",
+              "link": "https://translate.google.com"
+            }
+          ]
+        },
+        {
+          "id": "tier-b",
+          "name": "优秀",
+          "color": "#10b981",
+          "textColor": "#FFFFFF",
+          "order": 3,
+          "items": [
+            {
+              "id": "item-papago",
+              "name": "Papago",
+              "description": "Naver AI翻译，亚洲语言优化",
+              "link": "https://papago.naver.com"
+            },
+            {
+              "id": "item-youdao",
+              "name": "有道翻译",
+              "description": "网易AI翻译，中英互译准确",
+              "link": "https://fanyi.youdao.com"
+            }
+          ]
+        },
+        {
+          "id": "tier-c",
+          "name": "实用",
+          "color": "#64748b",
+          "textColor": "#FFFFFF",
+          "order": 4,
+          "items": [
+            {
+              "id": "item-baidu-translate",
+              "name": "百度翻译",
+              "description": "百度AI翻译，多语言支持",
+              "link": "https://fanyi.baidu.com"
+            }
+          ]
+        },
+        {
+          "id": "tier-d",
+          "name": "入门",
+          "color": "#475569",
+          "textColor": "#FFFFFF",
+          "order": 5,
+          "items": []
+        }
+      ]
+    },
+    {
+      "id": "board-data-analysis",
+      "name": "AI数据分析",
+      "description": "AI数据分析和商业智能工具排行",
+      "order": 10,
+      "tiers": [
+        {
+          "id": "tier-s",
+          "name": "神级",
+          "color": "#8b5cf6",
+          "textColor": "#FFFFFF",
+          "order": 1,
+          "items": []
+        },
+        {
+          "id": "tier-a",
+          "name": "顶级",
+          "color": "#3b82f6",
+          "textColor": "#FFFFFF",
+          "order": 2,
+          "items": [
+            {
+              "id": "item-smartbi",
+              "name": "Smartbi AIChat",
+              "description": "企业级AI数据分析，自然语言查询",
+              "link": "https://www.smartbi.com.cn"
+            },
+            {
+              "id": "item-tableau-ai",
+              "name": "Tableau AI",
+              "description": "Salesforce AI数据可视化，智能洞察",
+              "link": "https://www.tableau.com"
+            }
+          ]
+        },
+        {
+          "id": "tier-b",
+          "name": "优秀",
+          "color": "#10b981",
+          "textColor": "#FFFFFF",
+          "order": 3,
+          "items": [
+            {
+              "id": "item-pandas-ai",
+              "name": "Pandas AI",
+              "description": "Python数据分析AI助手，自动生成代码",
+              "link": "https://pandas-ai.com"
+            },
+            {
+              "id": "item-julius-ai",
+              "name": "Julius AI",
+              "description": "AI数据分析师，自动生成图表和报告",
+              "link": "https://julius.ai"
+            }
+          ]
+        },
+        {
+          "id": "tier-c",
+          "name": "实用",
+          "color": "#64748b",
+          "textColor": "#FFFFFF",
+          "order": 4,
+          "items": [
+            {
+              "id": "item-akkio",
+              "name": "Akkio",
+              "description": "无代码AI数据分析，预测建模",
+              "link": "https://www.akkio.com"
+            }
+          ]
+        },
+        {
+          "id": "tier-d",
+          "name": "入门",
+          "color": "#475569",
+          "textColor": "#FFFFFF",
+          "order": 5,
+          "items": []
+        }
+      ]
+    },
+    {
+      "id": "board-3d",
+      "name": "AI 3D生成",
+      "description": "AI 3D模型生成工具排行",
+      "order": 11,
+      "tiers": [
+        {
+          "id": "tier-s",
+          "name": "神级",
+          "color": "#8b5cf6",
+          "textColor": "#FFFFFF",
+          "order": 1,
+          "items": []
+        },
+        {
+          "id": "tier-a",
+          "name": "顶级",
+          "color": "#3b82f6",
+          "textColor": "#FFFFFF",
+          "order": 2,
+          "items": [
+            {
+              "id": "item-meshy",
+              "name": "Meshy AI",
+              "description": "AI 3D模型生成，文本/图片转3D，游戏资产",
+              "link": "https://www.meshy.ai"
+            },
+            {
+              "id": "item-luma-3d",
+              "name": "Luma AI 3D",
+              "description": "AI 3D扫描和重建，手机拍照生成3D",
+              "link": "https://lumalabs.ai"
+            }
+          ]
+        },
+        {
+          "id": "tier-b",
+          "name": "优秀",
+          "color": "#10b981",
+          "textColor": "#FFFFFF",
+          "order": 3,
+          "items": [
+            {
+              "id": "item-spline-ai",
+              "name": "Spline AI",
+              "description": "AI 3D设计，文本生成3D场景",
+              "link": "https://spline.design"
+            },
+            {
+              "id": "item-kaedim",
+              "name": "Kaedim",
+              "description": "2D图片转3D模型，游戏开发工具",
+              "link": "https://www.kaedim3d.com"
+            }
+          ]
+        },
+        {
+          "id": "tier-c",
+          "name": "实用",
+          "color": "#64748b",
+          "textColor": "#FFFFFF",
+          "order": 4,
+          "items": [
+            {
+              "id": "item-masterpiece-studio",
+              "name": "Masterpiece Studio",
+              "description": "AI 3D角色生成，VR创作",
+              "link": "https://masterpiecestudio.com"
+            }
+          ]
+        },
+        {
+          "id": "tier-d",
+          "name": "入门",
+          "color": "#475569",
+          "textColor": "#FFFFFF",
+          "order": 5,
+          "items": []
+        }
+      ]
+    },
+    {
+      "id": "board-coding",
+      "name": "AI编程",
+      "description": "AI编程工具能力排行",
+      "order": 12,
+      "tiers": [
+        {
+          "id": "tier-s",
+          "name": "神级",
+          "color": "#8b5cf6",
+          "textColor": "#FFFFFF",
+          "order": 1,
+          "items": [
+            {
+              "id": "item-cursor",
+              "name": "Cursor",
+              "description": "AI驱动的代码编辑器，集成GPT-4，智能代码补全和重构",
+              "link": "https://cursor.sh"
+            },
+            {
+              "id": "item-github-copilot",
+              "name": "GitHub Copilot",
+              "description": "GitHub官方AI编程助手，基于OpenAI Codex，支持多种IDE",
+              "link": "https://github.com/features/copilot"
+            }
+          ]
+        },
+        {
+          "id": "tier-a",
+          "name": "顶级",
+          "color": "#3b82f6",
+          "textColor": "#FFFFFF",
+          "order": 2,
+          "items": [
+            {
+              "id": "item-codeium",
+              "name": "Codeium",
+              "description": "免费AI代码补全工具，支持70+编程语言",
+              "link": "https://codeium.com"
+            },
+            {
+              "id": "item-tabnine",
+              "name": "Tabnine",
+              "description": "AI代码补全工具，支持本地部署和隐私保护",
+              "link": "https://www.tabnine.com"
+            },
+            {
+              "id": "item-replit-ai",
+              "name": "Replit AI",
+              "description": "在线IDE集成AI助手，支持实时协作编程",
+              "link": "https://replit.com"
+            }
+          ]
+        },
+        {
+          "id": "tier-b",
+          "name": "优秀",
+          "color": "#10b981",
+          "textColor": "#FFFFFF",
+          "order": 3,
+          "items": [
+            {
+              "id": "item-cody",
+              "name": "Cody",
+              "description": "Sourcegraph AI编程助手，理解整个代码库",
+              "link": "https://sourcegraph.com/cody"
+            },
+            {
+              "id": "item-amazon-codewhisperer",
+              "name": "Amazon CodeWhisperer",
+              "description": "AWS AI代码生成器，针对AWS服务优化",
+              "link": "https://aws.amazon.com/codewhisperer"
+            }
+          ]
+        },
+        {
+          "id": "tier-c",
+          "name": "实用",
+          "color": "#64748b",
+          "textColor": "#FFFFFF",
+          "order": 4,
+          "items": [
+            {
+              "id": "item-aider",
+              "name": "Aider",
+              "description": "命令行AI编程工具，支持GPT-4",
+              "link": "https://aider.chat"
+            }
+          ]
+        },
+        {
+          "id": "tier-d",
+          "name": "入门",
+          "color": "#475569",
+          "textColor": "#FFFFFF",
+          "order": 5,
+          "items": []
+        }
+      ]
+    },
+    {
+      "id": "board-image-gen",
+      "name": "AI生图",
+      "description": "AI图像生成工具排行",
+      "order": 13,
+      "tiers": [
+        {
+          "id": "tier-s",
+          "name": "神级",
+          "color": "#8b5cf6",
+          "textColor": "#FFFFFF",
+          "order": 1,
+          "items": [
+            {
+              "id": "item-midjourney-img",
+              "name": "Midjourney",
+              "description": "最强AI绘画工具，艺术风格多样，画质顶级，2025年持续领先",
+              "link": "https://midjourney.com"
+            }
+          ]
+        },
+        {
+          "id": "tier-a",
+          "name": "顶级",
+          "color": "#3b82f6",
+          "textColor": "#FFFFFF",
+          "order": 2,
+          "items": [
+            {
+              "id": "item-dalle3",
+              "name": "DALL·E 3",
+              "description": "OpenAI图像生成模型，理解复杂提示词，生成精准",
+              "link": "https://openai.com/dall-e-3"
+            },
+            {
+              "id": "item-stable-diffusion",
+              "name": "Stable Diffusion",
+              "description": "开源AI绘画模型，可本地部署，社区活跃",
+              "link": "https://stability.ai"
+            },
+            {
+              "id": "item-leonardo-ai",
+              "name": "Leonardo.AI",
+              "description": "游戏资产和概念艺术生成，风格控制强",
+              "link": "https://leonardo.ai"
+            }
+          ]
+        },
+        {
+          "id": "tier-b",
+          "name": "优秀",
+          "color": "#10b981",
+          "textColor": "#FFFFFF",
+          "order": 3,
+          "items": [
+            {
+              "id": "item-adobe-firefly",
+              "name": "Adobe Firefly",
+              "description": "Adobe AI图像生成，商用安全，集成Creative Cloud",
+              "link": "https://firefly.adobe.com"
+            },
+            {
+              "id": "item-ideogram",
+              "name": "Ideogram",
+              "description": "AI图像生成，文字渲染准确，适合海报设计",
+              "link": "https://ideogram.ai"
+            }
+          ]
+        },
+        {
+          "id": "tier-c",
+          "name": "实用",
+          "color": "#64748b",
+          "textColor": "#FFFFFF",
+          "order": 4,
+          "items": [
+            {
+              "id": "item-canva-ai",
+              "name": "Canva AI",
+              "description": "Canva内置AI图像生成，设计模板丰富",
+              "link": "https://www.canva.com"
+            }
+          ]
+        },
+        {
+          "id": "tier-d",
+          "name": "入门",
+          "color": "#475569",
+          "textColor": "#FFFFFF",
+          "order": 5,
+          "items": []
+        }
+      ]
+    },
+    {
+      "id": "board-video-gen",
+      "name": "AI视频",
+      "description": "AI视频生成工具排行",
+      "order": 14,
+      "tiers": [
+        {
+          "id": "tier-s",
+          "name": "神级",
+          "color": "#8b5cf6",
+          "textColor": "#FFFFFF",
+          "order": 1,
+          "items": [
+            {
+              "id": "item-sora-video",
+              "name": "Sora",
+              "description": "OpenAI视频生成模型，最长60秒，质量顶级",
+              "link": "https://openai.com/sora"
+            }
+          ]
+        },
+        {
+          "id": "tier-a",
+          "name": "顶级",
+          "color": "#3b82f6",
+          "textColor": "#FFFFFF",
+          "order": 2,
+          "items": [
+            {
+              "id": "item-runway-gen3",
+              "name": "Runway Gen-3",
+              "description": "专业级AI视频生成，支持文生视频和图生视频",
+              "link": "https://runwayml.com"
+            },
+            {
+              "id": "item-pika",
+              "name": "Pika",
+              "description": "AI视频生成平台，支持3D动画和特效",
+              "link": "https://pika.art"
+            },
+            {
+              "id": "item-luma-dream",
+              "name": "Luma Dream Machine",
+              "description": "AI视频生成，物理模拟真实，电影级画质",
+              "link": "https://lumalabs.ai"
+            }
+          ]
+        },
+        {
+          "id": "tier-b",
+          "name": "优秀",
+          "color": "#10b981",
+          "textColor": "#FFFFFF",
+          "order": 3,
+          "items": [
+            {
+              "id": "item-kling",
+              "name": "Kling AI",
+              "description": "快手AI视频生成，中文优化，效果出色",
+              "link": "https://kling.kuaishou.com"
+            },
+            {
+              "id": "item-veo",
+              "name": "Google Veo",
+              "description": "Google AI视频生成，多模态理解强",
+              "link": "https://deepmind.google/technologies/veo"
+            }
+          ]
+        },
+        {
+          "id": "tier-c",
+          "name": "实用",
+          "color": "#64748b",
+          "textColor": "#FFFFFF",
+          "order": 4,
+          "items": [
+            {
+              "id": "item-invideo-ai",
+              "name": "InVideo AI",
+              "description": "AI视频编辑，快速生成营销视频",
+              "link": "https://invideo.io"
+            }
+          ]
+        },
+        {
+          "id": "tier-d",
+          "name": "入门",
+          "color": "#475569",
+          "textColor": "#FFFFFF",
+          "order": 5,
+          "items": []
+        }
+      ]
+    },
+    {
+      "id": "board-writing",
+      "name": "AI写作",
+      "description": "AI写作辅助工具排行",
+      "order": 15,
+      "tiers": [
+        {
+          "id": "tier-s",
+          "name": "神级",
+          "color": "#8b5cf6",
+          "textColor": "#FFFFFF",
+          "order": 1,
+          "items": []
+        },
+        {
+          "id": "tier-a",
+          "name": "顶级",
+          "color": "#3b82f6",
+          "textColor": "#FFFFFF",
+          "order": 2,
+          "items": [
+            {
+              "id": "item-chatgpt-writing",
+              "name": "ChatGPT",
+              "description": "最强AI写作助手，支持各类文体和语言",
+              "link": "https://chat.openai.com"
+            },
+            {
+              "id": "item-jasper",
+              "name": "Jasper",
+              "description": "营销文案AI，支持SEO优化和品牌语调",
+              "link": "https://www.jasper.ai"
+            },
+            {
+              "id": "item-copy-ai",
+              "name": "Copy.ai",
+              "description": "AI文案生成，营销内容创作专家",
+              "link": "https://www.copy.ai"
+            }
+          ]
+        },
+        {
+          "id": "tier-b",
+          "name": "优秀",
+          "color": "#10b981",
+          "textColor": "#FFFFFF",
+          "order": 3,
+          "items": [
+            {
+              "id": "item-writesonic",
+              "name": "Writesonic",
+              "description": "AI写作平台，支持博客、广告、邮件等",
+              "link": "https://writesonic.com"
+            },
+            {
+              "id": "item-grammarly",
+              "name": "Grammarly AI",
+              "description": "AI语法检查和写作优化，英文写作必备",
+              "link": "https://www.grammarly.com"
+            }
+          ]
+        },
+        {
+          "id": "tier-c",
+          "name": "实用",
+          "color": "#64748b",
+          "textColor": "#FFFFFF",
+          "order": 4,
+          "items": [
+            {
+              "id": "item-rytr",
+              "name": "Rytr",
+              "description": "AI写作助手，性价比高，适合个人用户",
+              "link": "https://rytr.me"
+            }
+          ]
+        },
+        {
+          "id": "tier-d",
+          "name": "入门",
+          "color": "#475569",
+          "textColor": "#FFFFFF",
+          "order": 5,
+          "items": []
+        }
+      ]
+    }
+  ],
+  "lastUpdated": "2025-12-28T09:27:32.646Z"
+}
