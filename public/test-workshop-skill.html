@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workshop Skill Tab Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #0f1228;
+            color: #fff;
+        }
+        h1 {
+            color: #60a5fa;
+        }
+        .test-section {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .test-result {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .success {
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid #22c55e;
+        }
+        .error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid #ef4444;
+        }
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+        }
+        button:hover {
+            background: #2563eb;
+        }
+        pre {
+            background: #0f1228;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .workshop-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .workshop-card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 8px;
+        }
+        .workshop-card-description {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 10px;
+        }
+        .workshop-card-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .workshop-tag {
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Workshop Skill Tab Test</h1>
+    
+    <div class="test-section">
+        <h2>1. Test Skill Proxy API</h2>
+        <button onclick="testSkillProxy()">Test /api/skill-proxy/skills</button>
+        <div id="proxy-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>2. Test Workshop Data Loading</h2>
+        <button onclick="testWorkshopData()">Load Workshop Data</button>
+        <div id="workshop-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>3. Test Skill Items Rendering</h2>
+        <button onclick="testSkillRendering()">Render Skill Items</button>
+        <div id="render-result"></div>
+        <div id="skill-cards-container"></div>
+    </div>
+
+    <script>
+        let workshopData = null;
+
+        // Test 1: Skill Proxy API
+        async function testSkillProxy() {
+            const resultDiv = document.getElementById('proxy-result');
+            resultDiv.innerHTML = '<p>Testing...</p>';
+            
+            try {
+                console.log('Testing skill proxy API...');
+                const response = await fetch('/api/skill-proxy/skills?limit=8');
+                console.log('Proxy response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                const skills = data.data?.skills || data.skills || [];
+                
+                console.log(`Proxy returned ${skills.length} skills`);
+                
+                resultDiv.innerHTML = `
+                    <div class="test-result success">
+                        <strong>✓ Skill Proxy API Working</strong><br>
+                        Status: ${response.status}<br>
+                        Skills Count: ${skills.length}<br>
+                        <details>
+                            <summary>View Response (first 2 skills)</summary>
+                            <pre>${JSON.stringify(skills.slice(0, 2), null, 2)}</pre>
+                        </details>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Proxy test failed:', error);
+                resultDiv.innerHTML = `
+                    <div class="test-result error">
+                        <strong>✗ Skill Proxy API Failed</strong><br>
+                        Error: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        // Test 2: Workshop Data Loading
+        async function testWorkshopData() {
+            const resultDiv = document.getElementById('workshop-result');
+            resultDiv.innerHTML = '<p>Loading...</p>';
+            
+            try {
+                console.log('Loading workshop data...');
+                
+                // Load workshop.json
+                const response = await fetch('/api/workshop');
+                if (!response.ok) throw new Error('Failed to fetch workshop data');
+                workshopData = await response.json();
+                console.log('Workshop data loaded:', workshopData);
+
+                // Load skill data
+                const skillResponse = await fetch('/api/skill-proxy/skills?limit=8');
+                if (skillResponse.ok) {
+                    const skillData = await skillResponse.json();
+                    console.log('Skill data loaded:', skillData);
+
+                    const skills = skillData.data?.skills || skillData.skills || [];
+                    console.log(`Extracted ${skills.length} skills`);
+
+                    if (skills.length > 0) {
+                        const skillItems = skills.map(skill => ({
+                            id: skill.id || skill.name,
+                            title: skill.name,
+                            description: skill.description || '',
+                            tags: skill.tags || [],
+                            category: 'skill',
+                            fileName: skill.filename || '',
+                            systemPrompt: skill.system_prompt || ''
+                        }));
+
+                        if (!workshopData.itemsByCategory) {
+                            workshopData.itemsByCategory = {};
+                        }
+
+                        workshopData.itemsByCategory.skill = {
+                            name: 'Skill 组件库',
+                            items: skillItems
+                        };
+
+                        console.log(`Added ${skillItems.length} skill items to workshopData`);
+                    }
+                }
+
+                const skillCount = workshopData.itemsByCategory?.skill?.items?.length || 0;
+                
+                resultDiv.innerHTML = `
+                    <div class="test-result success">
+                        <strong>✓ Workshop Data Loaded Successfully</strong><br>
+                        Skill Items: ${skillCount}<br>
+                        <details>
+                            <summary>View Workshop Data Structure</summary>
+                            <pre>${JSON.stringify({
+                                categories: workshopData.categories,
+                                skillItemsCount: skillCount,
+                                hasSkillCategory: !!workshopData.itemsByCategory?.skill
+                            }, null, 2)}</pre>
+                        </details>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Workshop data loading failed:', error);
+                resultDiv.innerHTML = `
+                    <div class="test-result error">
+                        <strong>✗ Workshop Data Loading Failed</strong><br>
+                        Error: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        // Test 3: Skill Items Rendering
+        function testSkillRendering() {
+            const resultDiv = document.getElementById('render-result');
+            const cardsContainer = document.getElementById('skill-cards-container');
+            
+            if (!workshopData) {
+                resultDiv.innerHTML = `
+                    <div class="test-result error">
+                        <strong>✗ No Workshop Data</strong><br>
+                        Please run Test 2 first to load workshop data
+                    </div>
+                `;
+                return;
+            }
+
+            const skillData = workshopData.itemsByCategory?.skill;
+            if (!skillData || !skillData.items || skillData.items.length === 0) {
+                resultDiv.innerHTML = `
+                    <div class="test-result error">
+                        <strong>✗ No Skill Items Found</strong><br>
+                        Workshop data loaded but no skill items available
+                    </div>
+                `;
+                return;
+            }
+
+            const items = skillData.items;
+            console.log(`Rendering ${items.length} skill items`);
+
+            cardsContainer.innerHTML = items.map(item => `
+                <div class="workshop-card">
+                    <h3 class="workshop-card-title">${escapeHtml(item.title)}</h3>
+                    <p class="workshop-card-description">${escapeHtml(item.description || '')}</p>
+                    <div class="workshop-card-tags">
+                        ${(item.tags || []).map(tag => `<span class="workshop-tag">${escapeHtml(tag)}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            resultDiv.innerHTML = `
+                <div class="test-result success">
+                    <strong>✓ Skill Items Rendered Successfully</strong><br>
+                    Rendered: ${items.length} cards
+                </div>
+            `;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Auto-run tests on load
+        window.addEventListener('load', () => {
+            console.log('Test page loaded');
+            console.log('Click the buttons above to run tests in order');
+        });
+    </script>
+</body>
+</html>

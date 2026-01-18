@@ -1,0 +1,2205 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aethrix | 以太夜 - AI 工具导航与自建生态">
+    <meta name="keywords" content="AI工具,AI导航,人工智能,工具集合,以太夜,Aethrix">
+    <title>Aethrix | 以太夜</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="alternate icon" href="/favicon.ico">
+
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Aethrix">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css?v=2026011415">
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+    <!-- Firebase Modules -->
+    <script src="js/firebase/firebaseConfig.js"></script>
+    <script src="js/firebase/authStateManager.js"></script>
+    <script src="js/firebase/roleManager.js"></script>
+
+    <!-- Theme Initialization (runs immediately to prevent flash) -->
+    <script>
+        (function () {
+            var savedTheme = localStorage.getItem('hero-theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+    <!-- Theme Manager button binding moved to body end -->
+
+    <!-- Hero Button Styles - Applied via JS to bypass cache -->
+    <script>
+        (function () {
+            function applyHeroButtonStyles() {
+                var theme = document.documentElement.getAttribute('data-theme') || 'dark';
+                var primaryBtn = document.getElementById('hero-btn-portfolio');
+                var secondaryBtn = document.getElementById('hero-btn-tools');
+
+                if (!primaryBtn || !secondaryBtn) return;
+
+                // Clear previous event handlers
+                primaryBtn.onmouseenter = null;
+                primaryBtn.onmouseleave = null;
+                secondaryBtn.onmouseenter = null;
+                secondaryBtn.onmouseleave = null;
+
+                if (theme === 'dark') {
+                    // Dark mode: Apply teal styles
+                    // Primary: Solid teal background + dark text (NO hover change)
+                    primaryBtn.style.cssText = 'background: linear-gradient(135deg, #2dd4bf 0%, #14b8a6 100%) !important; color: #0a1628 !important; border: none !important; border-radius: 50px !important; font-weight: 600 !important; box-shadow: 0 0 20px rgba(45, 212, 191, 0.4) !important; transition: all 0.3s ease !important;';
+
+                    // Secondary: Transparent + teal border (hover changes to solid teal)
+                    secondaryBtn.style.cssText = 'background: transparent !important; color: #2dd4bf !important; border: 2px solid #2dd4bf !important; border-radius: 50px !important; font-weight: 500 !important; box-shadow: 0 0 15px rgba(45, 212, 191, 0.2) !important; transition: all 0.3s ease !important;';
+
+                    // Only secondary button gets hover effect
+                    secondaryBtn.onmouseenter = function () {
+                        this.style.background = 'linear-gradient(135deg, #2dd4bf 0%, #14b8a6 100%)';
+                        this.style.color = '#0a1628';
+                        this.style.border = 'none';
+                        this.style.boxShadow = '0 0 25px rgba(45, 212, 191, 0.5)';
+                        this.style.transform = 'translateY(-2px)';
+                    };
+                    secondaryBtn.onmouseleave = function () {
+                        this.style.background = 'transparent';
+                        this.style.color = '#2dd4bf';
+                        this.style.border = '2px solid #2dd4bf';
+                        this.style.boxShadow = '0 0 15px rgba(45, 212, 191, 0.2)';
+                        this.style.transform = 'translateY(0)';
+                    };
+
+                    // Also reduce title brightness in dark mode
+                    var heroTitle = document.getElementById('hero-title');
+                    if (heroTitle) {
+                        heroTitle.style.cssText = 'color: rgba(255, 255, 255, 0.85) !important; text-shadow: 0 0 30px rgba(255, 255, 255, 0.15) !important;';
+                    }
+                } else {
+                    // Light mode: Clear all inline styles so original CSS applies
+                    primaryBtn.style.cssText = '';
+                    secondaryBtn.style.cssText = '';
+                    var heroTitle = document.getElementById('hero-title');
+                    if (heroTitle) {
+                        heroTitle.style.cssText = '';
+                    }
+                }
+            }
+
+            // Apply on DOM ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', applyHeroButtonStyles);
+            } else {
+                applyHeroButtonStyles();
+            }
+
+            // Also observe theme changes
+            var observer = new MutationObserver(function (mutations) {
+                mutations.forEach(function (m) {
+                    if (m.attributeName === 'data-theme') {
+                        applyHeroButtonStyles();
+                    }
+                });
+            });
+            observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+        })();
+    </script>
+
+</head>
+
+<body data-theme="dark">
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="sr-only skip-link">跳转到主要内容</a>
+
+    <!-- Live Region for Screen Reader Announcements -->
+    <div id="aria-live-region" class="aria-live-region" aria-live="polite" aria-atomic="true"></div>
+
+    <!-- Site Header -->
+    <header class="site-header" role="banner">
+        <nav class="main-navigation" role="navigation" aria-label="主导航">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <a href="/" class="brand-link" aria-label="返回首页">
+                        <span class="brand-text">Aethrix | 以太夜</span>
+                    </a>
+                </div>
+
+                <div class="nav-menu" id="nav-menu">
+                    <ul class="nav-list" role="menubar">
+                        <li class="nav-item" role="none">
+                            <a href="#portfolio" class="nav-link" role="menuitem">作品集</a>
+                        </li>
+                        <li class="nav-item" role="none">
+                            <a href="#services" class="nav-link" role="menuitem">服务</a>
+                        </li>
+                        <li class="nav-item" role="none">
+                            <a href="#about" class="nav-link" role="menuitem">关于</a>
+                        </li>
+
+                        <li class="nav-item" role="none">
+                            <a href="#" class="nav-link nav-link--primary" role="menuitem"
+                                onclick="checkLoginAndGo(event)">AI 工具</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Announcement Marquee -->
+                <div class="announcement-marquee" id="announcement-marquee">
+                    <div class="marquee-content" id="marquee-content">
+                        <span class="marquee-text">欢迎访问 Aethrix | 以太夜</span>
+                    </div>
+                </div>
+
+                <!-- Auth Buttons / User Avatar -->
+                <div class="nav-auth" id="nav-auth">
+                    <!-- Pause Toggle Button -->
+                    <button class="nav-control-btn" id="nav-pause-toggle" aria-label="暂停动画" title="暂停/播放动画"
+                        type="button">
+                        <svg class="nav-control-icon nav-control-icon--pause" viewBox="0 0 24 24" fill="currentColor"
+                            aria-hidden="true">
+                            <rect x="6" y="4" width="4" height="16" />
+                            <rect x="14" y="4" width="4" height="16" />
+                        </svg>
+                        <svg class="nav-control-icon nav-control-icon--play" viewBox="0 0 24 24" fill="currentColor"
+                            aria-hidden="true" style="display:none;">
+                            <polygon points="5,3 19,12 5,21" />
+                        </svg>
+                    </button>
+                    <!-- Admin Panel Button (仅管理员可见) -->
+                    <button class="nav-control-btn" id="nav-admin-btn" aria-label="管理员后台" title="进入管理员后台" type="button"
+                        style="visibility: hidden;" onclick="window.location.href='/admin.html'">
+                        <svg class="nav-control-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" aria-hidden="true">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                            <path d="M2 17l10 5 10-5" />
+                            <path d="M2 12l10 5 10-5" />
+                        </svg>
+                    </button>
+                    <!-- Theme Toggle Button -->
+                    <button class="nav-control-btn" id="nav-theme-toggle" aria-label="切换主题" title="切换白天/夜晚模式"
+                        type="button">
+                        <svg class="nav-control-icon nav-control-icon--sun" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <circle cx="12" cy="12" r="5" />
+                            <line x1="12" y1="1" x2="12" y2="3" />
+                            <line x1="12" y1="21" x2="12" y2="23" />
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                            <line x1="1" y1="12" x2="3" y2="12" />
+                            <line x1="21" y1="12" x2="23" y2="12" />
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                        </svg>
+                        <svg class="nav-control-icon nav-control-icon--moon" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                        </svg>
+                    </button>
+                    <a href="auth.html" class="btn btn--outline btn--sm" id="login-btn" style="display: none;">登录</a>
+                    <a href="auth.html?tab=register" class="btn btn--primary btn--sm" id="register-btn"
+                        style="display: none;">注册</a>
+                    <div class="user-avatar" id="user-avatar" style="display: none;" onclick="toggleProfilePopup()">
+                        <span class="avatar-text" id="avatar-text"></span>
+                    </div>
+                </div>
+
+                <button class="nav-toggle" id="nav-toggle" aria-label="切换导航菜单" aria-expanded="false"
+                    aria-controls="nav-menu">
+                    <span class="nav-toggle-line" aria-hidden="true"></span>
+                    <span class="nav-toggle-line" aria-hidden="true"></span>
+                    <span class="nav-toggle-line" aria-hidden="true"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="site-main" id="main-content" role="main">
+        <!-- Hero Section -->
+        <section class="hero-section" id="hero" aria-labelledby="hero-title" role="region" aria-label="首页横幅">
+            <!-- Particle Canvas Background -->
+            <canvas id="hero-particles-canvas" class="hero-particles-canvas" aria-hidden="true"
+                role="presentation"></canvas>
+
+            <!-- Hero Content -->
+            <div class="hero-content" id="hero-content">
+                <h1 class="hero-title" id="hero-title" data-text="Aethrix | 以太夜">
+                    <span class="hero-title-text">Aethrix | 以太夜</span>
+                </h1>
+                <p class="hero-subtitle" id="hero-subtitle" aria-describedby="hero-title">
+                    <span class="hero-subtitle-text">以太夜漫漫，粒子生生不息</span>
+                </p>
+                <div class="hero-actions" id="hero-actions" role="group" aria-label="主要操作">
+                    <a href="#portfolio" class="btn btn--primary hero-btn hero-btn--primary" id="hero-btn-portfolio"
+                        role="button" aria-label="查看作品集">查看作品</a>
+                    <a href="#" class="btn btn--secondary hero-btn hero-btn--secondary" id="hero-btn-tools"
+                        onclick="checkLoginAndGo(event)" role="button" aria-label="探索 AI 工具导航">探索 AI 工具</a>
+                </div>
+
+                <!-- Cute Robot Mascot moved to fixed position at bottom of body -->
+            </div>
+            <div class="scroll-indicator" aria-hidden="true" role="presentation">
+                <div class="scroll-line"></div>
+                <span class="scroll-text">向下滚动</span>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section class="portfolio-section" id="portfolio" aria-labelledby="portfolio-title">
+            <div class="container">
+                <header class="section-header">
+                    <h2 class="section-title" id="portfolio-title">精选作品</h2>
+                    <p class="section-subtitle">展示最新的创意项目和技术实现</p>
+                </header>
+
+                <!-- Portfolio Filter -->
+                <div class="portfolio-filter" role="tablist" aria-label="作品分类筛选">
+                    <button class="filter-btn filter-btn--active" data-filter="all" role="tab" aria-selected="true">
+                        全部
+                    </button>
+                    <button class="filter-btn" data-filter="ai-tools" role="tab" aria-selected="false">
+                        AI 工具
+                    </button>
+                    <button class="filter-btn" data-filter="web-design" role="tab" aria-selected="false">
+                        网页设计
+                    </button>
+                    <button class="filter-btn" data-filter="branding" role="tab" aria-selected="false">
+                        品牌设计
+                    </button>
+                </div>
+
+                <!-- Portfolio Grid -->
+                <div class="portfolio-grid" id="portfolio-grid" role="tabpanel" aria-label="作品列表">
+                    <!-- Portfolio items will be loaded dynamically from settings.json -->
+                    <p class="loading-text">加载中...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services-section" id="services" aria-labelledby="services-title">
+            <div class="container">
+                <header class="section-header">
+                    <h2 class="section-title" id="services-title">专业服务</h2>
+                    <p class="section-subtitle">提供全方位的数字化解决方案</p>
+                </header>
+
+                <div class="services-grid">
+                    <article class="service-card fade-in">
+                        <div class="service-icon" aria-hidden="true">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <h3 class="service-title">AI 工具开发</h3>
+                        <p class="service-description">定制化 AI 工具开发，包括文本生成、图像处理、数据分析等功能模块</p>
+                    </article>
+
+                    <article class="service-card fade-in">
+                        <div class="service-icon" aria-hidden="true">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                                <line x1="8" y1="21" x2="16" y2="21" />
+                                <line x1="12" y1="17" x2="12" y2="21" />
+                            </svg>
+                        </div>
+                        <h3 class="service-title">网站设计开发</h3>
+                        <p class="service-description">现代化响应式网站设计与开发，注重性能优化和用户体验</p>
+                    </article>
+
+                    <article class="service-card fade-in">
+                        <div class="service-icon" aria-hidden="true">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <circle cx="12" cy="12" r="3" />
+                                <path
+                                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                            </svg>
+                        </div>
+                        <h3 class="service-title">系统集成</h3>
+                        <p class="service-description">企业级系统集成服务，提供完整的数字化转型解决方案</p>
+                    </article>
+
+                    <article class="service-card fade-in">
+                        <div class="service-icon" aria-hidden="true">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <path
+                                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                            </svg>
+                        </div>
+                        <h3 class="service-title">品牌设计</h3>
+                        <p class="service-description">专业的品牌视觉识别设计，打造独特的品牌形象和用户体验</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about-section" id="about" aria-labelledby="about-title">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <header class="section-header">
+                            <h2 class="section-title" id="about-title">关于我们</h2>
+                            <p class="section-subtitle">专注创新与品质的设计团队</p>
+                        </header>
+
+                        <div class="about-description">
+                            <p>我们是一支专注于现代化数字体验的创意团队，致力于将最新的 AI 技术与优秀的设计理念相结合，为客户提供创新的解决方案。</p>
+
+                            <p>从概念到实现，我们关注每一个细节，确保每个项目都能达到最高的品质标准。我们相信好的设计不仅要美观，更要实用和有意义。</p>
+                        </div>
+
+                        <div class="about-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">50+</div>
+                                <div class="stat-label">完成项目</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">3年</div>
+                                <div class="stat-label">行业经验</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">100%</div>
+                                <div class="stat-label">客户满意度</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="about-image">
+                        <img id="about-section-image"
+                            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='400' viewBox='0 0 500 400'%3E%3Crect width='500' height='400' fill='%23f5f5f5'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Inter, sans-serif' font-size='18' fill='%23666'%3E团队工作场景%3C/text%3E%3C/svg%3E"
+                            alt="创意工作室团队工作场景" loading="lazy" width="500" height="400" style="object-fit: cover;">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+    </main>
+
+    <!-- Bookmark Toast Modal -->
+    <div class="bookmark-toast" id="bookmark-toast">
+        <p class="bookmark-toast-text">请按 <kbd>Ctrl+D</kbd> 收藏本站，谢谢您的支持！</p>
+    </div>
+
+    <!-- Site Footer -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3 class="footer-title" id="footer-site-name">Aethrix | 以太夜</h3>
+                    <p class="footer-description" id="footer-slogan">以太夜漫漫，粒子生生不息</p>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4 class="footer-column-title">服务</h4>
+                        <ul class="footer-list" id="footer-services-list">
+                            <!-- 动态加载服务列表 -->
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4 class="footer-column-title">资源</h4>
+                        <ul class="footer-list" id="footer-resources-list">
+                            <!-- 动态加载资源列表 -->
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4 class="footer-column-title">联系</h4>
+                        <ul class="footer-list" id="footer-contact-list">
+                            <!-- 动态加载联系信息 -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="footer-copyright" id="footer-copyright-text">
+                    © 2025 Aethrix | 以太夜. 保留所有权利.
+                </p>
+                <div class="footer-social">
+                    <button class="social-link" aria-label="回到顶部"
+                        onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" aria-hidden="true">
+                            <path d="M12 19V5M5 12l7-7 7 7" />
+                        </svg>
+                    </button>
+                    <button class="social-link bookmark-btn" aria-label="收藏本站" onclick="handleSiteBookmark()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z" />
+                        </svg>
+                        <span class="bookmark-count" id="site-bookmark-count">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Background Mode Switcher (Optional) -->
+    <div class="bg-mode-switcher" id="bg-mode-switcher" style="display: none;">
+        <button class="bg-mode-btn active" data-mode="energy" onclick="switchBgMode('energy')">能量流</button>
+        <button class="bg-mode-btn" data-mode="snow" onclick="switchBgMode('snow')">下雪</button>
+        <button class="bg-mode-btn" data-mode="stars" onclick="switchBgMode('stars')">星空</button>
+    </div>
+
+    <script>
+        // Background mode switcher
+        function switchBgMode(mode) {
+            if (window.setBackgroundMode) {
+                window.setBackgroundMode(mode);
+            }
+            // Update active button
+            document.querySelectorAll('.bg-mode-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.mode === mode);
+            });
+        }
+
+        // Toggle switcher visibility (press 'B' key)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'b' || e.key === 'B') {
+                const switcher = document.getElementById('bg-mode-switcher');
+                if (switcher) {
+                    switcher.style.display = switcher.style.display === 'none' ? 'flex' : 'none';
+                }
+            }
+        });
+    </script>
+
+    <!-- JavaScript -->
+    <script src="main.js?v=2026011406"></script>
+
+    <!-- Ensure cursor effect is initialized -->
+    <script>
+        // Force cursor initialization after main.js loads
+        window.addEventListener('load', function () {
+            // Check if cursor already exists
+            if (!document.querySelector('.cursor-dot')) {
+                // Manually create cursor if not initialized
+                if (typeof window.CustomCursorModule !== 'undefined') {
+                    // Only initialize on desktop with fine pointer
+                    if (!window.matchMedia('(max-width: 767px)').matches &&
+                        !window.matchMedia('(pointer: coarse)').matches) {
+                        new window.CustomCursorModule();
+                    }
+                }
+            }
+        });
+    </script>
+
+    <!-- User Profile Script -->
+    <script>
+        let userProfile = null;
+        let isPasswordVisible = false;
+
+        // Quick initial auth check using stored state (prevents flash)
+        // 支持 Firebase 登录和 GitHub OAuth 直接登录两种方式
+        (function quickAuthCheck() {
+            const loginBtn = document.getElementById('login-btn');
+            const registerBtn = document.getElementById('register-btn');
+            const userAvatar = document.getElementById('user-avatar');
+            const avatarText = document.getElementById('avatar-text');
+
+            // Check localStorage for stored auth state (Firebase or GitHub OAuth)
+            try {
+                let authState = null;
+                let authType = null;
+
+                // 优先检查 Firebase 认证
+                const storedAuth = localStorage.getItem('firebase_auth_state');
+                if (storedAuth) {
+                    authState = JSON.parse(storedAuth);
+                    authType = 'firebase';
+                }
+
+                // 如果没有 Firebase 认证，检查 GitHub OAuth 认证
+                if (!authState) {
+                    const githubAuth = localStorage.getItem('github_auth_state');
+                    if (githubAuth) {
+                        authState = JSON.parse(githubAuth);
+                        authType = 'github';
+                    }
+                }
+
+                if (authState && authState.uid) {
+                    // 检查是否过期（1小时）
+                    const tokenAge = Date.now() - (authState.timestamp || 0);
+                    if (tokenAge < 60 * 60 * 1000) {
+                        // User was logged in - show avatar immediately
+                        if (loginBtn) loginBtn.style.display = 'none';
+                        if (registerBtn) registerBtn.style.display = 'none';
+                        if (userAvatar) {
+                            userAvatar.style.display = 'flex';
+                            const displayText = authState.displayName
+                                ? authState.displayName.charAt(0).toUpperCase()
+                                : (authState.email ? authState.email.charAt(0).toUpperCase() : 'U');
+                            if (avatarText) avatarText.textContent = displayText;
+                        }
+
+                        // 🔥 早期检查管理员状态，立即显示管理员按钮
+                        const cachedAdminStatus = localStorage.getItem('isAdmin');
+                        if (cachedAdminStatus === 'true') {
+                            const navAdminBtn = document.getElementById('nav-admin-btn');
+                            if (navAdminBtn) {
+                                navAdminBtn.style.visibility = 'visible';
+                                navAdminBtn.style.display = 'flex';
+                                console.log('✅ 管理员按钮已显示（quickAuthCheck缓存）');
+                            }
+                        }
+
+                        // Also populate userProfile from stored state for profile popup
+                        userProfile = {
+                            uid: authState.uid,
+                            email: authState.email,
+                            nickname: authState.displayName || (authState.email ? authState.email.split('@')[0] : 'User'),
+                            displayName: authState.displayName,
+                            photoURL: authState.photoURL,
+                            emailVerified: authState.emailVerified,
+                            isAdmin: false, // Will be updated by checkUserStatus
+                            provider: authType
+                        };
+
+                        // 保存认证类型供后续使用
+                        window._authType = authType;
+
+                        return; // Don't show login buttons
+                    }
+                }
+            } catch (e) {
+                console.log('Quick auth check failed:', e);
+            }
+
+            // No stored auth - show login/register buttons
+            if (loginBtn) loginBtn.style.display = 'inline-flex';
+            if (registerBtn) registerBtn.style.display = 'inline-flex';
+        })();
+
+        // Check user login status and update UI
+        async function checkUserStatus() {
+            try {
+                const loginBtn = document.getElementById('login-btn');
+                const registerBtn = document.getElementById('register-btn');
+                const userAvatar = document.getElementById('user-avatar');
+                const avatarText = document.getElementById('avatar-text');
+
+                // 首先检查 GitHub OAuth 登录状态
+                let githubAuth = null;
+                try {
+                    const githubAuthStr = localStorage.getItem('github_auth_state');
+                    if (githubAuthStr) {
+                        githubAuth = JSON.parse(githubAuthStr);
+                        const tokenAge = Date.now() - (githubAuth.timestamp || 0);
+                        // 检查是否过期（1小时）
+                        if (tokenAge >= 60 * 60 * 1000) {
+                            localStorage.removeItem('github_auth_state');
+                            githubAuth = null;
+                        }
+                    }
+                } catch (e) {
+                    console.log('解析 GitHub 认证状态失败:', e);
+                    localStorage.removeItem('github_auth_state');
+                }
+
+                // 如果有 GitHub OAuth 登录，使用它
+                if (githubAuth && githubAuth.uid) {
+                    console.log('检测到 GitHub OAuth 登录:', githubAuth.email || githubAuth.displayName);
+
+                    // 显示头像
+                    if (loginBtn) loginBtn.style.display = 'none';
+                    if (registerBtn) registerBtn.style.display = 'none';
+                    if (userAvatar) {
+                        userAvatar.style.display = 'flex';
+                        const displayText = githubAuth.displayName
+                            ? githubAuth.displayName.charAt(0).toUpperCase()
+                            : (githubAuth.email ? githubAuth.email.charAt(0).toUpperCase() : 'U');
+                        if (avatarText) avatarText.textContent = displayText;
+                    }
+
+                    // 检查是否是管理员
+                    const isAdmin = githubAuth.isAdmin || (window.RoleManager && window.RoleManager.checkAdminStatus && window.RoleManager.checkAdminStatus(githubAuth.email));
+
+                    // 设置用户资料
+                    userProfile = {
+                        uid: githubAuth.uid,
+                        email: githubAuth.email,
+                        nickname: githubAuth.displayName || (githubAuth.email ? githubAuth.email.split('@')[0] : 'User'),
+                        displayName: githubAuth.displayName,
+                        photoURL: githubAuth.photoURL,
+                        emailVerified: true,
+                        isAdmin: isAdmin,
+                        provider: 'github'
+                    };
+                    updateProfilePopup();
+
+                    // ✅ 如果是管理员，立即显示管理员按钮
+                    if (isAdmin) {
+                        const navAdminBtn = document.getElementById('nav-admin-btn');
+                        if (navAdminBtn) {
+                            navAdminBtn.style.visibility = 'visible';
+                            navAdminBtn.style.display = 'flex';
+                            localStorage.setItem('isAdmin', 'true');
+                            console.log('✅ 管理员按钮已显示（GitHub OAuth）');
+                        }
+                    }
+                    return;
+                }
+
+                // 如果没有 GitHub OAuth 登录，检查 Firebase 登录
+                window.FirebaseConfig.initializeFirebase();
+
+                // Wait for auth state - 增加等待时间
+                let user = await window.AuthStateManager.waitForAuthReady(5000);
+
+                // 如果没有用户，再检查一次存储的状态
+                if (!user && window.AuthStateManager.getStoredAuthState) {
+                    const storedState = window.AuthStateManager.getStoredAuthState();
+                    if (storedState && storedState.uid) {
+                        console.log('从存储中恢复认证状态...');
+                        user = await window.AuthStateManager.waitForAuthReady(3000);
+                    }
+                }
+
+                if (user) {
+                    // User is logged in via Firebase - show avatar
+                    console.log('检测到 Firebase 登录:', user.email);
+                    if (loginBtn) loginBtn.style.display = 'none';
+                    if (registerBtn) registerBtn.style.display = 'none';
+                    if (userAvatar) {
+                        userAvatar.style.display = 'flex';
+                        // Use display name or email first letter
+                        const displayText = user.displayName
+                            ? user.displayName.charAt(0).toUpperCase()
+                            : user.email.charAt(0).toUpperCase();
+                        avatarText.textContent = displayText;
+                    }
+                    // Load full profile
+                    loadUserProfile(user);
+                } else {
+                    // User not logged in - show login/register buttons
+                    console.log('未检测到登录状态');
+                    if (loginBtn) loginBtn.style.display = 'inline-flex';
+                    if (registerBtn) registerBtn.style.display = 'inline-flex';
+                    if (userAvatar) userAvatar.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Failed to check user status:', error);
+                // On error, show login buttons
+                const loginBtn = document.getElementById('login-btn');
+                const registerBtn = document.getElementById('register-btn');
+                if (loginBtn) loginBtn.style.display = 'inline-flex';
+                if (registerBtn) registerBtn.style.display = 'inline-flex';
+            }
+        }
+
+        // Load user profile data
+        async function loadUserProfile(user) {
+            try {
+                // Create profile from Firebase user
+                const isAdmin = window.RoleManager.checkAdminStatus(user.email);
+                userProfile = {
+                    uid: user.uid,
+                    email: user.email,
+                    nickname: user.displayName || user.email.split('@')[0],
+                    displayName: user.displayName,
+                    photoURL: user.photoURL,
+                    emailVerified: user.emailVerified,
+                    isAdmin: isAdmin
+                };
+                updateProfilePopup();
+
+                // ✅ 如果是管理员，立即显示管理员按钮
+                if (isAdmin) {
+                    const navAdminBtn = document.getElementById('nav-admin-btn');
+                    if (navAdminBtn) {
+                        navAdminBtn.style.visibility = 'visible';
+                        navAdminBtn.style.display = 'flex';
+                        localStorage.setItem('isAdmin', 'true');
+                        console.log('✅ 管理员按钮已显示（loadUserProfile）');
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to load user profile:', error);
+            }
+        }
+
+        // Update profile popup with user data
+        function updateProfilePopup() {
+            if (!userProfile) return;
+
+            const nicknameEl = document.getElementById('profile-nickname');
+            const emailEl = document.getElementById('profile-email');
+
+            if (nicknameEl) nicknameEl.textContent = userProfile.nickname || userProfile.displayName || '-';
+            if (emailEl) emailEl.textContent = userProfile.email || '-';
+        }
+
+        // Show profile message (success or error)
+        function showProfileMessage(message, type = 'success') {
+            const msgEl = document.getElementById('profile-message');
+            if (!msgEl) return;
+
+            msgEl.textContent = message;
+            msgEl.style.display = 'block';
+
+            if (type === 'success') {
+                msgEl.style.background = '#e8f5e9';
+                msgEl.style.color = '#2e7d32';
+                msgEl.style.border = '1px solid #a5d6a7';
+            } else {
+                msgEl.style.background = '#ffebee';
+                msgEl.style.color = '#c62828';
+                msgEl.style.border = '1px solid #ef9a9a';
+            }
+
+            // Auto hide after 3 seconds
+            setTimeout(() => {
+                msgEl.style.display = 'none';
+            }, 3000);
+        }
+
+        // Toggle profile popup
+        function toggleProfilePopup() {
+            const popup = document.getElementById('profile-popup');
+            if (popup.style.display === 'none') {
+                popup.style.display = 'block';
+            } else {
+                popup.style.display = 'none';
+            }
+        }
+
+        // Close profile popup
+        function closeProfilePopup() {
+            document.getElementById('profile-popup').style.display = 'none';
+        }
+
+        // Enter edit mode
+        function enterEditMode() {
+            document.getElementById('profile-view-mode').style.display = 'none';
+            document.getElementById('profile-edit-mode').style.display = 'block';
+            document.getElementById('profile-view-buttons').style.display = 'none';
+            document.getElementById('profile-edit-buttons').style.display = 'block';
+
+            // Pre-fill current values
+            document.getElementById('edit-nickname').value = userProfile?.nickname || '';
+            document.getElementById('edit-email').textContent = userProfile?.email || '-';
+            document.getElementById('edit-error').textContent = '';
+        }
+
+        // Cancel edit mode
+        function cancelEditMode() {
+            document.getElementById('profile-view-mode').style.display = 'block';
+            document.getElementById('profile-edit-mode').style.display = 'none';
+            document.getElementById('profile-view-buttons').style.display = 'block';
+            document.getElementById('profile-edit-buttons').style.display = 'none';
+            document.getElementById('edit-error').textContent = '';
+        }
+
+        // Save profile changes
+        async function saveProfileChanges() {
+            const nickname = document.getElementById('edit-nickname').value.trim();
+            const errorEl = document.getElementById('edit-error');
+
+            // Validation
+            if (!nickname || nickname.length < 2 || nickname.length > 20) {
+                errorEl.textContent = '昵称长度需要在2-20个字符之间';
+                return;
+            }
+
+            try {
+                const auth = window.FirebaseConfig?.getAuth();
+
+                // 首先同步 Firebase 用户到后端（确保有 user_token cookie）
+                if (auth?.currentUser) {
+                    console.log('正在同步 Firebase 用户到后端...');
+                    try {
+                        const idToken = await auth.currentUser.getIdToken();
+                        const syncResponse = await fetch('/api/auth/firebase-sync', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${idToken}`
+                            },
+                            credentials: 'include',
+                            body: JSON.stringify({
+                                uid: auth.currentUser.uid,
+                                email: auth.currentUser.email,
+                                displayName: auth.currentUser.displayName,
+                                photoURL: auth.currentUser.photoURL,
+                                provider: auth.currentUser.providerData[0]?.providerId || 'password'
+                            })
+                        });
+
+                        const syncResult = await syncResponse.json();
+                        console.log('Firebase sync result:', syncResult);
+
+                        if (!syncResponse.ok) {
+                            console.error('Firebase sync failed:', syncResult);
+                            errorEl.textContent = '同步用户信息失败，请重新登录后再试';
+                            return;
+                        }
+                    } catch (syncErr) {
+                        console.error('同步到后端失败:', syncErr);
+                        errorEl.textContent = '网络错误，请稍后重试';
+                        return;
+                    }
+                }
+
+                // 等待一小段时间确保 cookie 已设置
+                await new Promise(resolve => setTimeout(resolve, 100));
+
+                console.log('正在更新用户资料...');
+                const response = await fetch('/api/user/update-profile', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ nickname })
+                });
+
+                const result = await response.json();
+                console.log('Update profile response:', result);
+
+                if (result.success) {
+                    // Update local profile
+                    userProfile.nickname = nickname;
+                    updateProfilePopup();
+
+                    // Update Firebase displayName if available
+                    if (auth?.currentUser) {
+                        try {
+                            await auth.currentUser.updateProfile({ displayName: nickname });
+                            console.log('Firebase displayName 已更新');
+                        } catch (e) {
+                            console.log('更新 Firebase displayName 失败:', e);
+                        }
+                    }
+
+                    // Update avatar text
+                    const avatarText = document.getElementById('avatar-text');
+                    if (avatarText) {
+                        avatarText.textContent = nickname.charAt(0).toUpperCase();
+                    }
+
+                    cancelEditMode();
+
+                    // Show inline success message
+                    showProfileMessage('信息更新成功！', 'success');
+                } else {
+                    errorEl.textContent = result.message || '更新失败，请稍后重试';
+                }
+            } catch (error) {
+                console.error('Update profile error:', error);
+                errorEl.textContent = '更新失败，请稍后重试';
+            }
+        }
+
+        // Handle logout
+        async function handleLogout() {
+            try {
+                // 先清除本地存储状态（防止页面闪烁）
+                // 同时清除 Firebase 和 GitHub OAuth 的认证状态
+                if (window.AuthStateManager && window.AuthStateManager.clearAuthState) {
+                    window.AuthStateManager.clearAuthState();
+                } else {
+                    localStorage.removeItem('firebase_auth_state');
+                }
+                localStorage.removeItem('github_auth_state');
+
+                // Logout from Firebase (如果是 Firebase 登录)
+                const auth = window.FirebaseConfig.getAuth();
+                if (auth && auth.currentUser) {
+                    await auth.signOut();
+                }
+
+                // 清除后端 session
+                try {
+                    await fetch('/api/user/logout', { method: 'POST' });
+                } catch (e) {
+                    console.log('清除后端 session 失败:', e);
+                }
+
+                // Reload page
+                window.location.reload();
+            } catch (error) {
+                console.error('Logout error:', error);
+                // 确保清除本地状态
+                localStorage.removeItem('firebase_auth_state');
+                // Force reload anyway
+                window.location.reload();
+            }
+        }
+
+        // Close popup when clicking outside
+        document.addEventListener('click', function (e) {
+            const popup = document.getElementById('profile-popup');
+            const avatar = document.getElementById('user-avatar');
+            if (popup && popup.style.display === 'block' &&
+                !popup.contains(e.target) && !avatar.contains(e.target)) {
+                popup.style.display = 'none';
+            }
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', checkUserStatus);
+    </script>
+
+    <!-- Site Bookmark Script -->
+    <script>
+        // Bookmark state key in localStorage
+        const BOOKMARK_KEY = 'site_bookmarked';
+
+        // Check if user has bookmarked
+        function hasBookmarked() {
+            return localStorage.getItem(BOOKMARK_KEY) === 'true';
+        }
+
+        // Set bookmark state
+        function setBookmarkState(bookmarked) {
+            localStorage.setItem(BOOKMARK_KEY, bookmarked ? 'true' : 'false');
+        }
+
+        // Show bookmark toast with custom message
+        function showBookmarkToast(isBookmarked) {
+            const toast = document.getElementById('bookmark-toast');
+            const textEl = toast.querySelector('.bookmark-toast-text');
+            textEl.innerHTML = '请自行收藏网站，谢谢支持！！';
+            toast.classList.add('show');
+            // Auto close after 3 seconds
+            setTimeout(() => closeBookmarkToast(), 3000);
+        }
+
+        // Close bookmark toast
+        function closeBookmarkToast() {
+            const toast = document.getElementById('bookmark-toast');
+            toast.classList.remove('show');
+        }
+
+        // Update bookmark button UI
+        function updateBookmarkUI(isBookmarked) {
+            const bookmarkBtn = document.querySelector('.bookmark-btn');
+            if (bookmarkBtn) {
+                if (isBookmarked) {
+                    bookmarkBtn.classList.add('active');
+                    bookmarkBtn.setAttribute('aria-label', '取消收藏');
+                } else {
+                    bookmarkBtn.classList.remove('active');
+                    bookmarkBtn.setAttribute('aria-label', '收藏本站');
+                }
+            }
+        }
+
+        // Handle site bookmark toggle
+        async function handleSiteBookmark() {
+            const isCurrentlyBookmarked = hasBookmarked();
+            const newState = !isCurrentlyBookmarked;
+            const action = newState ? 'add' : 'remove';
+
+            console.log('Bookmark toggle:', { isCurrentlyBookmarked, newState, action });
+
+            // 只在收藏时显示提示框（newState = true 表示收藏）
+            if (newState) {
+                showBookmarkToast(newState);
+            }
+
+            // Update local state immediately for responsive UI
+            setBookmarkState(newState);
+            updateBookmarkUI(newState);
+
+            // Sync with server
+            try {
+                const response = await fetch('/api/site/bookmark', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action })
+                });
+                const data = await response.json();
+                console.log('Server response:', data);
+                const bookmarkCount = document.getElementById('site-bookmark-count');
+                if (bookmarkCount && data.bookmarks !== undefined) {
+                    bookmarkCount.textContent = data.bookmarks;
+                }
+                // Add animation
+                const bookmarkBtn = document.querySelector('.bookmark-btn');
+                if (bookmarkBtn) {
+                    bookmarkBtn.classList.add('bookmarked');
+                    setTimeout(() => bookmarkBtn.classList.remove('bookmarked'), 300);
+                }
+            } catch (error) {
+                console.error('Failed to sync bookmark:', error);
+                // Revert local state on error
+                setBookmarkState(isCurrentlyBookmarked);
+                updateBookmarkUI(isCurrentlyBookmarked);
+            }
+        }
+
+        // Load bookmarks on page load
+        async function loadSiteBookmarks() {
+            try {
+                const response = await fetch('/api/site/bookmarks');
+                const data = await response.json();
+                const bookmarkCount = document.getElementById('site-bookmark-count');
+                if (bookmarkCount && data.bookmarks !== undefined) {
+                    bookmarkCount.textContent = data.bookmarks;
+                }
+                // Update UI based on local bookmark state
+                updateBookmarkUI(hasBookmarked());
+            } catch (error) {
+                console.error('Failed to load bookmarks:', error);
+            }
+        }
+        document.addEventListener('DOMContentLoaded', loadSiteBookmarks);
+
+        // Heartbeat for online tracking
+        function sendHeartbeat() {
+            fetch('/api/heartbeat', { method: 'POST', credentials: 'include' }).catch(() => { });
+        }
+        // Send heartbeat every 30 seconds
+        setInterval(sendHeartbeat, 30000);
+        // Send initial heartbeat
+        document.addEventListener('DOMContentLoaded', sendHeartbeat);
+    </script>
+
+    <!-- Login Check Script -->
+    <script>
+        // Check login status and redirect to tools page or login page
+        async function checkLoginAndGo(event) {
+            event.preventDefault();
+
+            try {
+                // 首先检查 GitHub OAuth 登录状态
+                let isLoggedIn = false;
+                try {
+                    const githubAuthStr = localStorage.getItem('github_auth_state');
+                    if (githubAuthStr) {
+                        const githubAuth = JSON.parse(githubAuthStr);
+                        const tokenAge = Date.now() - (githubAuth.timestamp || 0);
+                        // 检查是否过期（1小时）
+                        if (githubAuth.uid && tokenAge < 60 * 60 * 1000) {
+                            isLoggedIn = true;
+                            console.log('检测到 GitHub OAuth 登录，跳转到工具页');
+                        }
+                    }
+                } catch (e) {
+                    console.log('检查 GitHub 认证状态失败:', e);
+                }
+
+                // 如果 GitHub OAuth 已登录，直接跳转
+                if (isLoggedIn) {
+                    // Record click
+                    fetch('/api/metrics/events', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ type: 'ai_tool_click' })
+                    }).catch(err => console.log('Metrics error:', err));
+
+                    window.location.href = '/tools.html';
+                    return;
+                }
+
+                // 如果没有 GitHub OAuth 登录，检查 Firebase 登录
+                // Initialize Firebase if not already done
+                if (!window.FirebaseConfig) {
+                    console.error('Firebase not loaded');
+                    window.location.href = '/auth.html?returnUrl=/tools.html';
+                    return;
+                }
+
+                // Wait for Firebase auth state to be ready (important!)
+                let user = await window.AuthStateManager.waitForAuthReady(5000);
+
+                // 如果没有用户，再检查一次存储的状态
+                if (!user && window.AuthStateManager.getStoredAuthState) {
+                    const storedState = window.AuthStateManager.getStoredAuthState();
+                    if (storedState && storedState.uid) {
+                        console.log('从存储中恢复认证状态，等待 Firebase 同步...');
+                        user = await window.AuthStateManager.waitForAuthReady(3000);
+                    }
+                }
+
+                if (user) {
+                    // User is logged in via Firebase, record click and go to tools page
+                    console.log('检测到 Firebase 登录，跳转到工具页');
+                    fetch('/api/metrics/events', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ type: 'ai_tool_click' })
+                    }).catch(err => console.log('Metrics error:', err));
+
+                    window.location.href = '/tools.html';
+                } else {
+                    // User not logged in, redirect to login page
+                    console.log('未检测到登录状态，跳转到登录页');
+                    window.location.href = '/auth.html?returnUrl=/tools.html';
+                }
+            } catch (error) {
+                console.error('Login check error:', error);
+                // On error, redirect to login page
+                window.location.href = '/auth.html?returnUrl=/tools.html';
+            }
+        }
+    </script>
+
+    <!-- Portfolio Loading Script - Runs BEFORE main.js -->
+    <script>
+        (function () {
+            'use strict';
+
+            // Escape HTML to prevent XSS
+            function escapeHtmlPortfolio(text) {
+                if (!text) return '';
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            // Handle portfolio item click
+            async function handlePortfolioClick(event, link) {
+                event.preventDefault();
+                event.stopPropagation();
+                console.log('[Portfolio] Link clicked:', link);
+
+                if (!link) return;
+
+                // Check if it's a tools link
+                const isToolsLink = link === 'tools' || link === '/tools.html' || link.includes('tools.html');
+
+                if (isToolsLink) {
+                    // Check Firebase auth status - wait for auth state to be ready
+                    try {
+                        if (window.AuthStateManager) {
+                            let user = await window.AuthStateManager.waitForAuthReady(5000);
+
+                            // 如果没有用户，再检查一次存储的状态
+                            if (!user && window.AuthStateManager.getStoredAuthState) {
+                                const storedState = window.AuthStateManager.getStoredAuthState();
+                                if (storedState && storedState.uid) {
+                                    user = await window.AuthStateManager.waitForAuthReady(3000);
+                                }
+                            }
+
+                            if (user) {
+                                window.location.href = '/tools.html';
+                            } else {
+                                window.location.href = '/auth.html?returnUrl=/tools.html';
+                            }
+                        } else {
+                            window.location.href = '/auth.html?returnUrl=/tools.html';
+                        }
+                    } catch (error) {
+                        console.error('Auth check error:', error);
+                        window.location.href = '/auth.html?returnUrl=/tools.html';
+                    }
+                } else if (link.startsWith('http://') || link.startsWith('https://')) {
+                    // External link - open in new tab
+                    window.open(link, '_blank', 'noopener,noreferrer');
+                } else {
+                    // Internal link
+                    window.location.href = '/' + link;
+                }
+            }
+
+            // Bind click events to portfolio links
+            function bindPortfolioLinkEvents() {
+                const grid = document.getElementById('portfolio-grid');
+                if (!grid) return;
+
+                grid.querySelectorAll('.portfolio-link--active').forEach(link => {
+                    link.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const encodedLink = this.dataset.link;
+                        if (encodedLink) {
+                            const decodedLink = decodeURIComponent(encodedLink);
+                            handlePortfolioClick(e, decodedLink);
+                        }
+                    });
+                });
+            }
+
+            // Bind filter button events using event delegation
+            let filterEventsBound = false;
+            function bindFilterEvents() {
+                const filterContainer = document.querySelector('.portfolio-filter');
+                if (!filterContainer) {
+                    console.log('[Portfolio] Filter container not found');
+                    return;
+                }
+
+                // Prevent duplicate event binding
+                if (filterEventsBound) {
+                    console.log('[Portfolio] Filter events already bound, skipping');
+                    return;
+                }
+                filterEventsBound = true;
+
+                console.log('[Portfolio] Binding filter events using event delegation');
+
+                // Use event delegation - bind to container, works even if buttons are regenerated
+                filterContainer.addEventListener('click', function (e) {
+                    const btn = e.target.closest('.filter-btn');
+                    if (!btn) return;
+
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('[Portfolio] Filter clicked:', btn.dataset.filter);
+
+                    // Update active state
+                    filterContainer.querySelectorAll('.filter-btn').forEach(b => {
+                        b.classList.remove('filter-btn--active');
+                        b.setAttribute('aria-selected', 'false');
+                    });
+                    btn.classList.add('filter-btn--active');
+                    btn.setAttribute('aria-selected', 'true');
+
+                    // Filter items - simple show/hide without animation
+                    const filter = btn.dataset.filter;
+                    document.querySelectorAll('.portfolio-item').forEach(item => {
+                        const shouldShow = filter === 'all' || item.dataset.category === filter;
+                        item.style.display = shouldShow ? '' : 'none';
+                    });
+                });
+            }
+
+            // Render portfolio items
+            function renderPortfolioItems(items) {
+                console.log('[Portfolio] Rendering', items.length, 'items');
+                const grid = document.getElementById('portfolio-grid');
+                if (!grid) {
+                    console.error('[Portfolio] Grid element not found');
+                    return;
+                }
+
+                grid.innerHTML = items.map((item) => {
+                    const hasLink = item.link && item.link.trim() !== '';
+                    const encodedLink = hasLink ? encodeURIComponent(item.link) : '';
+
+                    // Use custom image if available, otherwise use SVG placeholder
+                    const hasImage = item.image && item.image.trim() !== '';
+                    const imageSrc = hasImage
+                        ? item.image
+                        : `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%23f5f5f5'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Inter, sans-serif' font-size='16' fill='%23666'%3E${escapeHtmlPortfolio(item.title)}%3C/text%3E%3C/svg%3E`;
+
+                    return `
+                        <article class="portfolio-item fade-in visible" data-category="${escapeHtmlPortfolio(item.category || 'all')}">
+                            <div class="portfolio-image">
+                                <img src="${hasImage ? escapeHtmlPortfolio(imageSrc) : imageSrc}" 
+                                     alt="${escapeHtmlPortfolio(item.title)}" 
+                                     loading="lazy" width="400" height="300"
+                                     style="${hasImage ? 'object-fit: cover;' : ''}">
+                            </div>
+                            <div class="portfolio-content">
+                                <h3 class="portfolio-title">${escapeHtmlPortfolio(item.title)}</h3>
+                                <p class="portfolio-description">${escapeHtmlPortfolio(item.description)}</p>
+                                <div class="portfolio-tags">
+                                    ${(item.tags || []).map(tag => `<span class="tag">${escapeHtmlPortfolio(tag)}</span>`).join('')}
+                                </div>
+                            </div>
+                            <div class="portfolio-actions">
+                                ${hasLink ?
+                            `<a href="#" class="portfolio-link portfolio-link--active" data-link="${encodedLink}">点此预览 <span class="link-arrow">→</span></a>` :
+                            `<span class="portfolio-link portfolio-link--disabled">暂无预览</span>`
+                        }
+                            </div>
+                        </article>
+                    `;
+                }).join('');
+
+                // Bind click events after rendering
+                bindPortfolioLinkEvents();
+            }
+
+            // Update filter buttons
+            function updateFilterButtons(filters) {
+                const filterContainer = document.querySelector('.portfolio-filter');
+                if (!filterContainer) return;
+
+                const filterMap = {
+                    '全部': 'all',
+                    'AI 工具': 'ai-tools',
+                    '网页设计': 'web-design',
+                    '品牌设计': 'branding',
+                    '应用': 'app'
+                };
+
+                filterContainer.innerHTML = filters.map((filter, index) => {
+                    const category = filterMap[filter] || filter.toLowerCase().replace(/\s+/g, '-');
+                    const isActive = index === 0;
+                    return `<button class="filter-btn ${isActive ? 'filter-btn--active' : ''}" data-filter="${category}" role="tab" aria-selected="${isActive}">${escapeHtmlPortfolio(filter)}</button>`;
+                }).join('');
+            }
+
+            // Load portfolio data
+            async function loadPortfolio() {
+                console.log('[Portfolio] Loading...');
+                try {
+                    const response = await fetch('/api/settings');
+                    const settings = await response.json();
+
+                    if (settings.portfolio && settings.portfolio.items) {
+                        // Update filter buttons first
+                        if (settings.portfolio.filters) {
+                            updateFilterButtons(settings.portfolio.filters);
+                        }
+                        // Render items
+                        renderPortfolioItems(settings.portfolio.items);
+                        // Bind filter events after everything is rendered
+                        bindFilterEvents();
+                        console.log('[Portfolio] Loaded successfully');
+                    }
+                } catch (error) {
+                    console.error('[Portfolio] Failed to load:', error);
+                    const grid = document.getElementById('portfolio-grid');
+                    if (grid) grid.innerHTML = '<p class="error-text">加载失败，请刷新页面</p>';
+                }
+            }
+
+            // Initialize on DOM ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', loadPortfolio);
+            } else {
+                loadPortfolio();
+            }
+        })();
+    </script>
+
+    <!-- User Profile Popup -->
+    <div class="profile-popup" id="profile-popup" style="display: none;">
+        <div class="profile-popup-header">
+            <h3>个人信息</h3>
+            <button class="profile-popup-close" onclick="closeProfilePopup()" aria-label="关闭">×</button>
+        </div>
+        <!-- Success/Error Message -->
+        <div id="profile-message"
+            style="display: none; padding: 10px 16px; margin: 0 16px; border-radius: 6px; font-size: 13px; text-align: center;">
+        </div>
+        <div class="profile-popup-content" id="profile-view-mode">
+            <div class="profile-field">
+                <label>昵称</label>
+                <span id="profile-nickname">-</span>
+            </div>
+            <div class="profile-field">
+                <label>邮箱</label>
+                <span id="profile-email">-</span>
+            </div>
+        </div>
+        <!-- Edit Mode -->
+        <div class="profile-popup-content" id="profile-edit-mode" style="display: none;">
+            <div class="profile-field">
+                <label for="edit-nickname">昵称</label>
+                <input type="text" class="form-input" id="edit-nickname" placeholder="请输入新昵称" minlength="2"
+                    maxlength="20">
+            </div>
+            <div class="profile-field">
+                <label>邮箱</label>
+                <span id="edit-email" style="color: #666;">-</span>
+                <small style="color: #999; font-size: 11px;">邮箱不可修改</small>
+            </div>
+            <div id="edit-error" style="color: #e53935; font-size: 12px; margin-top: 8px;"></div>
+        </div>
+        <div class="profile-popup-footer">
+            <div id="profile-view-buttons">
+                <button class="btn btn--outline btn--sm" onclick="enterEditMode()"
+                    style="margin-right: 8px;">修改信息</button>
+                <button class="btn btn--outline btn--sm" onclick="handleLogout()">退出登录</button>
+            </div>
+            <div id="profile-edit-buttons" style="display: none;">
+                <button class="btn btn--primary btn--sm" onclick="saveProfileChanges()"
+                    style="margin-right: 8px;">保存</button>
+                <button class="btn btn--outline btn--sm" onclick="cancelEditMode()">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AethrixChatService Module -->
+    <script src="js/aethrixChatService.js"></script>
+
+    <!-- Aura Style AI Assistant -->
+    <div id="aura-assistant" class="aura-assistant">
+        <!-- Chat Panel -->
+        <div id="aura-chat-panel" class="aura-chat-panel">
+            <div class="aura-chat-header">
+                <span class="aura-chat-title">Aethrix 助手</span>
+                <div class="aura-header-actions">
+                    <button id="aura-clear-btn" class="aura-clear-btn" aria-label="清除对话" title="清除对话历史">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" width="18" height="18">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                        </svg>
+                    </button>
+                    <button id="aura-close-btn" class="aura-close-btn" aria-label="关闭">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1"
+                            stroke="currentColor" width="24" height="24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="aura-messages" class="aura-messages">
+                <div class="aura-message aura-message--bot aura-welcome-message">
+                    <div class="aura-message-content">你好！我是 Aethrix 助手 👋<br>欢迎来到以太夜，有什么可以帮助你的吗？</div>
+                </div>
+            </div>
+            <div id="aura-loading" class="aura-loading" style="display:none;">
+                <span class="aura-loading-text">容我思考片刻...</span>
+            </div>
+            <div class="aura-input-area">
+                <textarea id="aura-input" class="aura-input" placeholder="输入消息..." rows="1"></textarea>
+                <button id="aura-send-btn" class="aura-send-btn" aria-label="发送">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1"
+                        stroke="currentColor" width="24" height="24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Toggle Button -->
+        <button id="aura-toggle-btn" class="aura-toggle-btn" aria-label="打开助手">
+            <span class="aura-toggle-text">A</span>
+        </button>
+    </div>
+
+    <style>
+        /* Aura Style AI Assistant - Minimalist Design */
+        .aura-assistant {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 16px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .aura-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .aura-clear-btn {
+            background: none;
+            border: none;
+            color: rgba(250, 249, 246, 0.5);
+            cursor: pointer;
+            padding: 4px;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .aura-clear-btn:hover {
+            color: #ef4444;
+        }
+
+        .aura-loading {
+            padding: 12px 16px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        .aura-loading-text {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .aura-loading-text::before {
+            content: '';
+            width: 16px;
+            height: 16px;
+            border: 2px solid #3b82f6;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: aura-spin 0.8s linear infinite;
+        }
+
+        @keyframes aura-spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Toggle Button - Aethrix Style */
+        .aura-toggle-btn {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #0A1628 0%, #1a2a4a 100%);
+            color: #00FFCC;
+            border: 2px solid rgba(0, 255, 204, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow:
+                0 0 20px rgba(0, 255, 204, 0.3),
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 0 20px rgba(0, 255, 204, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .aura-toggle-btn:hover {
+            transform: scale(1.08) translateY(-3px);
+            border-color: rgba(0, 255, 204, 0.8);
+            box-shadow:
+                0 0 30px rgba(0, 255, 204, 0.5),
+                0 12px 40px rgba(0, 0, 0, 0.4),
+                inset 0 0 30px rgba(0, 255, 204, 0.2);
+        }
+
+        .aura-toggle-text {
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.8);
+        }
+
+        /* Light Mode Toggle */
+        [data-theme="light"] .aura-toggle-btn {
+            background: #FFFFFF;
+            border: 2px solid #1a1a1a;
+            color: #1a1a1a;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        [data-theme="light"] .aura-toggle-btn:hover {
+            border-color: #000000;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        [data-theme="light"] .aura-toggle-text {
+            text-shadow: none;
+        }
+
+        /* Chat Panel - Aethrix Style with rounded corners */
+        .aura-chat-panel {
+            width: 380px;
+            height: 520px;
+            background: #FAF9F6;
+            border: 2px solid rgba(26, 26, 26, 0.15);
+            border-radius: 20px;
+            box-shadow: 0 16px 64px rgba(0, 0, 0, 0.15);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            animation: aura-fade-in 0.4s ease;
+        }
+
+        .aura-chat-panel.active {
+            display: flex;
+        }
+
+        @keyframes aura-fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Chat Header - Aethrix Style */
+        .aura-chat-header {
+            background: #1A1A1A;
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 18px 18px 0 0;
+        }
+
+        .aura-chat-title {
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 17px;
+            font-weight: 600;
+            color: #FAF9F6;
+            letter-spacing: 0.5px;
+        }
+
+        .aura-close-btn {
+            background: none;
+            border: none;
+            color: rgba(250, 249, 246, 0.5);
+            cursor: pointer;
+            padding: 4px;
+            transition: color 0.3s ease;
+        }
+
+        .aura-close-btn:hover {
+            color: #FAF9F6;
+        }
+
+        /* Messages Area */
+        .aura-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background: #FAF9F6;
+        }
+
+        /* Custom Scrollbar for Messages */
+        .aura-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .aura-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .aura-messages::-webkit-scrollbar-thumb {
+            background: rgba(26, 26, 26, 0.15);
+            border-radius: 3px;
+        }
+
+        .aura-messages::-webkit-scrollbar-thumb:hover {
+            background: rgba(26, 26, 26, 0.25);
+        }
+
+        /* Custom Scrollbar for Input */
+        .aura-input::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .aura-input::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .aura-input::-webkit-scrollbar-thumb {
+            background: rgba(26, 26, 26, 0.15);
+            border-radius: 2px;
+        }
+
+        .aura-input::-webkit-scrollbar-thumb:hover {
+            background: rgba(26, 26, 26, 0.25);
+        }
+
+        .aura-message {
+            display: flex;
+        }
+
+        .aura-message--user {
+            justify-content: flex-end;
+        }
+
+        .aura-message--bot {
+            justify-content: flex-start;
+        }
+
+        .aura-message-content {
+            max-width: 85%;
+            padding: 16px 20px;
+            font-size: 14px;
+            line-height: 1.7;
+            letter-spacing: 0.3px;
+            border-radius: 16px;
+            word-wrap: break-word;
+            word-break: break-word;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+        }
+
+        .aura-message--user .aura-message-content {
+            background: #1A1A1A;
+            color: #FAF9F6;
+            border-radius: 16px 16px 4px 16px;
+        }
+
+        .aura-message--bot .aura-message-content {
+            background: #FFFFFF;
+            border: 1px solid rgba(26, 26, 26, 0.1);
+            color: #5D5A53;
+            border-radius: 16px 16px 16px 4px;
+        }
+
+        .aura-thinking {
+            font-size: 12px;
+            color: rgba(26, 26, 26, 0.3);
+            font-style: italic;
+            animation: aura-pulse 1.5s ease-in-out infinite;
+            /* 隐藏文字内容 */
+            font-size: 0;
+            text-indent: -9999px;
+            overflow: hidden;
+            /* 显示一个简单的加载点 */
+            width: 40px;
+            height: 20px;
+            position: relative;
+        }
+
+        .aura-thinking::before {
+            content: '•••';
+            font-size: 16px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            text-indent: 0;
+            letter-spacing: 2px;
+            color: rgba(26, 26, 26, 0.3);
+        }
+
+        @keyframes aura-pulse {
+
+            0%,
+            100% {
+                opacity: 0.3;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        /* Input Area - Aethrix Style */
+        .aura-input-area {
+            padding: 16px 20px;
+            background: #FAF9F6;
+            border-top: 1px solid rgba(26, 26, 26, 0.08);
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .aura-input {
+            flex: 1;
+            background: #FFFFFF;
+            border: 2px solid rgba(26, 26, 26, 0.1);
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 14px;
+            color: #1A1A1A;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            resize: none;
+            min-height: 44px;
+            max-height: 120px;
+            overflow-y: auto;
+            line-height: 1.5;
+            font-family: inherit;
+        }
+
+        .aura-input:focus {
+            border-color: #1A1A1A;
+            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+            outline: none !important;
+        }
+
+        .aura-input::placeholder {
+            color: rgba(26, 26, 26, 0.3);
+        }
+
+        .aura-send-btn {
+            background: #1A1A1A;
+            border: none;
+            color: #FAF9F6;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 10px;
+            transition: opacity 0.3s ease, transform 0.2s ease;
+        }
+
+        .aura-send-btn:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
+
+        /* Dark Mode Styles */
+        [data-theme="dark"] .aura-chat-panel {
+            background: #0D1F35;
+            border: 2px solid rgba(0, 255, 204, 0.2);
+            box-shadow: 0 16px 64px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 255, 204, 0.1);
+        }
+
+        [data-theme="dark"] .aura-chat-header {
+            background: linear-gradient(135deg, #00CCAA 0%, #00FFCC 100%);
+        }
+
+        [data-theme="dark"] .aura-chat-title {
+            color: #0A1628;
+        }
+
+        [data-theme="dark"] .aura-close-btn {
+            color: rgba(10, 22, 40, 0.5);
+        }
+
+        [data-theme="dark"] .aura-close-btn:hover {
+            color: #0A1628;
+        }
+
+        [data-theme="dark"] .aura-messages {
+            background: #0D1F35;
+        }
+
+        /* Dark theme scrollbar */
+        [data-theme="dark"] .aura-messages::-webkit-scrollbar-thumb {
+            background: rgba(0, 255, 204, 0.2);
+        }
+
+        [data-theme="dark"] .aura-messages::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 255, 204, 0.35);
+        }
+
+        [data-theme="dark"] .aura-input::-webkit-scrollbar-thumb {
+            background: rgba(0, 255, 204, 0.2);
+        }
+
+        [data-theme="dark"] .aura-input::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 255, 204, 0.35);
+        }
+
+        [data-theme="dark"] .aura-message--user .aura-message-content {
+            background: #00FFCC;
+            color: #0A1628;
+        }
+
+        [data-theme="dark"] .aura-message--bot .aura-message-content {
+            background: rgba(0, 255, 204, 0.1);
+            border-color: rgba(0, 255, 204, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        [data-theme="dark"] .aura-thinking {
+            color: rgba(0, 255, 204, 0.5);
+        }
+
+        [data-theme="dark"] .aura-input-area {
+            background: #0D1F35;
+            border-top-color: rgba(0, 255, 204, 0.1);
+        }
+
+        [data-theme="dark"] .aura-input {
+            background: rgba(0, 255, 204, 0.05);
+            border: 2px solid rgba(0, 255, 204, 0.2);
+            color: #FAF9F6;
+        }
+
+        [data-theme="dark"] .aura-input:focus {
+            border-color: #00FFCC;
+            box-shadow: 0 0 0 3px rgba(0, 255, 204, 0.1);
+            outline: none !important;
+        }
+
+        [data-theme="dark"] .aura-input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        [data-theme="dark"] .aura-send-btn {
+            background: linear-gradient(135deg, #00CCAA 0%, #00FFCC 100%);
+            color: #0A1628;
+        }
+
+        [data-theme="dark"] .aura-toggle-btn {
+            background: linear-gradient(135deg, #0A1628 0%, #1a2a4a 100%);
+            color: #00FFCC;
+            border: 2px solid rgba(0, 255, 204, 0.3);
+            box-shadow:
+                0 0 20px rgba(0, 255, 204, 0.3),
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 0 20px rgba(0, 255, 204, 0.1);
+        }
+
+        [data-theme="dark"] .aura-toggle-btn:hover {
+            box-shadow:
+                0 0 30px rgba(0, 255, 204, 0.5),
+                0 12px 40px rgba(0, 0, 0, 0.4),
+                inset 0 0 30px rgba(0, 255, 204, 0.2);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 480px) {
+            .aura-assistant {
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .aura-chat-panel {
+                width: calc(100vw - 40px);
+                height: 450px;
+            }
+
+            .aura-toggle-btn {
+                width: 56px;
+                height: 56px;
+            }
+
+            .aura-toggle-text {
+                font-size: 16px;
+            }
+        }
+    </style>
+    <script>
+        // Aura Style AI Assistant with Memory
+        (function () {
+            let isOpen = false;
+            let chatService = null;
+            let historyLoaded = false;
+
+            function init() {
+                const toggleBtn = document.getElementById('aura-toggle-btn');
+                const closeBtn = document.getElementById('aura-close-btn');
+                const clearBtn = document.getElementById('aura-clear-btn');
+                const sendBtn = document.getElementById('aura-send-btn');
+                const input = document.getElementById('aura-input');
+                const panel = document.getElementById('aura-chat-panel');
+                const messagesContainer = document.getElementById('aura-messages');
+                const loadingEl = document.getElementById('aura-loading');
+
+                if (!toggleBtn || !panel) {
+                    console.error('[Aura] Elements not found');
+                    return;
+                }
+
+                // Initialize chat service
+                if (window.AethrixChatService) {
+                    chatService = new AethrixChatService({
+                        onMessage: function (msg) {
+                            addMessageToUI(msg);
+                        },
+                        onError: function (error) {
+                            console.error('[Aura] Error:', error);
+                        },
+                        onLoading: function (loading) {
+                            if (loadingEl) {
+                                loadingEl.style.display = loading ? 'block' : 'none';
+                            }
+                        },
+                        onHistoryLoaded: function (messages) {
+                            renderHistory(messages);
+                        }
+                    });
+                }
+
+                // Toggle chat
+                toggleBtn.addEventListener('click', function () {
+                    isOpen = !isOpen;
+                    if (isOpen) {
+                        panel.classList.add('active');
+                        toggleBtn.innerHTML = '✕';
+                        if (input) input.focus();
+
+                        // Load history on first open
+                        if (!historyLoaded && chatService) {
+                            historyLoaded = true;
+                            chatService.loadHistory();
+                        }
+                    } else {
+                        panel.classList.remove('active');
+                        toggleBtn.innerHTML = '<span class="aura-toggle-text">A</span>';
+                    }
+                });
+
+                // Close button
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', function () {
+                        isOpen = false;
+                        panel.classList.remove('active');
+                        toggleBtn.innerHTML = '<span class="aura-toggle-text">A</span>';
+                    });
+                }
+
+                // Clear button
+                if (clearBtn) {
+                    clearBtn.addEventListener('click', async function () {
+                        if (confirm('确定要清除所有对话历史吗？')) {
+                            if (chatService) {
+                                await chatService.clearHistory();
+                            }
+                            // Reset to welcome message
+                            if (messagesContainer) {
+                                messagesContainer.innerHTML = '<div class="aura-message aura-message--bot aura-welcome-message"><div class="aura-message-content">你好！我是 Aethrix 助手 👋<br>欢迎来到以太夜，有什么可以帮助你的吗？</div></div>';
+                            }
+                        }
+                    });
+                }
+
+                // Render history messages
+                function renderHistory(messages) {
+                    if (!messagesContainer) return;
+
+                    // Keep welcome message, remove others
+                    const welcomeMsg = messagesContainer.querySelector('.aura-welcome-message');
+                    messagesContainer.innerHTML = '';
+                    if (welcomeMsg) {
+                        messagesContainer.appendChild(welcomeMsg);
+                    }
+
+                    // Add history messages
+                    if (messages && messages.length > 0) {
+                        messages.forEach(function (msg) {
+                            addMessageToUI(msg, true);
+                        });
+                    }
+
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }
+
+                // Add message to UI
+                function addMessageToUI(msg, isHistory) {
+                    if (!messagesContainer || !msg) return;
+
+                    const msgEl = document.createElement('div');
+                    msgEl.className = 'aura-message aura-message--' + (msg.role === 'user' ? 'user' : 'bot');
+                    if (msg.isError) {
+                        msgEl.classList.add('aura-message--error');
+                    }
+
+                    // Clean markdown symbols and convert to plain text
+                    let content = escapeHtml(msg.content);
+                    // Remove bold/italic markers: **text** -> text, *text* -> text
+                    content = content.replace(/\*\*([^*]+)\*\*/g, '$1');
+                    content = content.replace(/\*([^*]+)\*/g, '$1');
+                    // Remove code markers: `code` -> code
+                    content = content.replace(/`([^`]+)`/g, '$1');
+                    // Remove headers: ### text -> text
+                    content = content.replace(/^#{1,6}\s+/gm, '');
+                    // Remove list markers: * item, - item, + item at line start
+                    content = content.replace(/^[\*\-\+]\s+/gm, '');
+                    // Remove numbered list markers: 1. item, 2. item
+                    content = content.replace(/^\d+\.\s+/gm, '');
+                    // Convert markdown-style links to HTML
+                    content = content.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+                    content = content.replace(/\n/g, '<br>');
+
+                    msgEl.innerHTML = '<div class="aura-message-content">' + content + '</div>';
+                    messagesContainer.appendChild(msgEl);
+
+                    if (!isHistory) {
+                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    }
+                }
+
+                // Send message
+                async function sendMessage() {
+                    if (!input || !messagesContainer) return;
+                    const text = input.value.trim();
+                    if (!text) return;
+
+                    input.value = '';
+                    input.disabled = true;
+
+                    // Show thinking indicator
+                    const thinking = document.createElement('div');
+                    thinking.className = 'aura-thinking';
+                    thinking.textContent = '容我思考片刻...';
+                    messagesContainer.appendChild(thinking);
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+                    try {
+                        if (chatService) {
+                            // Remove thinking indicator (message will be added by callback)
+                            // First message (user) is added immediately by service
+                            await chatService.sendMessage(text);
+                        } else {
+                            // Fallback: call API directly
+                            const userMsg = document.createElement('div');
+                            userMsg.className = 'aura-message aura-message--user';
+                            userMsg.innerHTML = '<div class="aura-message-content">' + escapeHtml(text) + '</div>';
+                            messagesContainer.appendChild(userMsg);
+
+                            const response = await fetch('/api/chat/message', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                credentials: 'include',
+                                body: JSON.stringify({ message: text })
+                            });
+                            const data = await response.json();
+
+                            const botMsg = document.createElement('div');
+                            botMsg.className = 'aura-message aura-message--bot';
+                            let reply = escapeHtml(data.reply || '抱歉，无法获取回复');
+                            reply = reply.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+                            reply = reply.replace(/\n/g, '<br>');
+                            botMsg.innerHTML = '<div class="aura-message-content">' + reply + '</div>';
+                            messagesContainer.appendChild(botMsg);
+                        }
+                    } catch (error) {
+                        console.error('[Aura] Send error:', error);
+                        const errorMsg = document.createElement('div');
+                        errorMsg.className = 'aura-message aura-message--bot aura-message--error';
+                        errorMsg.innerHTML = '<div class="aura-message-content">抱歉，发送失败。请稍后重试。</div>';
+                        messagesContainer.appendChild(errorMsg);
+                    } finally {
+                        thinking.remove();
+                        input.disabled = false;
+                        input.focus();
+                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    }
+                }
+
+                function escapeHtml(text) {
+                    const div = document.createElement('div');
+                    div.textContent = text;
+                    return div.innerHTML;
+                }
+
+                if (sendBtn) sendBtn.addEventListener('click', sendMessage);
+                if (input) {
+                    // Auto-resize textarea
+                    input.addEventListener('input', function () {
+                        this.style.height = 'auto';
+                        this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+                    });
+
+                    input.addEventListener('keydown', function (e) {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            sendMessage();
+                            // Reset height after sending
+                            this.style.height = 'auto';
+                        }
+                    });
+                }
+
+                console.log('[Aura] Assistant initialized with memory support');
+            }
+
+            // Initialize when DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+
+    <!-- WebSocket Client for realtime kickout -->
+    <script src="/js/websocket-client.js"></script>
+
+    <!-- Theme Manager (at body end for reliable button binding) -->
+    <script src="js/theme-manager.js?v=2026011404"></script>
+</body>
+
+</html>

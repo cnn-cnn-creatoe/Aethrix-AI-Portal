@@ -1,0 +1,32 @@
+{
+  "posts": [
+    {
+      "id": "cdbc2091-f9c3-45f9-9475-24eddf9359f7",
+      "date": "2025-12-19",
+      "category": "emotion",
+      "content": "test",
+      "createdAt": 1766129554854,
+      "comments": [
+        {
+          "id": "3591ebf5-48cb-4020-84d7-f537129ab970",
+          "content": "你好",
+          "createdAt": 1766326533304
+        }
+      ]
+    },
+    {
+      "id": "2264aa7a-f322-461e-8526-82e567aa87c0",
+      "date": "2025-12-19",
+      "category": "advice",
+      "content": "1",
+      "createdAt": 1766129567601,
+      "comments": [
+        {
+          "id": "9e30ee54-08c3-433d-a0fa-bff9466876f6",
+          "content": "1",
+          "createdAt": 1766500395922
+        }
+      ]
+    }
+  ]
+}

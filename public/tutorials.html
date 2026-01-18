@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教程/案例 - Aethrix | 以太夜</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+        }
+        .header h1 {
+            font-size: 48px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+        }
+        .header p {
+            font-size: 18px;
+            color: #94a3b8;
+        }
+        .filter-bar {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 32px;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+        .filter-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+        .filter-tab {
+            padding: 10px 20px;
+            background: rgba(51, 65, 85, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 8px;
+            color: #cbd5e1;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .filter-tab:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+        .filter-tab.active {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            border-color: transparent;
+            color: white;
+        }
+        .category-section {
+            margin-bottom: 48px;
+        }
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+        }
+        .category-header h2 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+        .category-count {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .tutorials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 24px;
+        }
+        .tutorial-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .tutorial-card:hover {
+            transform: translateY(-4px);
+            border-color: #3b82f6;
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);
+        }
+        .tutorial-header {
+            margin-bottom: 12px;
+        }
+        .tutorial-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        .tutorial-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .meta-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .badge-platform {
+            background: rgba(139, 92, 246, 0.2);
+            color: #a78bfa;
+        }
+        .badge-language {
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+        }
+        .badge-difficulty {
+            background: rgba(251, 146, 60, 0.2);
+            color: #fb923c;
+        }
+        .tutorial-desc {
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+        .tutorial-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .tag {
+            background: rgba(51, 65, 85, 0.6);
+            color: #cbd5e1;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #64748b;
+        }
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .back-link:hover {
+            color: #60a5fa;
+        }
+        @media (max-width: 768px) {
+            .header h1 { font-size: 32px; }
+            .tutorials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← 返回首页</a>
+        
+        <div class="header">
+            <h1>📚 AI教程/案例</h1>
+            <p>精选YouTube和Bilibili优质AI工具教程，助你快速上手</p>
+        </div>
+
+        <div class="filter-bar">
+            <div class="filter-tabs" id="filter-tabs"></div>
+        </div>
+
+        <div id="tutorials-container">
+            <div style="text-align:center;padding:40px;color:#64748b;">加载中...</div>
+        </div>
+    </div>
+
+    <script>
+        let allTutorials = [];
+        let currentFilter = '';
+
+        const categories = [
+            '总榜教程', 'AI聊天教程', 'AI搜索教程', 'AI音乐教程',
+            'AI语音教程', 'AI智能体教程', 'AI数字人教程', 'AI办公教程',
+            'AI设计教程', 'AI翻译教程', 'AI数据分析教程', 'AI 3D教程',
+            'AI编程教程', 'AI生图教程', 'AI视频教程', 'AI写作教程'
+        ];
+
+        function initFilterTabs() {
+            console.log('🚀 初始化分类按钮...');
+            const container = document.getElementById('filter-tabs');
+            
+            if (!container) {
+                console.error('❌ 找不到 filter-tabs 容器');
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            const allTab = document.createElement('div');
+            allTab.className = 'filter-tab active';
+            allTab.textContent = '全部分类';
+            allTab.dataset.category = '';
+            allTab.onclick = function() { filterByCategory(''); };
+            container.appendChild(allTab);
+            
+            categories.forEach(function(cat) {
+                const tab = document.createElement('div');
+                tab.className = 'filter-tab';
+                tab.textContent = cat;
+                tab.dataset.category = cat;
+                tab.onclick = function() { filterByCategory(cat); };
+                container.appendChild(tab);
+            });
+            
+            console.log('✅ 创建了 ' + (categories.length + 1) + ' 个分类按钮');
+        }
+
+        async function loadTutorials() {
+            try {
+                console.log('📡 开始加载教程数据...');
+                const res = await fetch('/api/public/tutorials?_=' + Date.now());
+                if (res.ok) {
+                    const data = await res.json();
+                    allTutorials = data.tutorials || [];
+                    console.log('✅ 加载了 ' + allTutorials.length + ' 个教程');
+                    renderTutorials();
+                } else {
+                    console.error('❌ 加载失败: HTTP ' + res.status);
+                    document.getElementById('tutorials-container').innerHTML = 
+                        '<div class="empty-state"><p>加载失败: HTTP ' + res.status + '</p></div>';
+                }
+            } catch (e) {
+                console.error('❌ 加载错误:', e);
+                document.getElementById('tutorials-container').innerHTML = 
+                    '<div class="empty-state"><p>加载失败，请刷新重试</p></div>';
+            }
+        }
+
+        function filterByCategory(category) {
+            console.log('🔍 筛选分类: ' + (category || '全部'));
+            currentFilter = category;
+            
+            document.querySelectorAll('.filter-tab').forEach(function(tab) {
+                if (tab.dataset.category === category) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+            
+            renderTutorials();
+        }
+
+        function renderTutorials() {
+            console.log('🎨 渲染教程...');
+            const container = document.getElementById('tutorials-container');
+            
+            const filtered = currentFilter ? 
+                allTutorials.filter(function(t) { return t.category === currentFilter; }) : 
+                allTutorials;
+            
+            console.log('📊 筛选后数量: ' + filtered.length);
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<div class="empty-state"><p>暂无教程</p></div>';
+                return;
+            }
+
+            const grouped = {};
+            filtered.forEach(function(tutorial) {
+                const cat = tutorial.category || '未分类';
+                if (!grouped[cat]) grouped[cat] = [];
+                grouped[cat].push(tutorial);
+            });
+
+            let html = '';
+            Object.keys(grouped).sort().forEach(function(category) {
+                const tutorials = grouped[category];
+                html += '<div class="category-section">';
+                html += '<div class="category-header">';
+                html += '<h2>' + category + '</h2>';
+                html += '<span class="category-count">' + tutorials.length + '</span>';
+                html += '</div>';
+                html += '<div class="tutorials-grid">';
+                tutorials.forEach(function(t) {
+                    html += renderTutorialCard(t);
+                });
+                html += '</div></div>';
+            });
+
+            container.innerHTML = html;
+            console.log('✅ 渲染完成');
+        }
+
+        function renderTutorialCard(tutorial) {
+            const difficultyMap = {
+                'beginner': '入门',
+                'intermediate': '中级',
+                'advanced': '高级'
+            };
+            const difficultyText = difficultyMap[tutorial.difficulty] || tutorial.difficulty;
+
+            let html = '<div class="tutorial-card" onclick="window.open(\'' + tutorial.url + '\', \'_blank\')">';
+            html += '<div class="tutorial-header">';
+            html += '<div class="tutorial-title">' + escapeHtml(tutorial.title) + '</div>';
+            html += '<div class="tutorial-meta">';
+            if (tutorial.platform) {
+                html += '<span class="meta-badge badge-platform">' + tutorial.platform + '</span>';
+            }
+            if (tutorial.language) {
+                html += '<span class="meta-badge badge-language">' + (tutorial.language === 'zh' ? '中文' : 'English') + '</span>';
+            }
+            if (tutorial.difficulty) {
+                html += '<span class="meta-badge badge-difficulty">' + difficultyText + '</span>';
+            }
+            html += '</div></div>';
+            if (tutorial.description) {
+                html += '<div class="tutorial-desc">' + escapeHtml(tutorial.description) + '</div>';
+            }
+            if (tutorial.tags && tutorial.tags.length > 0) {
+                html += '<div class="tutorial-tags">';
+                tutorial.tags.forEach(function(tag) {
+                    html += '<span class="tag">' + escapeHtml(tag) + '</span>';
+                });
+                html += '</div>';
+            }
+            html += '</div>';
+            return html;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        console.log('🚀 页面加载完成，开始初始化...');
+        initFilterTabs();
+        loadTutorials();
+    </script>
+</body>
+</html>

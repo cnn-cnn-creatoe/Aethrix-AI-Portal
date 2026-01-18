@@ -1,0 +1,88 @@
+{
+  "apps": [
+    {
+      "id": "rocketchat",
+      "title": "Rocket.Chat",
+      "description": "开源团队协作平台，支持实时聊天、视频会议",
+      "port": "http://localhost:4001",
+      "tags": [
+        "聊天",
+        "自托管"
+      ],
+      "createdAt": 1734854400000,
+      "order": 1
+    },
+    {
+      "id": "focalboard",
+      "title": "Focalboard",
+      "description": "开源项目管理工具，类似 Notion/Trello",
+      "port": "http://localhost:4002",
+      "tags": [
+        "项目管理",
+        "看板"
+      ],
+      "createdAt": 1734854400000,
+      "order": 2
+    },
+    {
+      "id": "bookstack",
+      "title": "BookStack",
+      "description": "开源知识库/Wiki 平台，组织文档和笔记",
+      "port": "http://localhost:4003",
+      "tags": [
+        "知识库",
+        "WIKI"
+      ],
+      "createdAt": 1734854400000,
+      "order": 3
+    },
+    {
+      "id": "excalidraw",
+      "title": "Excalidraw",
+      "description": "开源手绘风格白板工具，支持协作",
+      "port": "http://localhost:4004",
+      "tags": [
+        "白板",
+        "协作"
+      ],
+      "createdAt": 1734854400000,
+      "order": 4
+    },
+    {
+      "id": "it-tools",
+      "title": "IT-Tools",
+      "description": "开发者工具集合，编码、转换、生成等",
+      "port": "http://localhost:4005",
+      "tags": [
+        "工具",
+        "开发"
+      ],
+      "createdAt": 1734854400000,
+      "order": 5
+    },
+    {
+      "id": "librespeed",
+      "title": "LibreSpeed",
+      "description": "开源网速测试工具，自托管测速服务",
+      "port": "http://localhost:4006",
+      "tags": [
+        "测速",
+        "网络"
+      ],
+      "createdAt": 1734854400000,
+      "order": 6
+    },
+    {
+      "id": "dozzle",
+      "title": "Dozzle",
+      "description": "Docker 日志查看器，实时监控容器日志",
+      "port": "http://localhost:4007",
+      "tags": [
+        "DOCKER",
+        "日志"
+      ],
+      "createdAt": 1734854400000,
+      "order": 7
+    }
+  ]
+}

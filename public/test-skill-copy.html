@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Skill Copy Buttons</title>
+    <link rel="stylesheet" href="style.css?v=224">
+    <style>
+        body {
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .test-section {
+            margin-bottom: 40px;
+        }
+        .test-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .test-result {
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        .test-result.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .test-result.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <h1>Skill Copy Buttons Test Page</h1>
+    
+    <div class="test-section">
+        <div class="test-title">1. API Connection Test</div>
+        <button onclick="testAPI()" class="workshop-btn workshop-btn-download">Test Skill API</button>
+        <div id="api-result" class="test-result" style="display: none;"></div>
+    </div>
+
+    <div class="test-section">
+        <div class="test-title">2. Skill Cards Preview</div>
+        <div id="skill-grid" class="workshop-grid"></div>
+    </div>
+
+    <div class="test-section">
+        <div class="test-title">3. Copy Test Results</div>
+        <div id="copy-results"></div>
+    </div>
+
+    <script>
+        // Test API connection
+        async function testAPI() {
+            const resultDiv = document.getElementById('api-result');
+            resultDiv.style.display = 'block';
+            resultDiv.textContent = 'Testing API...';
+            resultDiv.className = 'test-result';
+
+            try {
+                const response = await fetch('/api/skill-proxy/skills?per_page=8');
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const data = await response.json();
+                const skills = data.data?.skills || data.skills || [];
+                const filtered = skills.filter(s => s.category !== 'repositories');
+                
+                resultDiv.className = 'test-result success';
+                resultDiv.textContent = `✅ Success! Found ${filtered.length} skills (${skills.length} total, ${skills.length - filtered.length} repositories filtered)`;
+                
+                // Render skill cards
+                renderSkillCards(filtered);
+            } catch (error) {
+                resultDiv.className = 'test-result error';
+                resultDiv.textContent = `❌ Error: ${error.message}`;
+            }
+        }
+
+        // Render skill cards
+        function renderSkillCards(skills) {
+            const grid = document.getElementById('skill-grid');
+            
+            grid.innerHTML = skills.map((skill, index) => `
+                <article class="workshop-card" data-delay="${(index % 8) + 1}">
+                    <div class="workshop-card-content">
+                        <h3 class="workshop-card-title">${escapeHtml(skill.name)}</h3>
+                        <p class="workshop-card-description">${escapeHtml(skill.description || '')}</p>
+                        <div class="workshop-card-tags">
+                            ${(skill.tags || []).map(tag => `<span class="workshop-tag">${escapeHtml(tag)}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="workshop-card-actions">
+                        ${skill.system_prompt ? `
+                            <button class="workshop-btn workshop-btn-copy skill-copy-zh" 
+                                    data-prompt="${escapeHtml(skill.system_prompt)}"
+                                    data-skill-name="${escapeHtml(skill.name)}"
+                                    title="复制中文提示词">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <span>中文提示词</span>
+                            </button>
+                        ` : ''}
+                        ${skill.system_prompt_en ? `
+                            <button class="workshop-btn workshop-btn-copy skill-copy-en" 
+                                    data-prompt="${escapeHtml(skill.system_prompt_en)}"
+                                    data-skill-name="${escapeHtml(skill.name)}"
+                                    title="复制英文提示词">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <span>English Prompt</span>
+                            </button>
+                        ` : ''}
+                        ${skill.source_url ? `
+                            <a href="${escapeHtml(skill.source_url)}" target="_blank" rel="noopener noreferrer" 
+                               class="workshop-btn workshop-btn-download" title="查看源代码">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                                <span>源代码</span>
+                            </a>
+                        ` : ''}
+                    </div>
+                </article>
+            `).join('');
+
+            // Add event listeners
+            attachCopyListeners();
+        }
+
+        // Attach copy button event listeners
+        function attachCopyListeners() {
+            const resultsDiv = document.getElementById('copy-results');
+            
+            // Chinese copy buttons
+            document.querySelectorAll('.skill-copy-zh').forEach(btn => {
+                btn.addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    const prompt = this.dataset.prompt;
+                    const skillName = this.dataset.skillName;
+                    
+                    try {
+                        await navigator.clipboard.writeText(prompt);
+                        const originalText = this.querySelector('span').textContent;
+                        this.querySelector('span').textContent = '已复制!';
+                        this.classList.add('copied');
+                        
+                        // Log result
+                        logCopyResult(skillName, 'Chinese', true, prompt.length);
+                        
+                        setTimeout(() => {
+                            this.querySelector('span').textContent = originalText;
+                            this.classList.remove('copied');
+                        }, 2000);
+                    } catch (error) {
+                        logCopyResult(skillName, 'Chinese', false, error.message);
+                    }
+                });
+            });
+
+            // English copy buttons
+            document.querySelectorAll('.skill-copy-en').forEach(btn => {
+                btn.addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    const prompt = this.dataset.prompt;
+                    const skillName = this.dataset.skillName;
+                    
+                    try {
+                        await navigator.clipboard.writeText(prompt);
+                        const originalText = this.querySelector('span').textContent;
+                        this.querySelector('span').textContent = 'Copied!';
+                        this.classList.add('copied');
+                        
+                        // Log result
+                        logCopyResult(skillName, 'English', true, prompt.length);
+                        
+                        setTimeout(() => {
+                            this.querySelector('span').textContent = originalText;
+                            this.classList.remove('copied');
+                        }, 2000);
+                    } catch (error) {
+                        logCopyResult(skillName, 'English', false, error.message);
+                    }
+                });
+            });
+
+            console.log('✅ Copy listeners attached');
+        }
+
+        // Log copy results
+        function logCopyResult(skillName, language, success, info) {
+            const resultsDiv = document.getElementById('copy-results');
+            const timestamp = new Date().toLocaleTimeString();
+            const resultClass = success ? 'success' : 'error';
+            const icon = success ? '✅' : '❌';
+            const message = success 
+                ? `${icon} [${timestamp}] Copied ${language} prompt for "${skillName}" (${info} chars)`
+                : `${icon} [${timestamp}] Failed to copy ${language} prompt for "${skillName}": ${info}`;
+            
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `test-result ${resultClass}`;
+            resultDiv.textContent = message;
+            resultsDiv.appendChild(resultDiv);
+        }
+
+        // Escape HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Auto-run test on load
+        window.addEventListener('load', () => {
+            console.log('🧪 Test page loaded');
+            testAPI();
+        });
+    </script>
+</body>
+</html>
